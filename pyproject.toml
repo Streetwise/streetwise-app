@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "streetwise-app"
+version = "0.1.0"
+description = ""
+authors = ["Oleg Lavrovsky <oleg@datalets.ch>"]
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+gunicorn = "*"
+flask-restplus = "*"
+python-dotenv = "*"
+flask = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "5.3.5"
+bumpversion = "*"
+pytest-sugar = "*"
+pytest-cov = "*"
+# Werkzeug = "0.16.1"

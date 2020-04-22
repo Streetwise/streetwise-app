@@ -1,0 +1,28 @@
+
+{
+  "name": "Streetwise app",
+  "description": "",
+  "repository": "https://github.com/streetwise/streetwise-app",
+  "logo": "https://github.com/streetwise/streetwise-app/raw/master/docs/logo.png",
+  "keywords": ["crowdsourcing", "urban"],
+  "env": {
+    "FLASK_ENV": {
+      "description": "Flask Enviroment",
+      "value": "production"
+    },
+    "SECRET": {
+      "description": "Database Secret",
+      "value": "YourKeyHere"
+    }
+   },
+  "addons": [
+   ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
