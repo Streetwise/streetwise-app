@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Streetwise App"/>
+    <StartTour />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import StartTour from '@/components/StartTour.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    StartTour
   }
 }
 </script>

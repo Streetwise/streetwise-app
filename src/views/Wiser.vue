@@ -1,10 +1,16 @@
 <template>
-  <div class="about">
-    <h1>Backend Resources Demo</h1>
-    <p>Click on the links below to fetch data from the Flask server</p>
-    <a href="" @click.prevent="fetchResource">Fetch</a><br/>
-    <a href="" @click.prevent="fetchSecureResource">Fetch Secure Resource</a>
-    <h4>Results</h4>
+  <div class="wiser">
+    <p class="lead">Choose the image that feels safer.</p>
+
+    <img src="@/assets/test/24625645967_f9e6f81566_k.jpg">
+    <img src="@/assets/test/mesch - Helvetiagaertli.jpg">
+
+    <p>
+      <button href="" @click.prevent="fetchResource">Left</button>
+      <button href="" @click.prevent="fetchResource">Right</button>
+    </p>
+    <button href="" @click.prevent="fetchResource">Unsure</button>
+
     <p v-for="r in resources" :key="r.timestamp">
       Server Timestamp: {{r.timestamp | formatTimestamp }}
     </p>
@@ -32,14 +38,6 @@ export default {
         }).catch(error => {
           this.error = error.message
         })
-    },
-    fetchSecureResource () {
-      $backend.fetchSecureResource()
-        .then(responseData => {
-          this.resources.push(responseData)
-        }).catch(error => {
-          this.error = error.message
-        })
     }
   }
 }
@@ -47,4 +45,9 @@ export default {
 </script>
 
 <style lang="scss">
+.wiser {
+  text-align: center;
+}
+
+img { width: 40%; padding: 3px; }
 </style>
