@@ -15,6 +15,7 @@ class SecureResource(Resource):
     """ Calls require_auth decorator on all requests """
     method_decorators = [require_auth]
 
+# Example routes
 
 @api_rest.route('/resource/<string:resource_id>')
 class ResourceOne(Resource):
@@ -31,7 +32,7 @@ class ResourceOne(Resource):
 
 @api_rest.route('/secure-resource/<string:resource_id>')
 class SecureResourceOne(SecureResource):
-    """ Unsecure Resource Class: Inherit from Resource """
+    """ Secure Resource Class: Inherit from SecureResource """
 
     def get(self, resource_id):
         timestamp = datetime.utcnow().isoformat()

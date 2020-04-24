@@ -6,13 +6,21 @@
     <img src="@/assets/test/mesch - Helvetiagaertli.jpg">
 
     <p>
-      <button href="" @click.prevent="fetchResource">Left</button>
-      <button href="" @click.prevent="fetchResource">Right</button>
+      <button href="" @click.prevent="voteLeft">Left</button>
+      <button href="" @click.prevent="voteRight">Right</button>
     </p>
-    <button href="" @click.prevent="fetchResource">Unsure</button>
+    <button href="" @click.prevent="voteUndecided">Unsure</button>
 
+    <p>{{resources.length}} votes</p>
     <p v-for="r in resources" :key="r.timestamp">
-      Server Timestamp: {{r.timestamp | formatTimestamp }}
+      <span v-if="r.is_undecided">
+        Undecided |
+      </span>
+      <span v-if="!r.is_undecided">
+        Choice: {{r.choice}} |
+      </span>
+      Time: {{r.timetaken}} |
+      At: {{r.timestamp | formatTimestamp }}
     </p>
     <p>{{error}}</p>
   </div>
@@ -27,17 +35,41 @@ export default {
   data () {
     return {
       resources: [],
-      error: ''
+      error: '',
+      imageLeft: 'flickr',
+      imageRight: 'mesch',
+      timeStart: Date.now()
     }
   },
   methods: {
-    fetchResource () {
-      $backend.fetchResource()
+    elapsedTime () {
+      return Math.round((Date.now() - this.timeStart) / 1000)
+    },
+    nextImagePair () {
+      this.timeStart = Date.now()
+    },
+    castVote (isRight) {
+      $backend.castVote(
+        isRight,
+        this.imageLeft,
+        this.imageRight,
+        this.elapsedTime()
+      )
         .then(responseData => {
           this.resources.push(responseData)
+          this.nextImagePair()
         }).catch(error => {
           this.error = error.message
         })
+    },
+    voteLeft () {
+      this.castVote(false)
+    },
+    voteRight () {
+      this.castVote(true)
+    },
+    voteUndecided () {
+      this.castVote(null)
     }
   }
 }

@@ -23,6 +23,16 @@ $axios.interceptors.response.use(function (response) {
 
 export default {
 
+  castVote (isRight, imageLeft, imageRight, timeTaken) {
+    return $axios.post(`votes/`, {
+      choice: isRight ? imageRight : imageLeft,
+      other: isRight ? imageLeft : imageRight,
+      timetaken: timeTaken,
+      is_left: (isRight !== null && !isRight),
+      is_undecided: (isRight === null)
+    }).then(response => response.data)
+  },
+
   fetchResource () {
     return $axios.get(`resource/xxx`)
       .then(response => response.data)

@@ -7,7 +7,7 @@
     <div id="nav">
       <router-link to="/">Tour</router-link> |
       <router-link to="/wise">Evaluation</router-link> |
-      <a href="http://localhost:5000/api/">API</a>
+      <a href="/api">API</a>
     </div>
   </div>
 </template>
