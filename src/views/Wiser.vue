@@ -13,15 +13,15 @@
     <button href="" @click.prevent="nextImagePair">Next</button>
 
     <p>{{resources.length}} votes</p>
-    <p v-for="r in resources" :key="r.timestamp">
+    <p v-for="r in resources" :key="r.id">
       <span v-if="r.is_undecided">
         Undecided |
       </span>
       <span v-if="!r.is_undecided">
-        Choice: {{r.choice}} |
+        Choice: {{r.choice_id}} |
       </span>
-      Time: {{r.timetaken}} |
-      At: {{r.timestamp | formatTimestamp }}
+      Time: {{r.time_elapsed}} |
+      At: {{r.created | formatTimestamp }}
     </p>
     <p>{{error}}</p>
   </div>

@@ -7,7 +7,6 @@ from app.api.models import Image
 
 SKIP_EXISTING = False
 
-db.create_all()
 
 with open('data/ch_data.csv') as csvfile:
     total = count = 0
