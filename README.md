@@ -20,7 +20,8 @@ A Flask view is used to serve the `index.html` as an entry point into the Vue ap
 ### Components
 
 * [Flask](https://flask.palletsprojects.com/), a [Python](https://python.org) web framework
-* [Flask-RestPlus](https://flask-restplus.readthedocs.io/en/stable/) API
+* [Flask-RestPlus](https://flask-restplus.readthedocs.io/en/stable/) API layer
+* [SQLAlchemy](https://docs.sqlalchemy.org/) data persistence
 * [PyTest](https://pytest.org) test suite
 * [Vue.js v2](https://vuejs.org/v2/guide/) front-end framework
 * [vue-cli](https://github.com/vuejs/vue-cli/blob/dev/docs/README.md), [Vuex](https://vuex.vuejs.org/), [Router](https://router.vuejs.org/)
@@ -72,6 +73,14 @@ FLASK_APP = "app"
 # Uncomment this to debug:
 FLASK_DEBUG = 1
 ```
+
+### Initial data import
+
+Import the image files, which should be in the `ch_data.csv` file in the `data` folder:
+
+`python import.sh`
+
+This will also create a blank database.
 
 ### Frontend setup
 

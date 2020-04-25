@@ -4,6 +4,9 @@
 .env
 .flaskenv
 
+/data/*.csv
+/data/*.db
+
 /dist
 .coverage
 .pytest_cache/

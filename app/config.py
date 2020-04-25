@@ -3,8 +3,10 @@ Global Flask Application Setting
 See `.flaskenv` for default settings.
  """
 
-import os
+import os, os.path
 from app import app
+
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'streetwise.db'))
 
 
 class Config(object):
@@ -12,6 +14,9 @@ class Config(object):
     FLASK_ENV =  os.getenv('FLASK_ENV', 'production')
     # Set FLASK_SECRET on your production Environment
     SECRET_KEY = os.getenv('FLASK_SECRET', 'Secret')
+
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + DB_PATH)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)

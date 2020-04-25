@@ -2,14 +2,15 @@
   <div class="wiser">
     <p class="lead">Choose the image that feels safer.</p>
 
-    <img src="@/assets/test/24625645967_f9e6f81566_k.jpg">
-    <img src="@/assets/test/mesch - Helvetiagaertli.jpg">
+    <img :src="imageLeftUrl">
+    <img :src="imageRightUrl">
 
     <p>
       <button href="" @click.prevent="voteLeft">Left</button>
       <button href="" @click.prevent="voteRight">Right</button>
     </p>
     <button href="" @click.prevent="voteUndecided">Unsure</button>
+    <button href="" @click.prevent="nextImagePair">Next</button>
 
     <p>{{resources.length}} votes</p>
     <p v-for="r in resources" :key="r.timestamp">
@@ -36,8 +37,10 @@ export default {
     return {
       resources: [],
       error: '',
-      imageLeft: 'flickr',
-      imageRight: 'mesch',
+      imageLeft: 0,
+      imageLeftUrl: '/loading.gif',
+      imageRight: 0,
+      imageRightUrl: '/loading.gif',
       timeStart: Date.now()
     }
   },
@@ -47,6 +50,15 @@ export default {
     },
     nextImagePair () {
       this.timeStart = Date.now()
+      console.log('Fetching image pair')
+      $backend.getRandomImages()
+        .then(responseData => {
+          console.log(responseData)
+          this.imageLeft = responseData[0].id
+          this.imageLeftUrl = responseData[0].Url
+          this.imageRight = responseData[1].id
+          this.imageRightUrl = responseData[1].Url
+        })
     },
     castVote (isRight) {
       $backend.castVote(

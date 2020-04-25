@@ -25,11 +25,11 @@ export default {
 
   castVote (isRight, imageLeft, imageRight, timeTaken) {
     return $axios.post(`votes/`, {
-      choice: isRight ? imageRight : imageLeft,
-      other: isRight ? imageLeft : imageRight,
-      timetaken: timeTaken,
-      is_left: (isRight !== null && !isRight),
-      is_undecided: (isRight === null)
+      choice_id: isRight ? imageRight : imageLeft,
+      other_id: isRight ? imageLeft : imageRight,
+      is_leftimage: (isRight !== null && !isRight),
+      is_undecided: (isRight === null),
+      time_elapsed: timeTaken
     }).then(function (response) {
       if (response.status === 201) {
         return response
@@ -40,13 +40,8 @@ export default {
     }).then(response => response.data)
   },
 
-  fetchResource () {
-    return $axios.get(`resource/xxx`)
-      .then(response => response.data)
-  },
-
-  fetchSecureResource () {
-    return $axios.get(`secure-resource/zzz`)
+  getRandomImages () {
+    return $axios.get(`image/random`)
       .then(response => response.data)
   }
 }

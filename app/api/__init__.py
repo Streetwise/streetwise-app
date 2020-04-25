@@ -17,5 +17,6 @@ def add_header(response):
 
 
 # Import resources to ensure view is registered
-from .resources import * # NOQA
+# from .resources import * # NOQA
+from .images import * # NOQA
 from .votes import * # NOQA

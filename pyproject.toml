@@ -11,6 +11,8 @@ flask-restplus = "*"
 python-dotenv = "*"
 flask = "*"
 flask_limiter = "^1.2.1"
+flask_sqlalchemy = "^2.4.1"
+flask_migrate = "^2.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "5.3.5"
