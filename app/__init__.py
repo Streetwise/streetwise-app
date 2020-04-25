@@ -5,10 +5,13 @@ from flask import Flask, current_app, send_file
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 
-from .api import api_bp
+from .api import api_bp, api_limiter
 from .client import client_bp
 
 app = Flask(__name__, static_folder='../dist/static')
+
+# Initialize the limiter
+api_limiter.init_app(app)
 
 # Register the API blueprint
 app.register_blueprint(api_bp)

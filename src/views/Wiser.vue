@@ -56,10 +56,17 @@ export default {
         this.elapsedTime()
       )
         .then(responseData => {
-          this.resources.push(responseData)
-          this.nextImagePair()
+          if (responseData !== null) {
+            this.resources.push(responseData)
+            this.nextImagePair()
+          }
         }).catch(error => {
-          this.error = error.message
+          console.error(error.message)
+          if (error.message.indexOf('429')) {
+            this.error = 'Please slow down'
+          } else {
+            this.error = 'There was an error, please try again'
+          }
         })
     },
     voteLeft () {

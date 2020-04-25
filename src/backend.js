@@ -30,6 +30,13 @@ export default {
       timetaken: timeTaken,
       is_left: (isRight !== null && !isRight),
       is_undecided: (isRight === null)
+    }).then(function (response) {
+      if (response.status === 201) {
+        return response
+      }
+      alert(response.statusText)
+      console.log(response.data)
+      return null
     }).then(response => response.data)
   },
 

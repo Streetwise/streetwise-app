@@ -1,11 +1,14 @@
 """ API Blueprint """
 
 from flask import Blueprint, current_app
+
 from flask_restplus import Api
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 api_bp = Blueprint('api_bp', __name__, url_prefix='/api')
 api_rest = Api(api_bp)
-
+api_limiter = Limiter(current_app, key_func=get_remote_address)
 
 @api_bp.after_request
 def add_header(response):

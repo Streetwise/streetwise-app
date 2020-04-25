@@ -10,6 +10,7 @@ gunicorn = "*"
 flask-restplus = "*"
 python-dotenv = "*"
 flask = "*"
+flask_limiter = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "5.3.5"
