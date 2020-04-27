@@ -6,7 +6,12 @@ See `.flaskenv` for default settings.
 import os, os.path
 from app import app
 
-DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'data', 'streetwise.db'))
+DEFAULT_BUCKET_URL = "https://eu-central-1.linodeobjects.com/streetwise/enhanced/"
+
+# ../data/streetwise.db
+DEFAULT_DB_PATH = os.path.dirname(__file__)
+DEFAULT_DB_PATH = os.path.join(DEFAULT_DB_PATH, os.pardir, 'data', 'streetwise.db')
+DEFAULT_DB_PATH = os.path.abspath(DEFAULT_DB_PATH)
 
 
 class Config(object):
@@ -15,8 +20,10 @@ class Config(object):
     # Set FLASK_SECRET on your production Environment
     SECRET_KEY = os.getenv('FLASK_SECRET', 'Secret')
 
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + DB_PATH)
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + DEFAULT_DB_PATH)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    IMAGE_BUCKET_URL = os.getenv('IMAGE_BUCKET_URL', DEFAULT_BUCKET_URL)
 
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)

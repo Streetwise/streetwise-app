@@ -4,10 +4,12 @@ API Models
 
 from datetime import datetime
 
+from .. import Config
+
+IMG_BASE_URL = Config.IMAGE_BUCKET_URL
+
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
-
-IMG_BASE_URL = "https://eu-central-1.linodeobjects.com/streetwise/enhanced/"
 
 class Base(db.Model):
     __abstract__  = True
@@ -19,7 +21,7 @@ class Base(db.Model):
 class Image(Base):
     Image_Key = db.Column(db.String(100))
     Filename = db.Column(db.String(100))
-    Canton = db.Column(db.UnicodeText(10))
+    Canton = db.Column(db.String(10))
     Latitude = db.Column(db.Float())
     Longitude = db.Column(db.Float())
     Camera_Angle = db.Column(db.Float())
