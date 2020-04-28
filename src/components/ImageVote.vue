@@ -133,9 +133,11 @@ export default {
 <style scoped lang="scss">
 .imagepane {
   text-align: center;
+  width: 100%;
+  overflow: hidden;
   div {
     display: inline-block;
-    width: 40%;
+    width: 50%;
     height: 60%;
     min-height: 400px;
     padding: 3px;
