@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <StartTour />
   </div>
 </template>
@@ -9,7 +9,7 @@
 import StartTour from '@/components/StartTour.vue'
 
 export default {
-  name: 'home',
+  name: 'tour',
   components: {
     StartTour
   }

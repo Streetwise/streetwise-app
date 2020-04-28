@@ -1,45 +1,41 @@
 <template>
   <div id="app">
-    <div id="logos"><img src="@/assets/logo.png"></div>
+    <vs-navbar
+        color="primary"
+        text-color="rgba(255,255,255,.8)"
+        class="navbar shadow"
+    >
+      <vs-navbar-title>
+        Streetwise
+      </vs-navbar-title>
+
+      <vs-navbar-item>
+        <router-link to="/">Start</router-link>
+      </vs-navbar-item><vs-navbar-item>
+        <router-link to="/tour">Tour</router-link>
+      </vs-navbar-item><vs-navbar-item>
+        <router-link to="/wise">Umfrage</router-link>
+      </vs-navbar-item><vs-navbar-item>
+        <a href="/api">API</a>
+      </vs-navbar-item>
+    </vs-navbar>
 
     <router-view/>
 
-    <div id="nav">
-      <router-link to="/">Tour</router-link> |
-      <router-link to="/wise">Evaluation</router-link> |
-      <a href="/api">API</a>
-    </div>
+    <div id="logos"><img src="@/assets/logo.png"></div>
   </div>
 </template>
 
 <style lang="scss">
-#logos {
-  position: absolute; top: 0; right: 0; border: 0;
-  img { width: 90px; }
-}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #5b5777;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+#logos {
+  position: absolute; bottom: 0; right: 0; border: 0;
+  img { width: 90px; }
 }
-#plus {
-  padding: 0 20px 0 20px;
-  display: inline-block;
-  font-size: 50px;
-  vertical-align: top;
-  line-height: 100px;
-}
-
 </style>
