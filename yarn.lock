@@ -9043,15 +9043,18 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.5.13:
+vue@^2.5.13, vue@^2.6.9:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
-vuesax@^4.0.1-alpha.16:
-  version "4.0.1-alpha.16"
-  resolved "https://registry.yarnpkg.com/vuesax/-/vuesax-4.0.1-alpha.16.tgz#e37f1c7a7ca50fcf3eee7cd273ad19075c14c747"
-  integrity sha512-qm/0BBS7ULk/Sk4lr/xPGzUuj0hX5U3JN+L7ShmSFyt70L3zHzhQxNDNw7yD8EJa2GxdgyXReKzwfvcyH2uM/A==
+vuesax@^3.11.13:
+  version "3.11.13"
+  resolved "https://registry.yarnpkg.com/vuesax/-/vuesax-3.11.13.tgz#dd6ffb07e27746fa0a78da5e1dd8c91dce0baec5"
+  integrity sha512-q5YjXJOs16z/zd6/iEJRwbAsGBGCHHbHzyYAK73rNqBOtBPDJe/txrJGdqE02jnTLWwoH2j+5JvVSrNceto9zA==
+  dependencies:
+    chalk "^2.4.2"
+    vue "^2.6.9"
 
 vuex@^3.0.1:
   version "3.3.0"

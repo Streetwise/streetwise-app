@@ -1,6 +1,6 @@
 <template>
   <div class="wiser">
-    <p class="lead">Choose the image that feels safer.</p>
+    <h4 class="lead">Wählen Sie das Bild, das sich sicherer anfühlt.</h4>
 
     <ImageVote />
   </div>

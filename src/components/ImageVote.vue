@@ -6,11 +6,16 @@
     </div>
 
     <p>
-      <button href="" @click.prevent="voteLeft">Left</button>
-      <button href="" @click.prevent="voteRight">Right</button>
+      <vs-button flat size="large" @click.prevent="voteLeft">Left</vs-button>
+      &nbsp;
+      <vs-button flat size="large" @click.prevent="voteRight">Right</vs-button>
     </p>
-    <button href="" @click.prevent="voteUndecided">Unsure</button>
-    <button href="" @click.prevent="nextImagePair">Next</button>
+
+    <p style="margin:1em">
+      <vs-button @click.prevent="voteUndecided">Unsure</vs-button>
+      &nbsp;
+      <vs-button @click.prevent="nextImagePair">Next</vs-button>
+    </p>
 
     <p>{{resources.length}} votes</p>
     <p v-for="r in resources" :key="r.id">

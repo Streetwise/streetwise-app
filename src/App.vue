@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <vs-navbar
-        color="primary"
-        text-color="rgba(255,255,255,.8)"
-        class="navbar shadow"
+        color="secondary"
+        text-color="rgba(255,255,255,1)"
+        class="navbar"
     >
       <vs-navbar-title>
         Streetwise
@@ -37,5 +37,16 @@
 #logos {
   position: absolute; bottom: 0; right: 0; border: 0;
   img { width: 90px; }
+}
+
+.vs-navbar--title {
+  float: left;
+  font-size: 120%;
+}
+
+.vs-navbar--item a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
 }
 </style>
