@@ -1,5 +1,9 @@
 <template>
   <div class="imagevote">
+    <div class="progressbar" v-on:click="showResourceList = !showResourceList">
+      <p>{{ voteCount }} / {{ voteTotal }}</p>
+      <vs-progress :height="12" :percent="votePercent" color="success"></vs-progress>
+    </div>
     <div class="imagepane">
       <div class="left"  :style="{ backgroundImage: `url(${imageLeftUrl})`  }" />
       <div class="right" :style="{ backgroundImage: `url(${imageRightUrl})` }" />
@@ -12,13 +16,14 @@
     </p>
 
     <p style="margin:1em">
-      <vs-button @click.prevent="voteUndecided">Unsure</vs-button>
+      <vs-button type="border" @click.prevent="voteUndecided">Unsure</vs-button>
       &nbsp;
-      <vs-button @click.prevent="nextImagePair">Next</vs-button>
+      <vs-button type="border" @click.prevent="voteSkip">Next</vs-button>
     </p>
 
-    <p>{{resources.length}} votes</p>
-    <p v-for="r in resources" :key="r.id">
+    <p style="color:red">{{ error }}</p>
+
+    <p v-show="showResourceList" v-for="r in resources" :key="r.id">
       <span v-if="r.is_undecided">
         Undecided |
       </span>
@@ -28,7 +33,6 @@
       Time: {{r.time_elapsed}} |
       At: {{r.created | formatTimestamp }}
     </p>
-    <p>{{error}}</p>
   </div>
 </template>
 
@@ -40,20 +44,41 @@ export default {
   name: 'about',
   data () {
     return {
+      showResourceList: false,
       resources: [],
       error: '',
       imageLeft: 0,
       imageLeftUrl: '/loading.gif',
       imageRight: 0,
       imageRightUrl: '/loading.gif',
-      timeStart: Date.now()
+      timeStart: Date.now(),
+      voteCount: 0,
+      voteTotal: 5,
+      votePercent: 0
     }
   },
   methods: {
     elapsedTime () {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
-    nextImagePair () {
+    checkVotesComplete () {
+      if (this.voteCount === this.voteTotal) {
+        this.$vs.dialog({
+          title: `Erledigt! Vielen Dank`,
+          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+          cancel: function () { location.href = '/' },
+          accept: function () { location.href = '/' }
+        })
+      }
+      return false
+    },
+    nextImagePair (skip = false) {
+      this.error = ''
+      if (!skip) {
+        this.voteCount++
+        this.votePercent = 100 * this.voteCount / this.voteTotal
+        if (this.checkVotesComplete()) { return }
+      }
       this.timeStart = Date.now()
       console.log('Fetching image pair')
       $backend.getRandomImages()
@@ -94,6 +119,9 @@ export default {
     },
     voteUndecided () {
       this.castVote(null)
+    },
+    voteSkip () {
+      this.nextImagePair(true)
     }
   },
   mounted () {
@@ -114,6 +142,24 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom left;
+  }
+}
+
+.vs-button.large {
+  font-weight: bold;
+}
+
+.progressbar {
+  text-align: right;
+  margin: 1em;
+  p {
+    position: absolute;
+    right: 2.5em;
+  }
+  div {
+    margin-right: 1em;
+    width: 20%;
+    min-width: 10em;
   }
 }
 </style>
