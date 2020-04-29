@@ -7,6 +7,10 @@ div
     vs-button(flat) Hier findest du mehr Infos zum Projekt Streetwise
   router-link(to="/wise")
     vs-button(flat) Hier geht's zur Umfrage. Mach mit und gewinne ein iPhone!
+
+  p(style="margin-top:2em")
+    span Fragen? 👉&nbsp;
+    a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
 </template>
 
 <script>
