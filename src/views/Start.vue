@@ -11,7 +11,7 @@ div
 
 <script>
 export default {
-  name: 'tour',
+  name: 'Start',
   components: {
   }
 }

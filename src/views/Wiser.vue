@@ -26,7 +26,7 @@
 import ImageVote from '@/components/ImageVote.vue'
 
 export default {
-  name: 'wiser',
+  name: 'Wiser',
   components: {
     ImageVote
   },

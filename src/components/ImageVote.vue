@@ -83,12 +83,7 @@ export default {
     },
     checkVotesComplete () {
       if (this.voteCount === this.voteTotal) {
-        this.$vs.dialog({
-          title: `Erledigt! Vielen Dank`,
-          text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          cancel: function () { location.href = '/' },
-          accept: function () { location.href = '/' }
-        })
+        this.$router.push('complete')
       }
       return false
     },
@@ -151,13 +146,19 @@ export default {
     },
     voteSkip () {
       this.nextImagePair(true)
+      this.$vs.notify({ text: 'Übersprungen!', color: 'warning' })
     },
     complainImage (isRight) {
+      let voter = this
       this.$vs.dialog({
         type: 'confirm',
-        color: 'error',
+        color: 'danger',
         title: `Problem melden`,
-        text: 'Falls du diesen Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte hier bestätigen.'
+        text: 'Falls du diesen Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben.',
+        accept: function () {
+          prompt('Problem beschreiben:')
+          voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning' })
+        }
       })
     },
     complainLeft () {

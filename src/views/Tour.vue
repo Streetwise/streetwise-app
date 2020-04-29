@@ -9,7 +9,7 @@
 import StartTour from '@/components/StartTour.vue'
 
 export default {
-  name: 'tour',
+  name: 'Tour',
   components: {
     StartTour
   }
