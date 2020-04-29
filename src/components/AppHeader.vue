@@ -26,7 +26,11 @@
 </template>
 
 <script>
-
+export default {
+  name: 'AppHeader',
+  props: {
+  }
+}
 </script>
 
 <style scoped lang="scss">

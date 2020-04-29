@@ -8,6 +8,7 @@ import router from './router'
 import store from './store'
 
 import 'vuesax/dist/vuesax.css'
+import 'material-icons/iconfont/material-icons.css'
 
 import './filters'
 

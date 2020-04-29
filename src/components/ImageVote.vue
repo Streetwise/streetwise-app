@@ -4,21 +4,26 @@
       <p>{{ voteCount }} / {{ voteTotal }}</p>
       <vs-progress :height="12" :percent="votePercent" color="success"></vs-progress>
     </div>
+
+    <h4 class="lead">{{ msg }}</h4>
+
     <div class="imagepane">
       <div class="left"  :style="{ backgroundImage: `url(${imageLeftUrl})`  }" />
       <div class="right" :style="{ backgroundImage: `url(${imageRightUrl})` }" />
     </div>
 
     <p>
-      <vs-button flat size="large" @click.prevent="voteLeft">Left</vs-button>
+      <vs-button type="border" size="small" color="warning" class="complain left" @click.prevent="complainLeft">🚩</vs-button>
+      <vs-button flat size="large" @click.prevent="voteLeft">Links</vs-button>
       &nbsp;
-      <vs-button flat size="large" @click.prevent="voteRight">Right</vs-button>
+      <vs-button flat size="large" @click.prevent="voteRight">Rechts</vs-button>
+      <vs-button type="border" size="small" color="warning" class="complain right" @click.prevent="complainRight">🚩</vs-button>
     </p>
 
     <p style="margin:1em">
-      <vs-button type="border" @click.prevent="voteUndecided">Unsure</vs-button>
+      <vs-button type="border" @click.prevent="voteUndecided">Unsicher</vs-button>
       &nbsp;
-      <vs-button type="border" @click.prevent="voteSkip">Next</vs-button>
+      <vs-button type="border" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
 
     <p style="color:red">{{ error }}</p>
@@ -41,7 +46,10 @@
 import $backend from '../backend'
 
 export default {
-  name: 'about',
+  name: 'ImageVote',
+  props: {
+    msg: String
+  },
   data () {
     return {
       showResourceList: false,
@@ -122,10 +130,30 @@ export default {
     },
     voteSkip () {
       this.nextImagePair(true)
+    },
+    complainImage (isRight) {
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'error',
+        title: `Problem melden`,
+        text: 'Falls du diesen Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte hier bestätigen.'
+      })
+    },
+    complainLeft () {
+      this.complainImage(false)
+    },
+    complainRight () {
+      this.complainImage(true)
     }
   },
   mounted () {
     this.nextImagePair()
+    this.$vs.dialog({
+      type: 'alert',
+      color: 'success',
+      title: `Jetzt bist du dran!`,
+      text: 'Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.'
+    })
   }
 }
 </script>
@@ -147,8 +175,16 @@ export default {
   }
 }
 
+.lead { margin: 1em; }
+
 .vs-button.large {
   font-weight: bold;
+}
+
+.complain {
+  position: absolute;
+  &.left { left: 5px; }
+  &.right { right: 5px; }
 }
 
 .progressbar {
