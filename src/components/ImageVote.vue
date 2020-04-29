@@ -138,7 +138,16 @@ export default {
       this.castVote(true)
     },
     voteUndecided () {
-      this.castVote(null)
+      let voter = this
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'warning',
+        title: `Bestätigen`,
+        text: 'Bist du sicher, dass die beiden Situationen für dich gleich sicher erscheinen?',
+        accept: function () {
+          voter.castVote(null)
+        }
+      })
     },
     voteSkip () {
       this.nextImagePair(true)
