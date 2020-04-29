@@ -25,6 +25,9 @@ export default {
   text-align: center;
   color: #5b5777;
 }
+@media screen and (max-width: 600px) {
+  html { overflow: hidden; }
+}
 .vs-popup {
   text-align: left;
 }

@@ -15,20 +15,21 @@
       <form>
         <vs-row vs-w="12">
           <vs-col vs-type="flex" vs-w="6">
-            <vs-select
+            <b>Ich bin:</b>
+            <select
               label="Ich bin:"
               >
-              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item, index) in listAges" />
-            </vs-select>
+              <option :key="index" :value="item.value" v-for="(item, index) in listAges">{{ item.text }}</option>
+            </select>
           </vs-col>
         </vs-row><vs-row vs-w="12">
           <vs-col vs-type="flex" vs-w="6">
-
-            <vs-select
+            <b>Ich bin:</b>
+            <select
               label="Ich bin:"
               >
-              <vs-select-item :key="index" :value="item.value" :text="item.text" v-for="(item, index) in listGenders" />
-            </vs-select>
+              <option :key="index" :value="item.value" v-for="(item, index) in listGenders">{{ item.text }}</option>
+            </select>
           </vs-col>
         </vs-row>
 

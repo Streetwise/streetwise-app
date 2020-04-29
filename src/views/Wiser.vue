@@ -3,16 +3,14 @@
     <ImageVote
       msg="Welche Situation sieht sicherer aus?"
     />
-    <vs-popup fullscreen title="Anleitung" :active.sync="popupActive">
+    <vs-popup fullscreen title="Jetzt bist du dran ..." :active.sync="popupActive">
       <div class="content centerx">
-        <h1>Jetzt bist du dran!</h1>
         <p>
-          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
+          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Drücke entsprechend auf <b>Links</b> bsw. <b>Rechts</b>.
         </p>
-        <i>Zum Beispiel:</i>
-        <div><img src="@/assets/example.jpg"></div>
-        <p>
-          <b>Links</b> bsw. <b>Rechts</b> tippen wenn das Bild auf die entsprechende Seite eine sicherere Gefühl entspricht. Wenn es zu schwierig ist, die Bilder zu unterscheiden, tippe auf <b>Unsicher</b>. Tippe auf ein Bild zum es genauer anschauen im Vollbildmodus. Bitte beantworte alle 10 Bildpaare.
+        <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
+        <p style="font-size:80%">
+          Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen. Bitte beantworte <b>mindestens</b> 10 Bildpaare.
         </p>
         <center>
           <vs-button flat size="large" color="success" @click="popupActive=false">Los geht's !</vs-button>
@@ -51,5 +49,8 @@ export default {
   p, div {
     margin: 1em 0;
   }
+}
+@media screen and (max-width: 600px) {
+  .centerx { margin: 1em; }
 }
 </style>

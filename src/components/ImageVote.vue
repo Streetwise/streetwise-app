@@ -187,7 +187,29 @@ export default {
     padding: 3px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom left;
+    background-position: center center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .imagepane div {
+    min-height: 340px;
+  }
+  .vs-button.complain {
+    margin-top: -40px;
+    background: white !important;
+  }
+  .lead {
+    font-size: 90%;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .imagepane div {
+    min-height: 220px;
+  }
+  .lead {
+    display: none;
   }
 }
 
@@ -195,9 +217,10 @@ export default {
   width: 100%; height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center center;
 }
 
-.lightbox:active {
+.lightbox:active, .lightbox:hover {
   background-size: cover;
 }
 
