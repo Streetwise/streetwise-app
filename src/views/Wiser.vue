@@ -7,7 +7,7 @@
     <vs-popup fullscreen title="Jetzt bist du dran ..." :active.sync="popupActive">
       <div class="content centerx">
         <p>
-          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Drücke entsprechend auf <b>Links</b> bsw. <b>Rechts</b>.
+          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>.
         </p>
         <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
         <p style="font-size:80%">

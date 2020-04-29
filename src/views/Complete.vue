@@ -41,9 +41,9 @@
       </form>
     </div>
     <div class="raffle" v-show="surveyComplete">
-      <h1>Herzlichen Dank für deine Teilnahme</h1>
+      <h1>Herzlichen Dank für die Teilnahme</h1>
 
-      <p>Du kannst wenn gewünscht hier für unser Wettbewerb und zum unsere Newsletter anmelden, und dann weitere Bilder beurteilen.</p>
+      <p>Du kannst wenn gewünscht hier für unser Wettbewerb und zum unsere Newsletter anmelden, und danach weitere Bilder beurteilen.</p>
 
       <vs-checkbox v-model="confirmRaffle">
         Ich will ein iPhone gewinnen!
@@ -67,7 +67,13 @@
         <vs-button flat size="large" color="grey" @click="skipSubscribe">Überspringen</vs-button>
       </center>
 
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true" width="100%" height="1654" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <center style="margin-top:2em">
+        <a href="https://forms.gle/fDcXHYkSire7GRiU9" target="_blank" class="feedback-button">
+          <vs-button flat size="large" color="warning" style="color:black; font-size:150%; padding:1em">
+            📋 <b>Feedback</b> zum App abgeben
+          </vs-button>
+        </a>
+      </center>
     </div>
   </div>
 </template>
@@ -163,8 +169,10 @@ export default {
 
   .input-email {
     display: inline-block;
-    margin-right: 1em;
-    transform: scale(1.4);
+    margin-right: 2em;
+    transform: scale(1.3);
+    margin-top: 5px;
+    vertical-align: top;
   }
 }
 </style>

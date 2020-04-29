@@ -14,9 +14,10 @@ div
       b Projekt Streetwise
 
   center
+    span.material-icons(style="margin:0 0.5em") email
     span Fragen?&nbsp;
     a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
-    span.material-icons(style="margin:0 0.5em") email
+    span.material-icons(style="margin:0 0.5em") event_available
     span Bemerkungen?&nbsp;
     a(href="https://forms.gle/fDcXHYkSire7GRiU9") Feedback
 </template>
