@@ -16,9 +16,9 @@ div
   center
     span Fragen?&nbsp;
     a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
-    br
-    br
-    span.material-icons email
+    span.material-icons(style="margin:0 0.5em") email
+    span Bemerkungen?&nbsp;
+    a(href="https://forms.gle/fDcXHYkSire7GRiU9") Feedback
 </template>
 
 <script>
