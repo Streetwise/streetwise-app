@@ -193,7 +193,7 @@ export default {
 
 .lightbox {
   width: 100%; height: 100%;
-  background-size: cover;
+  background-size: contain;
 }
 
 .lead { margin: 1em; }
