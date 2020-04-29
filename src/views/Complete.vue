@@ -5,27 +5,29 @@
       <p class="lead">
         Erzähl uns kurz von dir.
       </p>
-      <p>
+      <a @click="showBlockquote=true" href="#">
+        <span class="material-icons info-button">
+        info
+        </span>
         Wir nutzen deine Angaben ausschliesslich für die anonyme Auswertung dieser Umfrage.
-      </p>
-      <blockquote>
+      </a>
+      <blockquote v-show="showBlockquote">
         Deine Angaben helfen uns, belastbare Aussagen über die Beteiligung der Umfrage machen zu können.
         So ist es beispielweise wichtig für uns zu wissen, welche Altersgruppe räumliche Situationen wie einschätzt.
       </blockquote>
-      <form>
+      <form style="margin-top:3em">
         <vs-row vs-w="12">
-          <vs-col vs-type="flex" vs-w="6">
-            <b>Ich bin:</b>
-            <select
+          <vs-col vs-type="flex" vs-w="12">
+            <b>Ich&nbsp;bin:&nbsp;</b><select
               label="Ich bin:"
               >
               <option :key="index" :value="item.value" v-for="(item, index) in listAges">{{ item.text }}</option>
             </select>
           </vs-col>
-        </vs-row><vs-row vs-w="12">
-          <vs-col vs-type="flex" vs-w="6">
-            <b>Ich bin:</b>
-            <select
+        </vs-row>
+        <vs-row vs-w="12" style="margin-top:1em">
+          <vs-col vs-type="flex" vs-w="12">
+            <b>&nbsp;Ich&nbsp;bin:&nbsp;</b><select
               label="Ich bin:"
               >
               <option :key="index" :value="item.value" v-for="(item, index) in listGenders">{{ item.text }}</option>
@@ -33,11 +35,15 @@
           </vs-col>
         </vs-row>
 
-        <vs-button flat size="large" color="success" @click="submitForm">Weiter</vs-button>
+        <vs-button flat size="large" color="success"
+          style="margin: 1em 0"
+          @click="submitForm">Abschliessen</vs-button>
       </form>
     </div>
     <div class="raffle" v-show="surveyComplete">
       <h1>Herzlichen Dank für deine Teilnahme</h1>
+
+      <p>Du kannst wenn gewünscht hier für unser Wettbewerb und zum unsere Newsletter anmelden, und dann weitere Bilder beurteilen.</p>
 
       <vs-checkbox v-model="confirmRaffle">
         Ich will ein iPhone gewinnen!
@@ -50,13 +56,15 @@
 
       <center>
         <vs-input
+          class="input-email"
           :success="emailValid"
           success-text="The address looks valid"
           placeholder="E-mail"
           v-model="emailAddress"
           @change="checkEmail" />
-
         <vs-button flat size="large" color="primary" @click="submitSubscribe">Senden</vs-button>
+        &nbsp;
+        <vs-button flat size="large" color="grey" @click="skipSubscribe">Überspringen</vs-button>
       </center>
     </div>
   </div>
@@ -69,6 +77,7 @@ export default {
   },
   data () {
     return {
+      showBlockquote: false,
       surveyComplete: false,
       confirmRaffle: true,
       confirmSubscribe: true,
@@ -93,6 +102,7 @@ export default {
     submitForm: function () {
       this.$vs.notify({ text: 'Gespeichert', color: 'success' })
       this.surveyComplete = true
+      window.scrollTo(0, 0)
     },
     submitSubscribe: function () {
       if (!this.emailValid) {
@@ -105,7 +115,10 @@ export default {
         return
       }
       this.$vs.notify({ text: 'Gespeichert', color: 'success' })
-      this.$router.push('/')
+      this.skipSubscribe()
+    },
+    skipSubscribe: function () {
+      this.$router.push({ name: 'wise', params: { skipintro: true } })
     },
     checkEmail: function () {
       this.emailValid = this.emailAddress.length - 2 > this.emailAddress.lastIndexOf('.') && this.emailAddress.lastIndexOf('.') > this.emailAddress.indexOf('@') > 0
@@ -126,7 +139,20 @@ export default {
   h1 { font-size: 200%; }
   .lead { font-size: 125%; }
 
-  .vs-button { margin: 1em 0; }
   .vs-row, .vs-col { margin: 0; }
+
+  .info-button {
+    color: blue;
+    float: left;
+    display: inline-block;
+    margin-right: 0.5em;
+    font-size: 200%;
+  }
+
+  .input-email {
+    display: inline-block;
+    margin-right: 1em;
+    transform: scale(1.4);
+  }
 }
 </style>

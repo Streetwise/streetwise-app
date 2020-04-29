@@ -2,6 +2,7 @@
   <div class="wiser">
     <ImageVote
       msg="Welche Situation sieht sicherer aus?"
+      :skipintro="skipintro"
     />
     <vs-popup fullscreen title="Jetzt bist du dran ..." :active.sync="popupActive">
       <div class="content centerx">
@@ -28,10 +29,19 @@ export default {
   components: {
     ImageVote
   },
+  props: {
+    skipintro: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      popupActive: true
+      popupActive: false
     }
+  },
+  mounted () {
+    this.popupActive = !this.skipintro
   }
 }
 </script>

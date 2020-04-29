@@ -18,7 +18,8 @@ export default new Router({
     {
       path: '/wise',
       name: 'wise',
-      component: Wiser
+      component: Wiser,
+      props: true
     },
     {
       path: '/complete',

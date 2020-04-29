@@ -58,7 +58,8 @@ import $backend from '../backend'
 export default {
   name: 'ImageVote',
   props: {
-    msg: String
+    msg: String,
+    skipintro: Boolean
   },
   data () {
     return {
@@ -83,7 +84,24 @@ export default {
     },
     checkVotesComplete () {
       if (this.voteCount === this.voteTotal) {
-        this.$router.push('complete')
+        if (this.skipintro) {
+          let voter = this
+          this.$vs.dialog({
+            type: 'alert',
+            color: 'success',
+            title: `Weiter geht es`,
+            text: 'Danke für deine Eingaben! Du kannst nun 10 weitere Bildpaaren beurteilen.',
+            accept: function () {
+              voter.voteCount = 0
+              voter.nextImagePair()
+            },
+            cancel: function () {
+              voter.$router.push('complete')
+            }
+          })
+        } else {
+          this.$router.push('complete')
+        }
       }
       return false
     },
@@ -95,10 +113,10 @@ export default {
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
-      console.log('Fetching image pair')
+      console.debug('Fetching image pair')
       $backend.getRandomImages()
         .then(responseData => {
-          console.log(responseData)
+          console.debug(responseData)
           this.imageLeft = responseData[0].id
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
@@ -118,7 +136,7 @@ export default {
             this.nextImagePair()
           }
         }).catch(error => {
-          console.error(error.message)
+          console.warn(error.message)
           if (error.message.indexOf('429')) {
             this.error = 'Please slow down'
           } else {
