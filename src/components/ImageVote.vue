@@ -2,7 +2,7 @@
   <div class="imagevote">
     <div class="progressbar" v-on:click="showResourceList = !showResourceList">
       <p>{{ voteCount }} / {{ voteTotal }}</p>
-      <vs-progress :height="12" :percent="votePercent" color="success"></vs-progress>
+      <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
     </div>
 
     <h4 class="lead">{{ msg }}</h4>
@@ -14,16 +14,18 @@
 
     <p>
       <vs-button type="border" size="small" color="warning" class="complain left" @click.prevent="complainLeft">🚩</vs-button>
-      <vs-button flat size="large" @click.prevent="voteLeft">Links</vs-button>
-      &nbsp;
-      <vs-button flat size="large" @click.prevent="voteRight">Rechts</vs-button>
+
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">Links</vs-button>
+
+      <vs-button type="border" class="undecided" @click.prevent="voteUndecided">Unsicher</vs-button>
+
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">Rechts</vs-button>
+
       <vs-button type="border" size="small" color="warning" class="complain right" @click.prevent="complainRight">🚩</vs-button>
     </p>
 
     <p style="margin:1em">
-      <vs-button type="border" @click.prevent="voteUndecided">Unsicher</vs-button>
-      &nbsp;
-      <vs-button type="border" @click.prevent="voteSkip">Überspringen</vs-button>
+      <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
 
     <p style="color:red">{{ error }}</p>
@@ -52,8 +54,9 @@ export default {
   },
   data () {
     return {
-      showResourceList: false,
+      voteTotal: 10, // number of images to require
       resources: [],
+      showResourceList: false,
       error: '',
       imageLeft: 0,
       imageLeftUrl: '/loading.gif',
@@ -61,7 +64,6 @@ export default {
       imageRightUrl: '/loading.gif',
       timeStart: Date.now(),
       voteCount: 0,
-      voteTotal: 5,
       votePercent: 0
     }
   },
@@ -148,12 +150,6 @@ export default {
   },
   mounted () {
     this.nextImagePair()
-    this.$vs.dialog({
-      type: 'alert',
-      color: 'success',
-      title: `Jetzt bist du dran!`,
-      text: 'Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.'
-    })
   }
 }
 </script>
@@ -177,8 +173,14 @@ export default {
 
 .lead { margin: 1em; }
 
-.vs-button.large {
+.vs-button.vote {
   font-weight: bold;
+  width: 5em;
+}
+
+.undecided {
+  margin: 0.5em;
+  opacity: 0.8;
 }
 
 .complain {

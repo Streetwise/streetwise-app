@@ -18,12 +18,15 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
+#app, .vs-popup {
   font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #5b5777;
+}
+.vs-popup {
+  text-align: left;
 }
 #logos {
   position: absolute; z-index: -99;
