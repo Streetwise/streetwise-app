@@ -12,7 +12,7 @@
         <i>Zum Beispiel:</i>
         <div><img src="@/assets/example.jpg"></div>
         <p>
-          <b>Links</b> bsw. <b>Rechts</b> tippen wenn das Bild auf die entsprechende Seite eine sicherere Gefühl entspricht. Wenn es zu schwierig ist, die Bilder zu unterscheiden, tippe auf <b>Unsicher</b>. Bitte beantworte alle 10 Bildpaare.
+          <b>Links</b> bsw. <b>Rechts</b> tippen wenn das Bild auf die entsprechende Seite eine sicherere Gefühl entspricht. Wenn es zu schwierig ist, die Bilder zu unterscheiden, tippe auf <b>Unsicher</b>. Tippe auf ein Bild zum es genauer anschauen im Vollbildmodus. Bitte beantworte alle 10 Bildpaare.
         </p>
         <center>
           <vs-button flat size="large" color="success" @click="popupActive=false">Los geht's !</vs-button>

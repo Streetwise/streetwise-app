@@ -28,6 +28,9 @@ export default {
 .vs-popup {
   text-align: left;
 }
+.lightbox-container {
+  height: 100%;
+}
 #logos {
   position: absolute; z-index: -99;
   bottom: 0; right: 0; border: 0;

@@ -8,9 +8,17 @@
     <h4 class="lead">{{ msg }}</h4>
 
     <div class="imagepane">
-      <div class="left"  :style="{ backgroundImage: `url(${imageLeftUrl})`  }" />
-      <div class="right" :style="{ backgroundImage: `url(${imageRightUrl})` }" />
+      <div class="left"  :style="{ backgroundImage: `url(${imageLeftUrl})`  }" @click="popupImage=true;popupLeft=true" />
+      <div class="right" :style="{ backgroundImage: `url(${imageRightUrl})` }" @click="popupImage=true;popupLeft=false" />
     </div>
+
+    <vs-popup fullscreen
+      classContent="lightbox-container" styleHeader="display:none"
+      :active.sync="popupImage" @close="popupImage=false" title="Zoom">
+      <div class="lightbox" @click="popupImage=false"
+        :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
+      ></div>
+    </vs-popup>
 
     <p>
       <vs-button type="border" size="small" color="warning" class="complain left" @click.prevent="complainLeft">🚩</vs-button>
@@ -64,7 +72,9 @@ export default {
       imageRightUrl: '/loading.gif',
       timeStart: Date.now(),
       voteCount: 0,
-      votePercent: 0
+      votePercent: 0,
+      popupImage: false,
+      popupLeft: false
     }
   },
   methods: {
@@ -169,6 +179,11 @@ export default {
     background-repeat: no-repeat;
     background-position: bottom left;
   }
+}
+
+.lightbox {
+  width: 100%; height: 100%;
+  background-size: cover;
 }
 
 .lead { margin: 1em; }
