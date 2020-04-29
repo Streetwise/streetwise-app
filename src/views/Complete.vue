@@ -43,7 +43,7 @@
     <div class="raffle" v-show="surveyComplete">
       <h1>Herzlichen Dank für die Teilnahme</h1>
 
-      <p>Du kannst wenn gewünscht hier für unser Wettbewerb und zum unsere Newsletter anmelden, und danach weitere Bilder beurteilen.</p>
+      <p>Du kannst dich hier für die Verlosung anmelden und, wenn du magst, danach weitere Bilder beurteilen.</p>
 
       <vs-checkbox v-model="confirmRaffle">
         Ich will ein iPhone gewinnen!
