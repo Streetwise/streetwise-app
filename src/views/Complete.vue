@@ -66,6 +66,8 @@
         &nbsp;
         <vs-button flat size="large" color="grey" @click="skipSubscribe">Überspringen</vs-button>
       </center>
+
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true" width="100%" height="1654" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
   </div>
 </template>
@@ -114,7 +116,17 @@ export default {
         })
         return
       }
-      this.$vs.notify({ text: 'Gespeichert', color: 'success' })
+      let disableSignup = true
+      if (disableSignup) {
+        this.$vs.dialog({
+          type: 'alert',
+          color: 'success',
+          title: 'Hinweis',
+          text: 'Es ist noch nicht möglich, sich am Wettbewerb zu beteiligen oder zu abonnieren. Aber es geht gleich los!'
+        })
+        this.$vs.notify({ text: 'Gespeichert', color: 'success' })
+        return
+      }
       this.skipSubscribe()
     },
     skipSubscribe: function () {
