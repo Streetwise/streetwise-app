@@ -194,6 +194,11 @@ export default {
 .lightbox {
   width: 100%; height: 100%;
   background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.lightbox:active {
+  background-size: cover;
 }
 
 .lead { margin: 1em; }

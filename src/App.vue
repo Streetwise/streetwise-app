@@ -32,6 +32,7 @@ export default {
   height: 100%;
 }
 #logos {
+  display: none;
   position: absolute; z-index: -99;
   bottom: 0; right: 0; border: 0;
   img { width: 90px; }
