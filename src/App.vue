@@ -2,7 +2,7 @@
   <div id="app">
     <AppHeader />
     <router-view/>
-    <div id="logos"><img src="@/assets/logo.png"></div>
+    <div id="logos"><img src="@/assets/streetwise_Logo.png"></div>
   </div>
 </template>
 

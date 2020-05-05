@@ -4,14 +4,23 @@
       msg="Welche Situation sieht sicherer aus?"
       :skipintro="skipintro"
     />
-    <vs-popup fullscreen title="Jetzt bist du dran ..." :active.sync="popupActive">
+    <vs-popup title="Jetzt bist du dran ..." :active.sync="popupActive">
       <div class="content centerx">
         <p>
-          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>.
+          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
+
         </p>
-        <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
+        <center>
+          <vs-button disabled flat size="large" color="black" class="vote left">Links</vs-button>
+          👈
+          <vs-button disabled type="border" color="black" class="undecided">Unsicher</vs-button>
+          👉
+          <vs-button disabled flat size="large" color="black" class="vote right">Rechts</vs-button>
+          <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
+        </center>
         <p style="font-size:80%">
-          Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen. Bitte beantworte <b>mindestens</b> 10 Bildpaare.
+          Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
+          Bitte beantworte <b>mindestens 10</b> Bildpaare.
         </p>
         <center>
           <vs-button flat size="large" color="success" @click="popupActive=false">Los geht's !</vs-button>

@@ -1,21 +1,23 @@
 # Streetwise App
 
-Mobile web application for the Streetwise project
-
-![Vue Logo](/docs/vue-logo.png "Vue Logo") ![Flask Logo](/docs/flask-logo.png "Flask Logo")
+Mobile web application for the Streetwise project. For background information, please visit https://streetwise.space
 
 ## History
 
-**0.1.0**
-* Initial release
+- **0.1.1** 6.5.2020: Patch release
+- **0.1.0** 29.4.2020: Initial release
 
 # Developer notes
+
+![Vue Logo](/docs/vue-logo.png "Vue Logo") ![Flask Logo](/docs/flask-logo.png "Flask Logo")
 
 This project uses Flask & Flask-RestPlus to create a REST-style API, accessed through Vue.js to handle the frontend and asset pipeline. Data from the Python server to the Vue application is passed by making Ajax requests.
 
 The API is served using a Flask blueprint at `/api/` using Flask RestPlus class-based resource routing.
 
 A Flask view is used to serve the `index.html` as an entry point into the Vue app at the endpoint `/`.
+
+Additional endpoints currently include: `/tour` `/wise` `/complete`
 
 ### Components
 

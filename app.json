@@ -3,7 +3,7 @@
   "name": "Streetwise app",
   "description": "",
   "repository": "https://github.com/streetwise/streetwise-app",
-  "logo": "https://github.com/streetwise/streetwise-app/raw/master/docs/logo.png",
+  "logo": "https://github.com/streetwise/streetwise-app/raw/master/src/assets/streetwise_Logo.png",
   "keywords": ["crowdsourcing", "urban"],
   "env": {
     "FLASK_ENV": {

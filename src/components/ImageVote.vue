@@ -8,8 +8,12 @@
     <h4 class="lead">{{ msg }}</h4>
 
     <div class="imagepane">
-      <div class="left"  :style="{ backgroundImage: `url(${imageLeftUrl})`  }" @click="popupImage=true;popupLeft=true" />
-      <div class="right" :style="{ backgroundImage: `url(${imageRightUrl})` }" @click="popupImage=true;popupLeft=false" />
+      <div class="left" @click="popupImage=true;popupLeft=true">
+        <img :src="imageLeftUrl">
+      </div>
+      <div class="right" @click="popupImage=true;popupLeft=false">
+        <img :src="imageRightUrl">
+      </div>
     </div>
 
     <vs-popup fullscreen
@@ -156,7 +160,7 @@ export default {
         type: 'confirm',
         color: 'warning',
         title: `Bestätigen`,
-        text: 'Bist du sicher, dass die beiden Situationen für dich gleich sicher erscheinen?',
+        text: 'Bist du sicher, dass du der mehr sichere der beiden Situationen *nicht* entscheiden kannst?',
         accept: function () {
           voter.castVote(null)
         }
@@ -168,14 +172,18 @@ export default {
     },
     complainImage (isRight) {
       let voter = this
+      let welchen = isRight ? 'rechten' : 'linken'
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
         title: `Problem melden`,
-        text: 'Falls du diesen Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben.',
+        text: 'Falls du den ' + welchen + ' Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben.',
         accept: function () {
-          prompt('Problem beschreiben:')
-          voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning' })
+          let note = prompt('Problem beschreiben:')
+          if (note) {
+            // TODO: needs API !
+            voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning' })
+          }
         }
       })
     },
@@ -201,30 +209,44 @@ export default {
     display: inline-block;
     width: 50%;
     height: 60%;
-    min-height: 400px;
-    padding: 3px;
+    padding: 0px; margin: 0px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    img {
+      padding: 0px; border: 0px; margin: 0px;
+    }
   }
 }
 
 @media screen and (max-width: 600px) {
-  .imagepane div {
-    min-height: 340px;
-  }
   .vs-button.complain {
-    margin-top: -40px;
-    background: white !important;
+    margin-top: 9px;
+    background: white;
   }
   .lead {
     font-size: 90%;
   }
 }
 
-@media screen and (max-height: 400px) {
+/* Vertical positioning of images */
+@media screen and (min-height: 1200px) {
+  .imagepane div img { height: 1000px; }
+}
+@media screen and (max-height: 1200px) and (min-height: 900px) {
+  .imagepane div img { height: 700px; }
+}
+@media screen and (max-height: 900px) and (min-height: 700px) {
+  .imagepane div img { height: 500px; }
+}
+@media screen and (max-height: 700px) and (min-height: 601px) {
+  .imagepane div img { height: 400px; }
+}
+@media screen and (max-height: 600px) {
   .imagepane div {
-    min-height: 220px;
+    img { height: 333px; }
   }
   .lead {
     display: none;
@@ -236,10 +258,7 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-}
-
-.lightbox:active, .lightbox:hover {
-  background-size: cover;
+  overflow: hidden;
 }
 
 .lead { margin: 1em; }
