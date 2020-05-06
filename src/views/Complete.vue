@@ -92,16 +92,16 @@ export default {
       emailAddress: '',
       emailValid: false,
       listAges: [
-        { text: '19 oder jünger', value: 0 },
-        { text: 'zwischen 20 und 39', value: 0 },
-        { text: 'zwischen 40 und 64', value: 0 },
-        { text: '65 oder älter', value: 0 },
+        { text: '19 oder jünger', value: 1 },
+        { text: 'zwischen 20 und 39', value: 2 },
+        { text: 'zwischen 40 und 64', value: 3 },
+        { text: '65 oder älter', value: 4 },
         { text: 'ich möchte keine Angaben machen', value: 0 }
       ],
       listGenders: [
-        { text: 'weiblich', value: 0 },
-        { text: 'männlich', value: 0 },
-        { text: 'andere', value: 0 },
+        { text: 'weiblich', value: 1 },
+        { text: 'männlich', value: 2 },
+        { text: 'andere', value: 3 },
         { text: 'ich möchte keine Angaben machen', value: 0 }
       ]
     }
@@ -158,6 +158,11 @@ export default {
   .lead { font-size: 125%; }
 
   .vs-row, .vs-col { margin: 0; }
+
+  form select {
+    font-size: 140%;
+    border: 2px solid blue;
+  }
 
   .info-button {
     color: blue;

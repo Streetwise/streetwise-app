@@ -1,7 +1,11 @@
 """ Unit tests for the frontend """
 
 import pytest
-from app import app
+from app import create_app, db
+
+app = create_app()
+app_context = app.app_context()
+
 
 @pytest.fixture(scope="module")
 def client():

@@ -11,11 +11,9 @@
 
         </p>
         <center>
-          <vs-button disabled flat size="large" color="black" class="vote left">Links</vs-button>
           👈
-          <vs-button disabled type="border" color="black" class="undecided">Unsicher</vs-button>
+          <vs-button disabled type="border" color="black" class="undecided">???</vs-button>
           👉
-          <vs-button disabled flat size="large" color="black" class="vote right">Rechts</vs-button>
           <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
         </center>
         <p style="font-size:80%">

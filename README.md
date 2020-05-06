@@ -78,11 +78,13 @@ FLASK_DEBUG = 1
 
 ### Initial data import
 
+First prepare your database using Flask Migrate:
+
+`flask db upgrade`
+
 Import the image files, which should be in the `ch_data.csv` file in the `data` folder:
 
-`python import.sh`
-
-This will also create a blank database.
+`./app.py images`
 
 ### Frontend setup
 
@@ -107,7 +109,7 @@ $ yarn serve
 Start the development server (in a separate tab from Webpack):
 
 ```
-$ python run.py
+$ flask run
 ```
 
 ### Notes
@@ -123,8 +125,12 @@ If you would rather run a single dev server, you can run Flask's development ser
 
 ```
 $ yarn build
-$ python run.py
+$ flask run
 ```
+
+See additional deploy tasks with:
+
+`python app.py`
 
 ## Production
 

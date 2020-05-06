@@ -4,10 +4,8 @@ import os, csv
 
 from dateutil import parser
 
-from ..api.models import *
-
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+from ..models import *
+from .. import db
 
 # ../../data/ch_data.csv
 DEFAULT_DATA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'ch_data.csv'))
@@ -24,19 +22,19 @@ def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH):
         reader = csv.DictReader(csvfile)
         for row in reader:
             count = count + 1
-            if skip_existing and Image.query.filter_by(Image_Key=row['Image_Key']).count() > 0:
+            if skip_existing and Image.query.filter_by(key=row['Image_Key']).count() > 0:
                 continue
             print('Importing ...', count, '/', total)
             img = Image(
-                Image_Key       = row['Image_Key'],
-                Filename        = row['Filename'],
-                Canton          = row['Canton'],
-                Latitude        = float(row['Latitude']),
-                Longitude       = float(row['Longitude']),
-                Camera_Angle    = float(row['Camera_Angle']),
-                Sequence_Key    = row['Sequence_Key'],
-                Captured_At     = parser.parse(row['Captured_At']),
-                Panorama        = bool(row['Panorama'])
+                key             = row['Image_Key'],
+                filename        = row['Filename'],
+                latitude        = float(row['Latitude']),
+                longitude       = float(row['Longitude']),
+                canton          = row['Canton'],
+                camera_angle    = float(row['Camera_Angle']),
+                sequence_key    = row['Sequence_Key'],
+                is_panorama     = bool(row['Panorama']),
+                captured_at     = parser.parse(row['Captured_At']),
             )
             db.session.add(img)
             if count % 200 == 0:

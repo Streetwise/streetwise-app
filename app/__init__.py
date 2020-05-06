@@ -1,42 +1,40 @@
-import os
-from flask import Flask, current_app, send_file
+from flask import Flask, send_file
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from os import path
 
 # TODO: track solution to https://github.com/jarus/flask-testing/issues/143
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 
-app = Flask(__name__, static_folder='../dist/static')
+db = SQLAlchemy()
+migrate = Migrate()
+
 from .config import Config
-app.logger.info('>>> {}'.format(Config.FLASK_ENV))
 
-# Initialize the database
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__, static_folder='../dist/static')
+    app.config.from_object('app.config.Config')
+    app.logger.info('>>> {}'.format(Config.FLASK_ENV))
 
-from flask_migrate import Migrate
-migrate = Migrate(app, db)
+    db.init_app(app)
+    from app.models import Base, Image, Session, Comment, Vote
+    migrate.init_app(app, db)
 
-from .api import api_bp, api_limiter
-from .client import client_bp
+    # Initialize the API limiter
+    from .api import api_limiter
+    api_limiter.init_app(app)
 
-# Initialize the API limiter
-api_limiter.init_app(app)
+    # Register the API blueprint
+    from .api import api_bp
+    app.register_blueprint(api_bp)
 
-# Register the API blueprint
-app.register_blueprint(api_bp)
+    from .client import client_bp
+    # TODO: enable if we need additional client logic
+    # app.register_blueprint(client_bp)
 
-# TODO: enable if we need additional client logic
-# app.register_blueprint(client_bp)
+    if app.config['SSL_REDIRECT']:
+        from flask_sslify import SSLify
+        sslify = SSLify(app)
 
-
-@app.route('/')
-def index_client():
-    return send_file(os.path.join(Config.DIST_DIR, 'index.html'))
-
-@app.route('/favicon.ico')
-def index_favicon():
-    return send_file(os.path.join(Config.DIST_DIR, 'favicon.ico'))
-
-@app.route('/loading.gif')
-def index_loading():
-    return send_file(os.path.join(Config.DIST_DIR, 'loading.gif'))
+    return app

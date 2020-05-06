@@ -1,6 +1,6 @@
 <template>
   <div class="imagevote">
-    <div class="progressbar" v-on:click="showResourceList = !showResourceList">
+    <div class="progressbar">
       <p>{{ voteCount }} / {{ voteTotal }}</p>
       <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
     </div>
@@ -41,17 +41,6 @@
     </p>
 
     <p style="color:red">{{ error }}</p>
-
-    <p v-show="showResourceList" v-for="r in resources" :key="r.id">
-      <span v-if="r.is_undecided">
-        Undecided |
-      </span>
-      <span v-if="!r.is_undecided">
-        Choice: {{r.choice_id}} |
-      </span>
-      Time: {{r.time_elapsed}} |
-      At: {{r.created | formatTimestamp }}
-    </p>
   </div>
 </template>
 
@@ -68,8 +57,8 @@ export default {
   data () {
     return {
       voteTotal: 10, // number of images to require
-      resources: [],
-      showResourceList: false,
+      resources: [], // response from voting
+      session: null, // current session
       error: '',
       imageLeft: 0,
       imageLeftUrl: '/loading.gif',
@@ -100,10 +89,12 @@ export default {
               voter.nextImagePair()
             },
             cancel: function () {
+              // TODO: forward session
               voter.$router.push('complete')
             }
           })
         } else {
+          // TODO: forward session
           this.$router.push('complete')
         }
       }
@@ -127,15 +118,17 @@ export default {
           this.imageRightUrl = responseData[1].Url
         })
     },
-    castVote (isRight) {
-      $backend.castVote(
+    vote (isRight) {
+      $backend.voteCast(
         isRight,
         this.imageLeft,
         this.imageRight,
-        this.elapsedTime()
+        this.elapsedTime(),
+        this.session
       )
         .then(responseData => {
           if (responseData !== null) {
+            this.session = responseData.session_hash
             this.resources.push(responseData)
             this.nextImagePair()
           }
@@ -149,10 +142,10 @@ export default {
         })
     },
     voteLeft () {
-      this.castVote(false)
+      this.vote(false)
     },
     voteRight () {
-      this.castVote(true)
+      this.vote(true)
     },
     voteUndecided () {
       let voter = this
@@ -160,9 +153,9 @@ export default {
         type: 'confirm',
         color: 'warning',
         title: `Bestätigen`,
-        text: 'Bist du sicher, dass du der mehr sichere der beiden Situationen *nicht* entscheiden kannst?',
+        text: 'Bitte bestätige, das du zwischen der beiden Situationen nicht entscheiden kannst.',
         accept: function () {
-          voter.castVote(null)
+          voter.vote(null)
         }
       })
     },

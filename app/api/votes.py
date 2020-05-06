@@ -1,31 +1,25 @@
 """
-Votes routing blueprint
+Service with a smile
 http://flask-restplus.readthedocs.io
 """
 
-from flask import request, current_app
-
-from flask_restplus import Resource, fields
-
-from .models import VoteSession, Vote, Image
-from .security import require_auth
-
-from . import api_rest, api_limiter
 from datetime import datetime
 
-from sqlalchemy.sql.expression import func
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+from flask import request, current_app
+from flask_restplus import Resource, fields
 
-ns = api_rest.namespace('votes',
+from . import db, api_rest, api_limiter
+from .security import require_auth
+from ..models import Session, Vote, Image, Comment
+
+from sqlalchemy.sql.expression import func
+
+ns = api_rest.namespace('vote',
     description = 'Vote operations'
 )
 
-VOTESESSION = VoteSession()
-
 VoteModel = api_rest.model('Vote', {
-    'id': fields.Integer,
-    'created': fields.DateTime,
+    'session_hash': fields.String,
     'choice_id': fields.Integer,
     'other_id': fields.Integer,
     'is_leftimage': fields.Boolean,
@@ -33,9 +27,18 @@ VoteModel = api_rest.model('Vote', {
     'time_elapsed': fields.Integer
 })
 
+CommentModel  = api_rest.model('Comment', {
+    'session_hash': fields.String,
+    'image_id': fields.Integer,
+    'text': fields.String
+})
+
+class SecureResource(Resource):
+    """ Calls require_auth decorator on all requests """
+    method_decorators = [require_auth]
 
 @ns.route('/export')
-class ExportVotes(Resource):
+class VoteExport(SecureResource):
     """ List all votes entered """
 
     @ns.doc('export_votes')
@@ -60,25 +63,36 @@ class VoteCounter(Resource):
         }
 
 @ns.route('/')
-class CastVote(Resource):
+class VoteCast(Resource):
     """ Collect user votes """
 
     decorators = [api_limiter.limit('1/second')]
-
-    # @ns.doc('list_votes')
-    # @ns.marshal_list_with(VoteModel)
-    # def get(self):
-    #     '''List all votes in session'''
-    #     return VOTESESSION.votes
 
     @ns.doc('create_vote')
     @ns.expect(VoteModel)
     @ns.marshal_with(VoteModel, code=201)
     def post(self):
         '''Create a new vote'''
-        # vote = VOTESESSION.create(api_rest.payload)
         data = api_rest.payload
+        session = None
+        if 'session_hash' in data and data['session_hash']:
+            my_sh = data['session_hash']
+            session = Session.query.filter(session_hash=my_sh).first()
+        if not session:
+            my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
+            my_ua = request.user_agent
+            session = Session(
+                ip = my_ip,
+                agent_platform = my_ua.platform,
+                agent_browser = my_ua.browser,
+                agent_version = my_ua.version,
+                agent_language = my_ua.language,
+                agent_string = my_ua.string
+            )
+            db.session.add(session)
+            db.session.commit()
         new_vote = Vote(
+            session_id = int(session.id),
             choice_id = int(data['choice_id']),
             other_id =  int(data['other_id']),
             is_leftimage = bool(data['is_leftimage']),
