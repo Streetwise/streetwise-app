@@ -19,6 +19,10 @@ A Flask view is used to serve the `index.html` as an entry point into the Vue ap
 
 Additional endpoints currently include: `/tour` `/wise` `/complete`
 
+The easiest way to deploy this project is currently using this button (see Production details below):
+
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/streetwise/streetwise-app)
+
 ### Components
 
 * [Flask](https://flask.palletsprojects.com/), a [Python](https://python.org) web framework
@@ -84,7 +88,7 @@ First prepare your database using Flask Migrate:
 
 Import the image files, which should be in the `ch_data.csv` file in the `data` folder:
 
-`./app.py images`
+`./streetwise.py images`
 
 ### Frontend setup
 
@@ -130,9 +134,11 @@ $ flask run
 
 See additional deploy tasks with:
 
-`python app.py`
+`python streetwise.py`
 
 ## Production
+
+[![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/streetwise/streetwise-app)
 
 For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
 
@@ -143,25 +149,6 @@ It will then trigger the `postinstall` command which calls `yarn build`.
 This will create the bundled `dist` folder which will be served by whitenoise.
 
 Heroku's buildpack currently does not Python dependencies from poetry automatically. [We're working on it](https://github.com/heroku/heroku-buildpack-python/issues/796#issuecomment-611198469) ...
-
-#### Sever Setup
-
-To deploy using the Web wizard:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/streetwise/streetwise-app)
-
-To get things set up on the Heroku side using the CLI:
-
-```
-$ heroku apps:create flask-vuejs-template-demo
-$ heroku git:remote --app flask-vuejs-template-demo
-$ heroku buildpacks:add --index 1 heroku/nodejs
-$ heroku buildpacks:add --index 2 heroku/python
-$ heroku config:set FLASK_ENV=production
-$ heroku config:set FLASK_SECRET=SuperSecretKey
-
-$ git push heroku
-```
 
 ## Acknowledgements
 
