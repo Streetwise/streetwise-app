@@ -87,8 +87,8 @@ class VoteCast(Resource):
             my_ua = request.user_agent
             my_campaign = Campaign.query.first() # No support for multiple campaigns yet
             session = Session(
-                ip = my_ip,
                 campaign = my_campaign,
+                agent_address = my_ip,
                 agent_platform = my_ua.platform,
                 agent_browser = my_ua.browser,
                 agent_version = my_ua.version,
@@ -99,7 +99,7 @@ class VoteCast(Resource):
             db.session.add(session)
             db.session.commit()
         new_vote = Vote(
-            session_id = int(session.id),
+            session = session,
             choice_id = int(data['choice_id']),
             other_id =  int(data['other_id']),
             is_leftimage = bool(data['is_leftimage']),
@@ -113,4 +113,6 @@ class VoteCast(Resource):
             db.session.rollback()
             current_app.logger.error('Error saving vote {}'.format(str(err)))
         current_app.logger.info('Vote committed')
-        return new_vote, 201
+        vm = VotingModel(Vote)
+        vm.session_hash = session.hash
+        return vm, 201

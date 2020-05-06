@@ -22,9 +22,10 @@ $axios.interceptors.response.use(function (response) {
 })
 
 export default {
-
   voteCast (isRight, imageLeft, imageRight, timeTaken) {
+    let sessionHash = localStorage.getItem('streetwiseSession') || null
     return $axios.post(`vote/`, {
+      session_hash: sessionHash,
       choice_id: isRight ? imageRight : imageLeft,
       other_id: isRight ? imageLeft : imageRight,
       is_leftimage: (isRight !== null && !isRight),
@@ -34,6 +35,10 @@ export default {
       window_height: window.innerHeight
     }).then(function (response) {
       if (response.status === 201) {
+        if (typeof response.data.session_hash !== 'undefined' &&
+            response.data.session_hash !== sessionHash) {
+          localStorage.setItem('streetwiseSession', response.data.session_hash)
+        }
         return response
       }
       alert(response.statusText)
