@@ -16,9 +16,19 @@ class Base(db.Model):
     created = db.Column(db.DateTime,
         default=db.func.current_timestamp())
 
+class Campaign(Base):
+    __tablename__ = "campaign"
+
+    # A short way to describe this survey campaign
+    name = db.Column(db.String(100))
+
+
 class Image(Base):
     __tablename__ = "images"
 
+    # Campaign that this image belongs to
+    campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
+    campaign = db.relationship(Campaign)
     # Data source identifier
     key = db.Column(db.String(100))
     # Filename the image refers to
@@ -48,6 +58,9 @@ class Session(Base):
     # A hash to identify this session by
     hash = db.Column(db.String(32),
         default=b2a_hex(urandom(16)))
+    # Campaign that this session belongs to
+    campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
+    campaign = db.relationship(Campaign)
     # IP address of this user session
     ip = db.Column(db.String(100))
     # Agent details for this user session
@@ -56,9 +69,10 @@ class Session(Base):
     agent_version = db.Column(db.String())
     agent_language = db.Column(db.String())
     agent_string = db.Column(db.String())
+    agent_width = db.Column(db.Integer())
+    agent_height = db.Column(db.Integer())
     # Questionnaire response data
-    of_age = db.Column(db.Integer())
-    of_gender = db.Column(db.Integer())
+    response = db.Column(db.JSON())
     is_complete = db.Column(db.Boolean(), default=False)
 
 class Comment(Base):

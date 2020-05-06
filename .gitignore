@@ -28,3 +28,5 @@ selenium-debug.log
 *.sln
 *security-sgps.py
 *security_backend.py
+
+.now

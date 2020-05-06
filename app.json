@@ -10,12 +10,13 @@
       "description": "Flask Enviroment",
       "value": "production"
     },
-    "SECRET": {
+    "FLASK_SECRET": {
       "description": "Database Secret",
-      "value": "YourKeyHere"
+      "generator": "secret"
     }
    },
   "addons": [
+    "heroku-postgresql"
    ],
   "buildpacks": [
     {

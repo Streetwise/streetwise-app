@@ -74,11 +74,13 @@ def deploy():
     upgrade()
 
 @app.cli.command()
-def images():
+@click.option('--update/--no-update', default=True,
+              help='Check to see if images are already in database.')
+def images(update):
     """Import the images."""
     from app.admin import load_images
     with app.app_context():
-        load_images()
+        load_images(update)
 
 if __name__ == '__main__':
     app.cli()
