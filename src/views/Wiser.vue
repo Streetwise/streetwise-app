@@ -11,9 +11,9 @@
 
         </p>
         <center>
-          👈
+          Links 👈
           <vs-button disabled type="border" color="black" class="undecided">???</vs-button>
-          👉
+          👉 Rechts
           <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
         </center>
         <p style="font-size:80%">

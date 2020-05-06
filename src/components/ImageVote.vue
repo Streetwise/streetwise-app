@@ -165,14 +165,13 @@ export default {
       this.nextImagePair(true)
       this.$vs.notify({ text: 'Übersprungen!', color: 'warning' })
     },
-    complainImage (isRight) {
+    complainImage () {
       let voter = this
-      let welchen = isRight ? 'rechten' : 'linken'
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
         title: `Problem melden`,
-        text: 'Falls du den ' + welchen + ' Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben.',
+        text: 'Falls du den Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben. Wenn es um eine oder die beiden Bilder geht, bitte notiere um welchen es geht.',
         accept: function () {
           let note = prompt('Problem beschreiben:')
           if (note) {
@@ -181,12 +180,6 @@ export default {
           }
         }
       })
-    },
-    complainLeft () {
-      this.complainImage(false)
-    },
-    complainRight () {
-      this.complainImage(true)
     }
   },
   mounted () {
