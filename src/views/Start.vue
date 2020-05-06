@@ -46,6 +46,9 @@
 export default {
   name: 'Start',
   components: {
+  },
+  mounted () {
+    localStorage.setItem('streetwiseSession', null)
   }
 }
 </script>

@@ -81,7 +81,7 @@ class VoteCast(Resource):
             return 'No data', 500
         if 'session_hash' in data and data['session_hash']:
             my_sh = data['session_hash']
-            session = Session.query.filter_by(hash=my_sh).first()
+            session = Session.query.filter_by(hash=my_sh).one_or_none()
         if not session:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
@@ -112,5 +112,37 @@ class VoteCast(Resource):
         except Exception as err:
             db.session.rollback()
             current_app.logger.error('Error saving vote {}'.format(str(err)))
+            return 'Error saving vote', 500
         current_app.logger.info('Vote committed')
         return new_vote, 201
+
+
+@ns.route('/survey')
+class Survey(Resource):
+    """ Collect user survey """
+
+    @ns.doc('submit_survey')
+    def post(self):
+        '''Save results of survey'''
+        data = api_rest.payload
+        session = None
+        if not data:
+            return 'No data', 500
+        if 'session_hash' in data and data['session_hash']:
+            my_sh = data['session_hash']
+            session = Session.query.filter_by(hash=my_sh).one_or_none()
+        if not session:
+            current_app.logger.warn('No session data')
+            return 'No session', 500
+        # Update the session data
+        session.is_complete = True
+        session.response = data['survey_data']
+        try:
+            db.session.add(session)
+            db.session.commit()
+        except Exception as err:
+            db.session.rollback()
+            current_app.logger.error('Error saving session {}'.format(str(err)))
+            return 'Error saving session', 500
+        current_app.logger.info('Session committed')
+        return 'OK', 201

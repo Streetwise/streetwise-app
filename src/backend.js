@@ -39,12 +39,30 @@ export default {
             response.data.session_hash !== sessionHash) {
           localStorage.setItem('streetwiseSession', response.data.session_hash)
         }
-        return response
+        return response.data
       }
       alert(response.statusText)
       console.log(response.data)
       return null
-    }).then(response => response.data)
+    })
+  },
+
+  saveSurvey (surveyData) {
+    let sessionHash = localStorage.getItem('streetwiseSession') || null
+    if (!sessionHash) {
+      return alert('Session not found, please start again')
+    }
+    return $axios.post(`vote/survey`, {
+      session_hash: sessionHash,
+      survey_data: surveyData
+    }).then(function (response) {
+      if (response.status === 201) {
+        return true
+      }
+      alert(response.statusText)
+      console.log(response.data)
+      return null
+    })
   },
 
   getRandomImages () {

@@ -45,9 +45,7 @@
 </template>
 
 <script>
-
 import $backend from '../backend'
-
 export default {
   name: 'ImageVote',
   props: {
@@ -126,11 +124,12 @@ export default {
         this.session
       )
         .then(responseData => {
-          if (responseData !== null) {
-            this.session = responseData.session_hash
-            this.resources.push(responseData)
-            this.nextImagePair()
+          if (responseData === null) {
+            return this.$vs.notify({ text: 'Bitte nochmal wiederholen', color: 'warning', position: 'top-center' })
           }
+          this.session = responseData.session_hash
+          this.resources.push(responseData)
+          this.nextImagePair()
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
