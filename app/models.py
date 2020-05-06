@@ -67,7 +67,6 @@ class Session(Base):
     agent_platform = db.Column(db.String())
     agent_browser = db.Column(db.String())
     agent_version = db.Column(db.String())
-    agent_language = db.Column(db.String())
     agent_string = db.Column(db.String())
     agent_width = db.Column(db.Integer())
     agent_height = db.Column(db.Integer())

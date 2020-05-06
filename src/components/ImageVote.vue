@@ -21,26 +21,27 @@
       :active.sync="popupImage" @close="popupImage=false" title="Zoom">
       <div class="lightbox" @click="popupImage=false"
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
-      ></div>
+      >
+        <div class="buttons">
+          <vs-button flat size="large" color="black" @click="popupImage=false">Schliessen</vs-button>
+          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Bild auswählen</vs-button>
+          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Bild auswählen</vs-button>
+        </div>
+      </div>
     </vs-popup>
 
+    <p class="undecided">
+      <vs-button flat size="large" color="rgb(255,255,255)" @click.prevent="voteUndecided">Beide / Weiss nicht</vs-button>
+    </p>
     <p>
-      <vs-button type="border" size="small" color="warning" class="complain left" @click.prevent="complainLeft">🚩</vs-button>
-
       <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">Links</vs-button>
 
-      <vs-button type="border" class="undecided" @click.prevent="voteUndecided">Unsicher</vs-button>
-
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">Rechts</vs-button>
-
-      <vs-button type="border" size="small" color="warning" class="complain right" @click.prevent="complainRight">🚩</vs-button>
     </p>
-
-    <p style="margin:1em">
+    <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
-
-    <p style="color:red">{{ error }}</p>
+    <p style="color:red" v-show="error">{{ error }}</p>
   </div>
 </template>
 
@@ -59,6 +60,7 @@ export default {
       voteTotal: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
+      debug: false,
       error: '',
       imageLeft: 0,
       imageLeftUrl: '/loading.gif',
@@ -252,6 +254,11 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   overflow: hidden;
+  .buttons {
+    position: absolute;
+    bottom: 2em;
+    button { margin-right: 10px; }
+  }
 }
 
 .lead { margin: 1em; }
@@ -259,13 +266,28 @@ export default {
 .vs-button.vote {
   font-weight: bold;
   width: 5em;
+  width: 50%;
+  border: 1px solid white;
 }
 
 .undecided {
-  margin: 0.5em;
-  opacity: 0.8;
+  text-align: center;
+  width: 100%;
+  button {
+    z-index: 99;
+    height: 2.8em;
+    border-radius: 0px;
+    position: absolute;
+    color: #933;
+    margin-left: -5em;
+  }
 }
-
+@media screen and (max-width: 600px) {
+  .undecided button {
+      position: relative; margin: 0px;
+      margin-top: -0.5em;
+  }
+}
 .complain {
   position: absolute;
   &.left { left: 5px; }

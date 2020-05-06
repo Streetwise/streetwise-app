@@ -10,7 +10,7 @@ from flask_restplus import Resource, fields
 
 from . import db, api_rest, api_limiter
 from .security import require_auth
-from ..models import Session, Vote, Image, Comment
+from ..models import Session, Vote, Image, Comment, Campaign
 
 from sqlalchemy.sql.expression import func
 
@@ -18,13 +18,15 @@ ns = api_rest.namespace('vote',
     description = 'Vote operations'
 )
 
-VoteModel = api_rest.model('Vote', {
+VotingModel = api_rest.model('Vote', {
     'session_hash': fields.String,
     'choice_id': fields.Integer,
     'other_id': fields.Integer,
     'is_leftimage': fields.Boolean,
     'is_undecided': fields.Boolean,
-    'time_elapsed': fields.Integer
+    'time_elapsed': fields.Integer,
+    'window_width': fields.Integer,
+    'window_height': fields.Integer,
 })
 
 CommentModel  = api_rest.model('Comment', {
@@ -69,8 +71,8 @@ class VoteCast(Resource):
     decorators = [api_limiter.limit('1/second')]
 
     @ns.doc('create_vote')
-    @ns.expect(VoteModel)
-    @ns.marshal_with(VoteModel, code=201)
+    @ns.expect(VotingModel)
+    @ns.marshal_with(VotingModel, code=201)
     def post(self):
         '''Create a new vote'''
         data = api_rest.payload
@@ -81,13 +83,16 @@ class VoteCast(Resource):
         if not session:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
+            my_campaign = Campaign.query.first() # No support for multiple campaigns yet
             session = Session(
                 ip = my_ip,
+                campaign = my_campaign,
                 agent_platform = my_ua.platform,
                 agent_browser = my_ua.browser,
                 agent_version = my_ua.version,
-                agent_language = my_ua.language,
-                agent_string = my_ua.string
+                agent_string = my_ua.string,
+                agent_height = data['window_height'],
+                agent_width = data['window_width']
             )
             db.session.add(session)
             db.session.commit()

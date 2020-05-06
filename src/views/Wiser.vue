@@ -25,6 +25,9 @@
         </center>
       </div>
     </vs-popup>
+    <center>
+      <vs-button type="line" size="small" color="blue" @click="popupActive=true">Anleitung</vs-button>
+    </center>
   </div>
 </template>
 
@@ -48,7 +51,7 @@ export default {
     }
   },
   mounted () {
-    this.popupActive = !this.skipintro
+    // this.popupActive = !this.skipintro
   }
 }
 </script>

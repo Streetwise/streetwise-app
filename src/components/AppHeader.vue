@@ -12,7 +12,7 @@
         </vs-navbar-title>
       </div>
       <vs-navbar-item>
-        <a href="mailto:support@streetwise.space">Hilfe</a>
+        <a href="https://streetwise.space/start" target="_blank">Hilfe</a>
       </vs-navbar-item>
     </vs-navbar>
   </div>
