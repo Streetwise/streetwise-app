@@ -2,26 +2,22 @@
 
 Mobile web application for the Streetwise project. For background information, please visit https://streetwise.space
 
-## History
-
-- **0.1.1** 6.5.2020: Patch release
-- **0.1.0** 29.4.2020: Initial release
-
-# Developer notes
-
 ![Vue Logo](/docs/vue-logo.png "Vue Logo") ![Flask Logo](/docs/flask-logo.png "Flask Logo")
 
 This project uses Flask & Flask-RestPlus to create a REST-style API, accessed through Vue.js to handle the frontend and asset pipeline. Data from the Python server to the Vue application is passed by making Ajax requests.
 
-The API is served using a Flask blueprint at `/api/` using Flask RestPlus class-based resource routing.
-
-A Flask view is used to serve the `index.html` as an entry point into the Vue app at the endpoint `/`.
-
-Additional endpoints currently include: `/tour` `/wise` `/complete`
+- The API is served using a Flask blueprint at `/api/` using Flask RestPlus class-based resource routing.
+- A Flask view is used to serve the `index.html` as an entry point into the Vue app at the endpoint `/`.
+- Additional endpoints currently include: `/tour` `/wise` `/complete`
 
 The easiest way to deploy this project is currently using this button (see Production details below):
 
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/streetwise/streetwise-app)
+
+## History
+
+- **0.2** 6.5.2020: Patch release
+- **0.1** 29.4.2020: Initial release
 
 ### Components
 
@@ -32,8 +28,8 @@ The easiest way to deploy this project is currently using this button (see Produ
 * [Vue.js v2](https://vuejs.org/v2/guide/) front-end framework
 * [vue-cli](https://github.com/vuejs/vue-cli/blob/dev/docs/README.md), [Vuex](https://vuex.vuejs.org/), [Router](https://router.vuejs.org/)
 * [Axios](https://github.com/axios/axios/) for backend communication with [Vue Filters](https://vuejs.org/v2/guide/filters.html)
-* Gunicorn web server support
-* Heroku deployment support
+* [Gunicorn](https://gunicorn.org/) web server support
+* [Heroku](https://heroku.com) deployment support
 
 ### Project structure
 
@@ -124,6 +120,8 @@ $ flask run
 
 - The Vue application will be served from http://localhost:8080
 - The API and static files will be served from http://localhost:5000
+
+### Notes
 
 The dual dev-server setup allows you to take advantage of Webpack's development server with hot module replacement.
 

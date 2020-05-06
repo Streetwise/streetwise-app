@@ -41,7 +41,6 @@
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
-    <p style="color:red" v-show="error">{{ error }}</p>
   </div>
 </template>
 
@@ -61,7 +60,6 @@ export default {
       resources: [], // response from voting
       session: null, // current session
       debug: false,
-      error: '',
       imageLeft: 0,
       imageLeftUrl: '/loading.gif',
       imageRight: 0,
@@ -103,7 +101,6 @@ export default {
       return false
     },
     nextImagePair (skip = false) {
-      this.error = ''
       if (!skip) {
         this.voteCount++
         this.votePercent = 100 * this.voteCount / this.voteTotal
@@ -137,9 +134,9 @@ export default {
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
-            this.error = 'Please slow down'
+            this.$vs.notify({ text: 'Bitte nochmal wiederholen', color: 'warning', position: 'top-center' })
           } else {
-            this.error = 'There was an error, please try again'
+            this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
           }
         })
     },
@@ -163,7 +160,7 @@ export default {
     },
     voteSkip () {
       this.nextImagePair(true)
-      this.$vs.notify({ text: 'Übersprungen!', color: 'warning' })
+      this.$vs.notify({ text: 'Übersprungen!', color: 'warning', position: 'top-center' })
     },
     complainImage () {
       let voter = this
@@ -176,7 +173,7 @@ export default {
           let note = prompt('Problem beschreiben:')
           if (note) {
             // TODO: needs API !
-            voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning' })
+            voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning', position: 'top-center' })
           }
         }
       })

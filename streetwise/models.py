@@ -56,18 +56,17 @@ class Session(Base):
     __tablename__ = "sessions"
 
     # A hash to identify this session by
-    hash = db.Column(db.String(32),
+    hash = db.Column(db.String(64),
         default=b2a_hex(urandom(16)))
     # Campaign that this session belongs to
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)
-    # IP address of this user session
-    ip = db.Column(db.String(100))
     # Agent details for this user session
-    agent_platform = db.Column(db.String())
-    agent_browser = db.Column(db.String())
-    agent_version = db.Column(db.String())
-    agent_string = db.Column(db.String())
+    agent_address = db.Column(db.String(32))
+    agent_platform = db.Column(db.String(64))
+    agent_browser = db.Column(db.String(64))
+    agent_version = db.Column(db.String(64))
+    agent_string = db.Column(db.String(256))
     agent_width = db.Column(db.Integer())
     agent_height = db.Column(db.Integer())
     # Questionnaire response data
