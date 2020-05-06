@@ -55,41 +55,22 @@
           @click="submitForm">Abschliessen</vs-button>
       </form>
     </div>
+
     <div class="raffle" v-show="surveyComplete">
       <h1>Herzlichen Dank für die Teilnahme</h1>
 
-      <p>Du kannst dich hier für die Verlosung anmelden und, wenn du magst, danach weitere Bilder beurteilen.</p>
+      <img class="icon right" src="@/assets/icons/nature.svg">
+      <p>Du kannst dich hier für die Verlosung anmelden und, wenn du magst, dann weitere Bilder beurteilen.</p>
 
-      <vs-checkbox v-model="confirmRaffle">
-        Ich will ein iPhone gewinnen!
-        Bitte <a href="https://streetwise.space/disclaimer" target="_blank">Wettbewerbsbedingungen</a> anschauen.
-      </vs-checkbox>
-
-      <vs-checkbox v-model="confirmSubscribe">
-        Ich will über die Ergebnisse dieser Umfrage informiert werden.
-      </vs-checkbox>
-
-      <center>
-        <vs-input
-          class="input-email"
-          :success="emailValid"
-          success-text="The address looks valid"
-          placeholder="E-mail"
-          v-model="emailAddress"
-          @change="checkEmail" />
-        <vs-button flat size="large" color="primary" @click="submitSubscribe">Senden</vs-button>
-        &nbsp;
-        <vs-button flat size="large" color="grey" @click="skipSubscribe">Überspringen</vs-button>
-      </center>
-
-      <center style="margin-top:2em">
-        <a href="https://forms.gle/fDcXHYkSire7GRiU9" target="_blank" class="feedback-button">
-          <vs-button flat size="large" color="warning" style="color:black; font-size:150%; padding:1em">
-            📋 <b>Feedback</b> zum App abgeben
-          </vs-button>
-        </a>
-      </center>
     </div>
+    <iframe v-show="surveyComplete"
+      src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <center v-show="surveyComplete" class="survey-next">
+      <a href="https://forms.gle/SoFeC5tRiJdiEvoU6" target="_blank">
+        <vs-button flat size="large" color="black">Vollbild</vs-button>
+      </a>
+      <vs-button flat size="large" color="success" @click="skipSubscribe">Weiter beurteilen</vs-button>
+    </center>
   </div>
 </template>
 
@@ -101,15 +82,14 @@ export default {
   },
   data () {
     return {
+      // Form state
       showBlockquote: false,
+      surveyComplete: false,
+      // Survey data
       surveyAge: null,
       surveyGender: null,
       surveyCanton: null,
-      surveyComplete: false,
-      confirmRaffle: true,
-      confirmSubscribe: true,
-      emailAddress: '',
-      emailValid: false,
+      // Survey values
       listAges: [
         { text: '19 oder jünger', value: 1 },
         { text: 'zwischen 20 und 39', value: 2 },
@@ -154,34 +134,8 @@ export default {
           this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
         })
     },
-    submitSubscribe: function () {
-      if (!this.emailValid) {
-        this.$vs.dialog({
-          type: 'alert',
-          color: 'warning',
-          title: 'Hinweis',
-          text: 'Bitte alle Angaben überprüfen.'
-        })
-        return
-      }
-      let disableSignup = true
-      if (disableSignup) {
-        this.$vs.dialog({
-          type: 'alert',
-          color: 'success',
-          title: 'Hinweis',
-          text: 'Es ist noch nicht möglich, sich am Wettbewerb zu beteiligen oder zu abonnieren. Aber es geht gleich los!'
-        })
-        this.$vs.notify({ text: 'Gespeichert', color: 'success' })
-        return
-      }
-      this.skipSubscribe()
-    },
     skipSubscribe: function () {
       this.$router.push({ name: 'wise', params: { skipintro: true } })
-    },
-    checkEmail: function () {
-      this.emailValid = this.emailAddress.length - 2 > this.emailAddress.lastIndexOf('.') && this.emailAddress.lastIndexOf('.') > this.emailAddress.indexOf('@') > 0
     }
   }
 }
@@ -212,6 +166,12 @@ export default {
     }
   }
 
+  img.icon {
+    width: 50px; margin-top: 1em;
+    &.left { float:left; margin-right: 1em; }
+    &.right { float:right; margin-left: 2em;  }
+  }
+
   .info-button {
     color: blue;
     float: left;
@@ -226,6 +186,23 @@ export default {
     transform: scale(1.3);
     margin-top: 5px;
     vertical-align: top;
+  }
+
+  .survey-next {
+    margin-top: 1em;
+    button { margin-right: 1em; }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .complete {
+    margin: 1em;
+  }
+  iframe {
+    width: 100%;
+    height: 330px;
+    margin: 0px;
+    padding: 0px;
   }
 }
 </style>

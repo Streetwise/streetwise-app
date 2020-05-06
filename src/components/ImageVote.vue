@@ -226,18 +226,24 @@ export default {
   .imagepane div img { height: 700px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
-  .imagepane div img { height: 500px; }
+  .imagepane div img { height: 480px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
   .imagepane div img { height: 400px; }
 }
-@media screen and (max-height: 600px) {
-  .imagepane div {
-    img { height: 333px; }
-  }
-  .lead {
-    display: none;
-  }
+@media screen and (max-height: 600px) and (min-height: 401px) {
+  .imagepane div img { height: 333px; }
+  .lead { display: none; }
+}
+@media screen and (max-height: 500px) and (min-width: 640px) {
+  .imagepane div img { height: 305px; }
+  .lead { display: none; }
+  .progressbar { position: absolute; top: -4px; left: 40%; }
+}
+@media screen and (max-height: 400px) {
+  .imagepane div img { height: 220px; }
+  .lead { display: none; }
+  .progressbar { position: absolute; top: -4px; left: 40%; }
 }
 
 .lightbox {
@@ -279,7 +285,7 @@ export default {
     margin-left: -5em;
   }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) and (min-height: 400px) {
   .undecided button {
       position: relative; margin: 0px;
       margin-top: -0.5em;

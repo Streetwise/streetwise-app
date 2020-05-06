@@ -70,6 +70,9 @@ export default {
     margin: 1em 0;
   }
 }
+.imagevote {
+  margin-bottom: 7px;
+}
 @media screen and (max-width: 600px) {
   .centerx { margin: 1em; }
 }
