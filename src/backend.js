@@ -23,13 +23,15 @@ $axios.interceptors.response.use(function (response) {
 
 export default {
 
-  castVote (isRight, imageLeft, imageRight, timeTaken) {
-    return $axios.post(`votes/`, {
+  voteCast (isRight, imageLeft, imageRight, timeTaken) {
+    return $axios.post(`vote/`, {
       choice_id: isRight ? imageRight : imageLeft,
       other_id: isRight ? imageLeft : imageRight,
       is_leftimage: (isRight !== null && !isRight),
       is_undecided: (isRight === null),
-      time_elapsed: timeTaken
+      time_elapsed: timeTaken,
+      window_width: window.innerWidth,
+      window_height: window.innerHeight
     }).then(function (response) {
       if (response.status === 201) {
         return response

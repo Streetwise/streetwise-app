@@ -7,7 +7,7 @@ from flask import request
 from flask_restplus import Resource, fields
 from sqlalchemy.sql.expression import func
 
-from .models import Image
+from ..models import Image
 from . import api_rest
 
 ns = api_rest.namespace('image',
@@ -16,16 +16,16 @@ ns = api_rest.namespace('image',
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
+    'key': fields.String,
+    'filename': fields.String,
+    'latitude': fields.Float,
+    'longitude': fields.Float,
+    'canton': fields.String,
+    'camera_angle': fields.Float,
+    'sequence_key': fields.String,
+    'is_panorama': fields.Boolean,
+    'captured_at': fields.DateTime,
     'Url': fields.String,
-    'Image_Key': fields.String,
-    'Filename': fields.String,
-    'Canton': fields.String,
-    'Latitude': fields.Float,
-    'Longitude': fields.Float,
-    'Camera_Angle': fields.Float,
-    'Sequence_Key': fields.String,
-    'Captured_At': fields.DateTime,
-    'Panorama': fields.Boolean
 })
 
 @ns.route('/all')

@@ -155,6 +155,17 @@ SQLAlchemy = ">=0.8.0"
 
 [[package]]
 category = "main"
+description = "Force SSL on your Flask app."
+name = "flask-sslify"
+optional = false
+python-versions = "*"
+version = "0.1.5"
+
+[package.dependencies]
+Flask = "*"
+
+[[package]]
+category = "main"
 description = "WSGI HTTP Server for UNIX"
 name = "gunicorn"
 optional = false
@@ -497,7 +508,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "bfa8079ab93d2acf7d737cabe503056019edd8271776fee599900be14e022ecb"
+content-hash = "31c04067dd9d4105a25c4500bf68b9e6e1fc4a73a2528965fa99294289009fc4"
 python-versions = ">=3.6"
 
 [metadata.files]
@@ -590,6 +601,9 @@ flask-restplus = [
 flask-sqlalchemy = [
     {file = "Flask-SQLAlchemy-2.4.1.tar.gz", hash = "sha256:6974785d913666587949f7c2946f7001e4fa2cb2d19f4e69ead02e4b8f50b33d"},
     {file = "Flask_SQLAlchemy-2.4.1-py2.py3-none-any.whl", hash = "sha256:0078d8663330dc05a74bc72b3b6ddc441b9a744e2f56fe60af1a5bfc81334327"},
+]
+flask-sslify = [
+    {file = "Flask-SSLify-0.1.5.tar.gz", hash = "sha256:d33e1d3c09cd95154176aa8a7319418e52129fc482dd56d8a8ad7c24500d543e"},
 ]
 gunicorn = [
     {file = "gunicorn-20.0.4-py2.py3-none-any.whl", hash = "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"},

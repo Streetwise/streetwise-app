@@ -14,6 +14,7 @@ flask_limiter = "^1.2.1"
 flask_sqlalchemy = "^2.4.1"
 flask_migrate = "^2.5.3"
 psycopg2-binary = "^2.8.5"
+flask-sslify = "^0.1.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "5.3.5"
