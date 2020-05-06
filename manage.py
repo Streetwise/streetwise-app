@@ -15,8 +15,8 @@ if os.environ.get('FLASK_COVERAGE'):
 import sys
 import click
 
-from app import create_app, db
-from app.models import Image, Session, Comment, Vote
+from streetwise import create_app, db
+from streetwise.models import Image, Session, Comment, Vote
 
 app = create_app()
 
@@ -70,17 +70,44 @@ def profile(length, profile_dir):
 @app.cli.command()
 def deploy():
     """Run deployment tasks."""
+    from flask_migrate import upgrade
     # migrate database to latest revision
     upgrade()
+    # run frontend build
+    os.system("yarn build")
 
 @app.cli.command()
+@click.option('--name', default="safety-1",
+              help='Name of the campaign to use for import.')
+@click.option('--src', default="ch-data.csv",
+              help='Filename of the CSV database to import.')
 @click.option('--update/--no-update', default=True,
               help='Check to see if images are already in database.')
-def images(update):
+def images(name, src, update):
     """Import the images."""
-    from app.admin import load_images
+    from streetwise.admin import load_images
     with app.app_context():
-        load_images(update)
+        load_images(update, src, name)
+
+@app.cli.command()
+def profile():
+    """ Run profiler and debugger."""
+    from flask_debugtoolbar import DebugToolbarExtension
+    import flask_profiler
+
+    app.config["flask_profiler"] = {
+        "enabled": app.config["DEBUG"],
+        "storage": {"engine": "sqlite"},
+        "basicAuth": {"enabled": False},
+        "ignore": ["^/tests/.*", "^/src"],
+    }
+    flask_profiler.init_app(app)
+    app.config["DEBUG_TB_PROFILER_ENABLED"] = True
+    app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
+
+    toolbar = DebugToolbarExtension()
+    toolbar.init_app(app)
+    print(" * Flask profiling running at http://127.0.0.1:4000/flask-profiler/")
 
 if __name__ == '__main__':
     app.cli()

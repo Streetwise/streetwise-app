@@ -1,7 +1,7 @@
 
 {
   "name": "Streetwise app",
-  "description": "",
+  "description": "Open source urban crowdsourcing",
   "repository": "https://github.com/streetwise/streetwise-app",
   "logo": "https://github.com/streetwise/streetwise-app/raw/master/src/assets/streetwise_Logo.png",
   "keywords": ["crowdsourcing", "urban"],

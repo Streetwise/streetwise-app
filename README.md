@@ -37,30 +37,26 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 ### Project structure
 
-The template uses vue-cli 3 and assumes Vue Cli & Webpack will manage front-end resources and assets, so it does overwrite template delimiter.
-
-The Vue instance is preconfigured with Filters, Vue-Router, Vuex; each of these can easilly removed if they are not desired.
-
-| Location             |  Content                                   |
-|----------------------|--------------------------------------------|
-| `/app`               | Flask Application                          |
-| `/app/api`           | Flask Rest Api (`/api`)                    |
-| `/app/client.py`     | Flask Client (`/`)                         |
-| `/src`               | Vue App .                                  |
-| `/src/main.js`       | JS Application Entry Point                 |
-| `/public/index.html` | Html Application Entry Point (`/`)         |
-| `/public/static`     | Static Assets                              |
-| `/dist/`             | Bundled Assets Output (generated at `yarn build` |
+| Location                |  Content                             |
+|-------------------------|--------------------------------------|
+| `/streetwise`           | Main application                     |
+| `/streetwise/api`       | Flask REST API (`/api`)              |
+| `/streetwise/client.py` | Flask Client (`/`)                   |
+| `/src`                  | Vue App .                            |
+| `/src/main.js`          | JS Application Entry Point           |
+| `/public/index.html`    | Html Application Entry Point (`/`)   |
+| `/public/static`        | Static Assets                        |
+| `/dist/`                | Bundled Assets Output (`yarn build`) |
 
 ## Installation
 
 First, clone this repository and make sure to set up the following dependencies:
 
-- [X] Python 3
-- [X] Python Poetry - [instructions](https://python-poetry.org/docs/)
-- [X] Yarn - [instructions](https://yarnpkg.com/en/docs/install)
-- [X] Vue cli 3 - [instructions](https://cli.vuejs.org/guide/installation.html)
-- [X] Heroku cli (if deploying to Heroku)
+- [X] [Python 3](https://python.org)
+- [X] [Poetry](https://python-poetry.org/docs/)
+- [X] [Yarn](https://yarnpkg.com/en/docs/install)
+- [X] [Vue CLI 3](https://cli.vuejs.org/guide/installation.html) (optional)
+- [X] [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (optional)
 
 Setup a virtual environment, install dependencies, and activate it:
 
@@ -74,25 +70,33 @@ Create a file called `.flaskenv` in the root folder and add development settings
 ```
 # Production Enviroment should be set to 'production'
 FLASK_ENV = "development"
-FLASK_APP = "app"
+FLASK_APP = "streetwise"
 
 # Uncomment this to debug:
 FLASK_DEBUG = 1
 ```
 
-### Initial data import
-
-First prepare your database using Flask Migrate:
+Prepare your database using the Flask Migrate upgrade command:
 
 `flask db upgrade`
 
-Import the image files, which should be in the `ch_data.csv` file in the `data` folder:
+Import the image files, defaulting from the `ch_data.csv` file in the `data` folder:
 
-`./streetwise.py images`
+`./manage.py images`
+
+### Dependency management
+
+We are using poetry (and GitHub bots) to keep this project up to date. To check if you have the latest versions of upstream libraries, run:
+
+`poetry update`
+
+Heroku's buildpack currently does not support loading Python dependencies from poetry automatically. [We're working on it](https://github.com/heroku/heroku-buildpack-python/issues/796#issuecomment-611198469) ... in the meantime, please remember to run this command after upgrading dependencies:
+
+`poetry export -f requirements.txt > requirements.txt`
 
 ### Frontend setup
 
-Install JS dependencies
+Install JS dependencies:
 
 ```
 $ yarn
@@ -110,16 +114,16 @@ Start the Webpack dev server:
 $ yarn serve
 ```
 
+The template uses vue-cli 3 and assumes Vue Cli & Webpack will manage front-end resources and assets, so it does overwrite template delimiter. The Vue instance is preconfigured with Filters, Vue-Router, Vuex; each of these can easilly removed if they are not desired.
+
 Start the development server (in a separate tab from Webpack):
 
 ```
 $ flask run
 ```
 
-### Notes
-
-The Vue application will be served from http://localhost:8080
-The API and static files will be served from http://localhost:5000
+- The Vue application will be served from http://localhost:8080
+- The API and static files will be served from http://localhost:5000
 
 The dual dev-server setup allows you to take advantage of Webpack's development server with hot module replacement.
 
@@ -134,21 +138,25 @@ $ flask run
 
 See additional deploy tasks with:
 
-`python streetwise.py`
+`python manage.py`
 
 ## Production
 
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/streetwise/streetwise-app)
 
-For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
+This template is configured to work with Heroku + Gunicorn and is pre-configured to have Heroku build the application before releasing it. The command to test this locally is:
 
-This template is configured to work with Heroku + Gunicorn and is pre-configured to have Heroku build the application before releasing it.
+`gunicorn manage:app`
+
+Or using Heroku's cli:
+
+`heroku local`
 
 Heroku's nodejs buildpack will handle install for all the dependencies from the `packages.json` file.
 It will then trigger the `postinstall` command which calls `yarn build`.
 This will create the bundled `dist` folder which will be served by whitenoise.
 
-Heroku's buildpack currently does not Python dependencies from poetry automatically. [We're working on it](https://github.com/heroku/heroku-buildpack-python/issues/796#issuecomment-611198469) ...
+For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
 
 ## Acknowledgements
 

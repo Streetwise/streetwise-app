@@ -1,7 +1,8 @@
 """ Client App """
 
-import os
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_file
+from os import path
+from . import Config
 
 client_bp = Blueprint('client_app', __name__,
                       url_prefix='',

@@ -77,6 +77,8 @@ class VoteCast(Resource):
         '''Create a new vote'''
         data = api_rest.payload
         session = None
+        if not data:
+            return 'No data', 500
         if 'session_hash' in data and data['session_hash']:
             my_sh = data['session_hash']
             session = Session.query.filter(session_hash=my_sh).first()
