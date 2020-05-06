@@ -16,7 +16,7 @@ import sys
 import click
 
 from streetwise import create_app, db
-from streetwise.models import Image, Session, Comment, Vote
+from streetwise.models import *
 
 app = create_app()
 

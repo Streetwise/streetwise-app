@@ -19,14 +19,14 @@ ns = api_rest.namespace('vote',
 )
 
 VotingModel = api_rest.model('Vote', {
-    'session_hash': fields.String,
     'choice_id': fields.Integer,
     'other_id': fields.Integer,
     'is_leftimage': fields.Boolean,
     'is_undecided': fields.Boolean,
     'time_elapsed': fields.Integer,
-    'window_width': fields.Integer,
-    'window_height': fields.Integer,
+    'session_hash': fields.String(attribute='session.hash'),
+    'window_width': fields.Integer(attribute='session.agent_width'),
+    'window_height': fields.Integer(attribute='session.agent_height'),
 })
 
 CommentModel  = api_rest.model('Comment', {
@@ -81,7 +81,7 @@ class VoteCast(Resource):
             return 'No data', 500
         if 'session_hash' in data and data['session_hash']:
             my_sh = data['session_hash']
-            session = Session.query.filter(session_hash=my_sh).first()
+            session = Session.query.filter_by(hash=my_sh).first()
         if not session:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
@@ -113,6 +113,4 @@ class VoteCast(Resource):
             db.session.rollback()
             current_app.logger.error('Error saving vote {}'.format(str(err)))
         current_app.logger.info('Vote committed')
-        vm = VotingModel(Vote)
-        vm.session_hash = session.hash
-        return vm, 201
+        return new_vote, 201

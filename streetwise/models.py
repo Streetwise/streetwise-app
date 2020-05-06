@@ -56,8 +56,8 @@ class Session(Base):
     __tablename__ = "sessions"
 
     # A hash to identify this session by
-    hash = db.Column(db.String(64),
-        default=b2a_hex(urandom(16)))
+    hash = db.Column(db.String(33),
+        default=str(b2a_hex(urandom(16)), 'utf-8'))
     # Campaign that this session belongs to
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)

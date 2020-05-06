@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b275c54a63ec
+Revision ID: 46ba6c8d1266
 Revises: 
-Create Date: 2020-05-06 18:40:33.536602
+Create Date: 2020-05-07 00:15:26.268664
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b275c54a63ec'
+revision = '46ba6c8d1266'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,13 +43,13 @@ def upgrade():
     op.create_table('sessions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created', sa.DateTime(), nullable=True),
-    sa.Column('hash', sa.String(length=32), nullable=True),
+    sa.Column('hash', sa.String(length=33), nullable=True),
     sa.Column('campaign_id', sa.Integer(), nullable=True),
-    sa.Column('ip', sa.String(length=100), nullable=True),
-    sa.Column('agent_platform', sa.String(), nullable=True),
-    sa.Column('agent_browser', sa.String(), nullable=True),
-    sa.Column('agent_version', sa.String(), nullable=True),
-    sa.Column('agent_string', sa.String(), nullable=True),
+    sa.Column('agent_address', sa.String(length=32), nullable=True),
+    sa.Column('agent_platform', sa.String(length=64), nullable=True),
+    sa.Column('agent_browser', sa.String(length=64), nullable=True),
+    sa.Column('agent_version', sa.String(length=64), nullable=True),
+    sa.Column('agent_string', sa.String(length=256), nullable=True),
     sa.Column('agent_width', sa.Integer(), nullable=True),
     sa.Column('agent_height', sa.Integer(), nullable=True),
     sa.Column('response', sa.JSON(), nullable=True),

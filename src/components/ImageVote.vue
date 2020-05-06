@@ -211,8 +211,11 @@ export default {
     margin-top: 9px;
     background: white;
   }
-  .lead {
+  .imagevote .lead {
     font-size: 90%;
+    position: relative;
+    margin: 1em;
+    left: 0px;
   }
 }
 
@@ -251,7 +254,12 @@ export default {
   }
 }
 
-.lead { margin: 1em; }
+.lead {
+  position: absolute;
+  left: 50%;
+  margin-left: -9em;
+  margin-top: -2em;
+}
 
 .vs-button.vote {
   font-weight: bold;
