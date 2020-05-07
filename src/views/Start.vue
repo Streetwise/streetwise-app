@@ -6,10 +6,14 @@
     span.smaller Hallo! Schön, dass du hier bist.
   p.lead
     img.icon.right(src="@/assets/icons/road.svg")
-    | Es gibt tausende Karten – keine zeigt die Raumqualität aus Sicht der Bevölkerung. Wie nehmen wir unseren Lebensraum wahr? Wie erleben wir die Atmosphäre eines Ortes, wo fühlen wir uns sicher, wo fühlen wir uns gut? Diese Fragen werden umso wichtiger, je mehr Menschen in städtischen Gebieten leben.
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
   p
     img.icon.right(src="@/assets/icons/road2.svg")
-    | Wir alle fühlen uns am unterschiedlichen Orten mehr oder weniger sicher. Wie sicher fühlst du dich an einem öffentlichen Platz, an einer dicht befahrenen Strasse oder in einer Sackgasse?
+    b So funktioniert’s
+  p
+    | Die folgende Umfrage fragt zunächst nach deinem allgemeinen Sicherheitsempfinden. Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
+    b &nbsp;Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
+    | &nbsp;Scrolle oder tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «beide / weiss nicht».
   p.campaign
     | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
   p
@@ -19,13 +23,13 @@
     | Bitte beantworte <b>mindestens 10</b> Bildpaare.
   router-link.wiselink(to="/wise")
     vs-button(flat) Hier geht es zur Umfrage.
-  .together
-    b Mach mit und&nbsp;
-    a(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone!
+  center(style="margin:0px")
+    b Mach bei der Umfrage mit und&nbsp;
+    a.together(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone 11
   br
   a(href="https://streetwise.space", target="_blank")
-    vs-button(flat, color="black") Hier findest du mehr Infos zum&nbsp;
-      b Projekt Streetwise
+    vs-button(flat, color="default") Worum geht es bei&nbsp;
+      b Streetwise?
   center
     .together
       span Fragen?&nbsp;

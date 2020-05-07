@@ -149,7 +149,7 @@ export default {
         type: 'confirm',
         color: 'warning',
         title: `Bestätigen`,
-        text: 'Bitte bestätige, das du zwischen der beiden Situationen nicht entscheiden kannst.',
+        text: 'Kannst du dich bei diesem Bildpaar wirklich nicht entscheiden, wo du dich sicherer fühlen würdest? Hast du Probleme mit der Ansicht eines Bildes?',
         accept: function () {
           voter.vote(null)
         }

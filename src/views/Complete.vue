@@ -1,7 +1,7 @@
 <template>
   <div class="complete">
     <div class="survey" v-show="!surveyComplete">
-      <h1>Letzte Schritte</h1>
+      <h1>Fast geschafft!</h1>
       <p class="lead">
         Erzähl uns kurz von dir.
       </p>
@@ -9,11 +9,11 @@
         <span class="material-icons info-button">
         info
         </span>
-        Wir nutzen deine Angaben ausschliesslich für die anonyme Auswertung dieser Umfrage.
+        Deine Angaben werden nicht an Dritte weitergegeben und von uns ausschliesslich für die anonyme Auswertung dieser Umfrage genutzt.
       </a>
       <blockquote v-show="showBlockquote">
         Deine Angaben helfen uns, belastbare Aussagen über die Beteiligung der Umfrage machen zu können.
-        So ist es beispielweise wichtig für uns zu wissen, welche Altersgruppe räumliche Situationen wie einschätzt.
+        So ist es beispielweise wichtig für uns zu wissen, wie spezifische Altersgruppen räumliche Situationen einschätzen.
       </blockquote>
       <form style="margin-top:3em">
         <vs-row vs-w="12">
@@ -40,7 +40,7 @@
         </vs-row>
         <vs-row vs-w="12" style="margin-top:1em">
           <vs-col vs-type="flex" vs-w="4">
-            In Kanton:
+            Wohnort (Kanton):
           </vs-col>
           <vs-col vs-type="flex" vs-w="8">
             <select v-model="surveyCanton"
@@ -57,15 +57,15 @@
     </div>
 
     <div class="raffle" v-show="surveyComplete">
-      <h1>Herzlichen Dank für die Teilnahme</h1>
+      <h1>Herzlichen Dank für deine Teilnahme!</h1>
     </div>
     <iframe v-show="surveyComplete"
       src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     <center v-show="surveyComplete" class="survey-next">
       <a href="https://forms.gle/SoFeC5tRiJdiEvoU6" target="_blank">
-        <vs-button flat size="large" color="black">Vollbild</vs-button>
+        <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
       </a>
-      <vs-button flat size="large" color="success" @click="skipSubscribe">Weiter beurteilen</vs-button>
+      <vs-button flat size="large" color="success" @click="skipSubscribe">Weitere Bilder bewerten 👉</vs-button>
     </center>
   </div>
 </template>
@@ -109,7 +109,7 @@ export default {
       if (this.surveyAge === null ||
           this.surveyGender === null ||
           this.surveyCanton === null) {
-        return this.$vs.notify({ text: 'Bitte überprüfen Sie ihre Angaben', color: 'warning', position: 'top-center' })
+        return this.$vs.notify({ text: 'Bitte überprüfe deine Angaben', color: 'warning', position: 'top-center' })
       }
       $backend.saveSurvey(
         {

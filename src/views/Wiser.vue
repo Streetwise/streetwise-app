@@ -4,20 +4,21 @@
       msg="Wo fühlst du dich sicherer?"
       :skipintro="skipintro"
     />
-    <vs-popup title="Jetzt bist du dran ..." :active.sync="popupActive">
+    <vs-popup title="Anleitungshilfe" :active.sync="popupActive">
       <div class="content centerx">
         <p>
           Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
-
+          Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
+          Scrolle oder tippe auf ein Bild, um es zu vergrössern.
         </p>
         <center class="together">
-          Links 👈
+          links 👈
           <vs-button disabled type="border" color="black" class="undecided">???</vs-button>
-          👉 Rechts
-          <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
+          👉 rechts
         </center>
+        <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
         <p>
-          Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
+          Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «Beide / Weiss nicht».
           Bitte beantworte <b>mindestens 10</b> Bildpaare.
         </p>
         <center>
@@ -90,7 +91,7 @@ export default {
   .centerx { margin: 1em; }
   .help-icon {
     position: absolute;
-    top: -5px; left: -5px;
+    top: 0px; left: 0px;
   }
 }
 </style>

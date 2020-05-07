@@ -43,4 +43,8 @@ export default {
     }
   }
 }
+header { min-height: 2em; }
+@media screen and (min-height: 800px) {
+  header { min-height: 3em; }
+}
 </style>
