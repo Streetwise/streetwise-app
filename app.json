@@ -10,6 +10,10 @@
       "description": "Flask Enviroment",
       "value": "production"
     },
+    "FLASK_APP": {
+      "description": "Flask App",
+      "value": "streetwise"
+    },
     "FLASK_SECRET": {
       "description": "Database Secret",
       "generator": "secret"
