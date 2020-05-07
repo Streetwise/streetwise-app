@@ -28,7 +28,7 @@
     a.together(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone 11
   br
   a(href="https://streetwise.space", target="_blank")
-    vs-button(flat, color="default") Worum geht es bei&nbsp;
+    vs-button(flat, color="black") Worum geht es bei&nbsp;
       b Streetwise?
   center
     .together
