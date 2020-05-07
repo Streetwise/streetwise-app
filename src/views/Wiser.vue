@@ -17,7 +17,7 @@
           <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
         </center>
         <p style="font-size:80%">
-          Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
+          Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Beide / Weiss nicht</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
           Bitte beantworte <b>mindestens 10</b> Bildpaare.
         </p>
         <center>

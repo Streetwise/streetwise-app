@@ -15,7 +15,7 @@
     | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
   p
     img.icon.right(src="@/assets/icons/nature.svg")
-    | Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>.
+    | Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Beide / Weiss nicht</b>.
     | Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
     | Bitte beantworte <b>mindestens 10</b> Bildpaare.
   router-link.wiselink(to="/wise")
