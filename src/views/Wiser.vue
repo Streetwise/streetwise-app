@@ -1,7 +1,7 @@
 <template>
   <div class="wiser">
     <ImageVote
-      msg="Welche Situation sieht sicherer aus?"
+      msg="Wo fühlst du dich sicherer?"
       :skipintro="skipintro"
     />
     <vs-popup title="Jetzt bist du dran ..." :active.sync="popupActive">
@@ -10,13 +10,13 @@
           Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
 
         </p>
-        <center>
+        <center class="together">
           Links 👈
           <vs-button disabled type="border" color="black" class="undecided">???</vs-button>
           👉 Rechts
           <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
         </center>
-        <p style="font-size:80%">
+        <p>
           Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>. Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
           Bitte beantworte <b>mindestens 10</b> Bildpaare.
         </p>
@@ -25,8 +25,10 @@
         </center>
       </div>
     </vs-popup>
-    <center>
-      <vs-button type="line" size="small" color="blue" @click="popupActive=true">Anleitung</vs-button>
+    <center class="help-icon">
+      <vs-button flat size="small" color="white" @click="popupActive=true" title="Anleitung">
+        <vs-icon icon="help" size="small" bg="orange" round></vs-icon>
+      </vs-button>
     </center>
   </div>
 </template>
@@ -70,10 +72,25 @@ export default {
     margin: 1em 0;
   }
 }
+.together { white-space: nowrap; }
+.help-icon {
+  z-index: 10000;
+  button { padding: 7px; }
+}
 .imagevote {
   margin-bottom: 7px;
 }
+@media screen and (max-height: 500px) {
+  .help-icon {
+    position: absolute;
+    top: 0px; left: 6px;
+  }
+}
 @media screen and (max-width: 600px) {
   .centerx { margin: 1em; }
+  .help-icon {
+    position: absolute;
+    top: -5px; left: -5px;
+  }
 }
 </style>

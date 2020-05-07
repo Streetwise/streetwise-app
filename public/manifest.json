@@ -1,0 +1,22 @@
+{
+  "name": "Streetwise",
+  "short_name": "Streetwise",
+  "description": "Raumqualität aus Sicht der Bevölkerung",
+  "icons": [
+    {
+      "src": "/images/streetwise_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/streetwise_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#288e46"
+}

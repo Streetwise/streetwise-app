@@ -58,10 +58,6 @@
 
     <div class="raffle" v-show="surveyComplete">
       <h1>Herzlichen Dank für die Teilnahme</h1>
-
-      <img class="icon right" src="@/assets/icons/nature.svg">
-      <p>Du kannst dich hier für die Verlosung anmelden und, wenn du magst, dann weitere Bilder beurteilen.</p>
-
     </div>
     <iframe v-show="surveyComplete"
       src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>

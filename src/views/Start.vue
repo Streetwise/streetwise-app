@@ -3,8 +3,7 @@
   img.logo(src="@/assets/streetwise_Logo.png")
   h1
     span.material-icons emoji_people
-    span Hallo
-    span.smaller.together Schön, dass du hier bist.
+    span.smaller Hallo! Schön, dass du hier bist.
   p.lead
     img.icon.right(src="@/assets/icons/road.svg")
     | Es gibt tausende Karten – keine zeigt die Raumqualität aus Sicht der Bevölkerung. Wie nehmen wir unseren Lebensraum wahr? Wie erleben wir die Atmosphäre eines Ortes, wo fühlen wir uns sicher, wo fühlen wir uns gut? Diese Fragen werden umso wichtiger, je mehr Menschen in städtischen Gebieten leben.
@@ -28,12 +27,14 @@
     vs-button(flat, color="black") Hier findest du mehr Infos zum&nbsp;
       b Projekt Streetwise
   center
-    span.material-icons(style="margin:0 0.5em") email
-    span Fragen?&nbsp;
-    a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
-    span.material-icons(style="margin:0 0.5em") event_available
-    span Bemerkungen?&nbsp;
-    a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
+    .together
+      span Fragen?&nbsp;
+      a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
+      span.material-icons email
+    .together
+      span Bemerkungen?&nbsp;
+      a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
+      span.material-icons event_available
     ul.attribution
       li Ein Projekt der <a href="metropolitanraum-zuerich.ch/" target="_blank">Verein Metropolitanraum Zürich</a>
       li Code (MIT) by <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a> &amp; contributors.
@@ -55,16 +56,24 @@ export default {
 
 <style lang="scss" scoped>
 h1, h2, h3, p { margin: 1em; }
-h1 { color: black; }
-h1 .material-icons { padding-right: 0.21em; font-size: 120%; vertical-align: middle; }
-h1 .smaller {
-  color: #444; padding-left: 1em;
-  font-size: 80%; font-weight: normal;
+h1 {
+  color: black;
+  .material-icons {
+    font-size: 120%;
+    vertical-align: middle;
+  }
+  .smaller {
+    color: #444; padding-left: 1em;
+    font-size: 80%; font-weight: normal;
+  }
 }
 .together { white-space: nowrap; }
 p { text-align: left; margin: 0 20% 1em; }
 p.lead, p.campaign { font-size: 120%; }
 p.campaign { color: darkblue; font-weight: bold; }
+img.logo {
+  max-width: 80%;
+}
 img.icon {
   width: 50px; margin-bottom: 2em;
   &.left { float:left; margin-right: 1em; }
@@ -74,11 +83,8 @@ center { margin-top: 2em; }
 .attribution {
   font-size: 80%;
   color: #555;
-  text-align: left;
-  margin-top: 3em;
-  width: 40em;
-  margin-left: 20em;
-  left: 50%;
+  text-align: right;
+  margin: 3em;
   list-style: none;
 }
 .vs-button {

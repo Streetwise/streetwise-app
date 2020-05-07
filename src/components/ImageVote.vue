@@ -23,20 +23,18 @@
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button flat size="large" color="black" @click="popupImage=false">Schliessen</vs-button>
-          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Bild auswählen</vs-button>
-          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Bild auswählen</vs-button>
+          <vs-button flat size="large" color="black" @click="popupImage=false">Zurück</vs-button>
+          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Dieses Bild auswählen</vs-button>
+          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Dieses Bild auswählen</vs-button>
         </div>
       </div>
     </vs-popup>
-
-    <p class="undecided">
-      <vs-button flat size="large" color="rgb(255,255,255)" @click.prevent="voteUndecided">Beide / Weiss nicht</vs-button>
-    </p>
     <p>
-      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">Links</vs-button>
-
-      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">Rechts</vs-button>
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
+    </p>
+    <p class="undecided">
+      <vs-button flat size="large" color="warning" @click.prevent="voteUndecided">Beide / Weiss nicht</vs-button>
     </p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
@@ -46,6 +44,7 @@
 
 <script>
 import $backend from '../backend'
+const imageLoading = '/images/loading.gif'
 export default {
   name: 'ImageVote',
   props: {
@@ -59,9 +58,9 @@ export default {
       session: null, // current session
       debug: false,
       imageLeft: 0,
-      imageLeftUrl: '/loading.gif',
       imageRight: 0,
-      imageRightUrl: '/loading.gif',
+      imageLeftUrl: imageLoading,
+      imageRightUrl: imageLoading,
       timeStart: Date.now(),
       voteCount: 0,
       votePercent: 0,
@@ -232,17 +231,15 @@ export default {
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   .imagepane div img { height: 333px; }
-  .lead { display: none; }
+  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
-  .imagepane div img { height: 305px; }
-  .lead { display: none; }
-  .progressbar { position: absolute; top: -4px; left: 40%; }
+  .imagepane div img { height: 270px; }
+  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 220px; }
-  .lead { display: none; }
-  .progressbar { position: absolute; top: -4px; left: 40%; }
+  .imagepane div img { height: 230px; }
+  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
 }
 
 .lightbox {
@@ -278,16 +275,16 @@ export default {
   button {
     z-index: 99;
     height: 2.8em;
-    border-radius: 0px;
+    border-radius: 3px;
     position: absolute;
     color: #933;
     margin-left: -5em;
+    margin-top: -2.8em;
   }
 }
 @media screen and (max-width: 600px) and (min-height: 400px) {
   .undecided button {
       position: relative; margin: 0px;
-      margin-top: -0.5em;
   }
 }
 .complain {
@@ -299,14 +296,14 @@ export default {
 .progressbar {
   text-align: right;
   margin: 1em;
+  border-radius: 5px;
+  background: white;
+  padding: 0 5px;
   p {
-    position: absolute;
-    right: 2.5em;
+    display: none;
   }
   div {
-    margin-right: 1em;
-    width: 20%;
-    min-width: 10em;
+    width: 10em;
   }
 }
 </style>
