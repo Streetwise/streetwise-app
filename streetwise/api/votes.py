@@ -10,7 +10,7 @@ from flask_restplus import Resource, fields
 
 from . import db, api_rest, api_limiter
 from .security import require_auth
-from ..models import Session, Vote, Image, Comment, Campaign
+from ..models import Session, Vote, Image, Comment, Campaign, generate_hash
 
 from sqlalchemy.sql.expression import func
 
@@ -90,6 +90,7 @@ class VoteCast(Resource):
             my_ua = request.user_agent
             my_campaign = Campaign.query.first() # No support for multiple campaigns yet
             session = Session(
+                hash = generate_hash(),
                 campaign = my_campaign,
                 agent_address = my_ip,
                 agent_platform = my_ua.platform,

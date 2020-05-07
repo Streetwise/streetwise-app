@@ -51,12 +51,14 @@ class Image(Base):
     def __repr__(self):
         return self.key
 
+def generate_hash():
+    return str(b2a_hex(urandom(16)), 'utf-8')
+
 class Session(Base):
     __tablename__ = "sessions"
 
     # A hash to identify this session by
-    hash = db.Column(db.String(33), unique=True,
-        default=str(b2a_hex(urandom(16)), 'utf-8'))
+    hash = db.Column(db.String(33), unique=True, default=generate_hash())
     # Campaign that this session belongs to
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)

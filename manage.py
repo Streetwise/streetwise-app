@@ -73,6 +73,8 @@ def deploy():
     from flask_migrate import upgrade
     # migrate database to latest revision
     upgrade()
+    # Generate some bytes to create entropy
+    os.urandom(256)
 
 @app.cli.command()
 @click.option('--name', default="safety-1",
