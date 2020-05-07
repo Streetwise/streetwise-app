@@ -73,8 +73,6 @@ def deploy():
     from flask_migrate import upgrade
     # migrate database to latest revision
     upgrade()
-    # run frontend build
-    os.system("yarn build")
 
 @app.cli.command()
 @click.option('--name', default="safety-1",
