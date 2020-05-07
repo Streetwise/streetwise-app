@@ -9,7 +9,7 @@ manage.py profile
 ## Running the perf test
 The performance tests are designed to hit the APIs using the [Vegeta utility](https://github.com/tsenart/vegeta)
 
-The [request](./request) file contains the APIs that would be hit as part of the performance test. The headers and body parameters can also be configured in here. The parameters if any can be configured in different files. For instance the [vote.json](./vote.json) contains the body params used for making the `/api/vote/` request.
+The [requests](./requests) file contains the APIs that would be hit as part of the performance test. The headers and body parameters can also be configured in here. The parameters if any can be configured in different files. For instance the [vote.json](./vote.json) contains the body params used for making the `/api/vote/` request.
 
 The perf test itself can be run as follows:
 ```
