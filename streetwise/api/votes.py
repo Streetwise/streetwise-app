@@ -56,7 +56,9 @@ class VoteCounter(Resource):
 
     @ns.doc('count_votes')
     def get(self):
-        latest_vote = Vote.query.first().created
+        latest_vote = Vote.query.first()
+        if latest_vote is None: return {}
+        latest_vote = latest_vote.created
         vote_count = db.session.query(func.count(Vote.id)).scalar()
         return {
             'total_count':  vote_count,
@@ -76,13 +78,14 @@ class VoteCast(Resource):
     def post(self):
         '''Create a new vote'''
         data = api_rest.payload
-        session = None
         if not data:
             return 'No data', 500
+        session = None
         if 'session_hash' in data and data['session_hash']:
             my_sh = data['session_hash']
+            # Sessions have unique hashes
             session = Session.query.filter_by(hash=my_sh).one_or_none()
-        if not session:
+        if session is None:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
             my_campaign = Campaign.query.first() # No support for multiple campaigns yet

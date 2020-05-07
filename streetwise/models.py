@@ -13,8 +13,7 @@ IMG_BASE_URL = Config.IMAGE_BUCKET_URL
 class Base(db.Model):
     __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime,
-        default=db.func.current_timestamp())
+    created = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 class Campaign(Base):
     __tablename__ = "campaign"
@@ -30,7 +29,7 @@ class Image(Base):
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)
     # Data source identifier
-    key = db.Column(db.String(100))
+    key = db.Column(db.String(100), unique=True)
     # Filename the image refers to
     filename = db.Column(db.String(100))
     # Geographic coordinates of the photo
@@ -56,7 +55,7 @@ class Session(Base):
     __tablename__ = "sessions"
 
     # A hash to identify this session by
-    hash = db.Column(db.String(33),
+    hash = db.Column(db.String(33), unique=True,
         default=str(b2a_hex(urandom(16)), 'utf-8'))
     # Campaign that this session belongs to
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))

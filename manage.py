@@ -79,7 +79,7 @@ def deploy():
 @app.cli.command()
 @click.option('--name', default="safety-1",
               help='Name of the campaign to use for import.')
-@click.option('--src', default="ch-data.csv",
+@click.option('--src', default="data/ch_data.csv",
               help='Filename of the CSV database to import.')
 @click.option('--update/--no-update', default=True,
               help='Check to see if images are already in database.')

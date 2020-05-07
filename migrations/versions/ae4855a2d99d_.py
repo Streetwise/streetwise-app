@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 46ba6c8d1266
+Revision ID: ae4855a2d99d
 Revises: 
-Create Date: 2020-05-07 00:15:26.268664
+Create Date: 2020-05-07 12:26:47.733469
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '46ba6c8d1266'
+revision = 'ae4855a2d99d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,7 +38,8 @@ def upgrade():
     sa.Column('is_panorama', sa.Boolean(), nullable=True),
     sa.Column('captured_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['campaign_id'], ['campaign.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('key')
     )
     op.create_table('sessions',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -55,7 +56,8 @@ def upgrade():
     sa.Column('response', sa.JSON(), nullable=True),
     sa.Column('is_complete', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['campaign_id'], ['campaign.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('hash')
     )
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),

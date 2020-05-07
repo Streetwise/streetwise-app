@@ -105,10 +105,9 @@ export default {
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
-      console.debug('Fetching image pair')
       $backend.getRandomImages()
         .then(responseData => {
-          console.debug(responseData)
+          // console.debug(responseData)
           this.imageLeft = responseData[0].id
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
