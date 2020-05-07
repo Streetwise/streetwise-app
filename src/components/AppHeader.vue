@@ -33,7 +33,8 @@ export default {
 .devpanel { display: none }
 .vs-navbar--title {
   font-size: 120%;
-  padding-left: 2em;
+  padding-top: 4px;
+  padding-left: 2.5em;
   background: url('/images/streetwise_192x192.png') no-repeat 10px;
   background-size: contain;
   a {
