@@ -29,6 +29,7 @@
     <center class="help-icon">
       <vs-button flat size="small" color="white" @click="popupActive=true" title="Anleitung">
         <vs-icon icon="help" size="small" bg="orange" round></vs-icon>
+        <b>Anleitung</b>
       </vs-button>
     </center>
   </div>
@@ -76,6 +77,7 @@ export default {
 .together { white-space: nowrap; }
 .help-icon {
   z-index: 10000;
+  b { color: orange !important; font-size: 120%; }
   button { padding: 7px; }
 }
 .imagevote {
@@ -84,7 +86,8 @@ export default {
 @media screen and (max-height: 500px) {
   .help-icon {
     position: absolute;
-    top: 0px; left: 6px;
+    top: 0px; right: 0px;
+    b { display: none; }
   }
 }
 @media screen and (max-width: 600px) {
@@ -92,6 +95,7 @@ export default {
   .help-icon {
     position: absolute;
     top: 0px; left: 0px;
+    b { display: none; }
   }
 }
 </style>

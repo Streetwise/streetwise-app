@@ -1,49 +1,50 @@
 <template lang="pug">
 .start
-  img.logo(src="@/assets/streetwise_Logo.png")
   h1
     span.material-icons emoji_people
-    span.smaller Hallo! Schön, dass du hier bist.
+    span.smaller Willkommen zum Crowdsourcing!
   p.lead
-    img.icon.right(src="@/assets/icons/road.svg")
-    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
-  p
-    img.icon.right(src="@/assets/icons/road2.svg")
-    b So funktioniert’s
-  p
-    | Die folgende Umfrage fragt zunächst nach deinem allgemeinen Sicherheitsempfinden. Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
-    b &nbsp;Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
-    | &nbsp;Scrolle oder tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «beide / weiss nicht».
-  p.campaign
-    | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
-  p
-    img.icon.right(src="@/assets/icons/nature.svg")
-    | Drücke entsprechend auf <b>Links</b> bzw. <b>Rechts</b>. Zu schwierig zu entscheiden? Wähle <b>Unsicher</b>.
-    | Tippe auf ein Bild, um es in <b>Vollbild</b> anzuschauen.
-    | Bitte beantworte <b>mindestens 10</b> Bildpaare.
-  router-link.wiselink(to="/wise")
-    vs-button(flat) Hier geht es zur Umfrage.
-  center(style="margin:0px")
-    b Mach bei der Umfrage mit und&nbsp;
-    a.together(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone 11
-  br
-  a(href="https://streetwise.space", target="_blank")
-    vs-button(flat, color="black") Worum geht es bei&nbsp;
-      b Streetwise?
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut? Zeig es uns in dieser Umfrage und mach mit beim Wettbewerb eines iPhone 11. Die Umfrage dauert max. 5 Minuten.
+  .infobox
+    center
+      img.icon(src="@/assets/icons/road.svg")
+      img.icon(src="@/assets/icons/road2.svg")
+      img.icon(src="@/assets/icons/nature.svg")
+    p.campaign
+      | Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
+    p.tip
+      vs-icon(icon="star", size="small", color="green")
+      | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+    p.tip
+      vs-icon(icon="star", size="small", color="yellow")
+      | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
+    p.tip
+      vs-icon(icon="star", size="small", color="orange")
+      span Ein kleiner Tipp für Handy-NutzerInnen: Haltet das Handy quer für eine bessere Ansicht!
+    router-link.wiselink(to="/wise")
+      vs-button(flat) Hier geht es zur Umfrage.
+    center
+      b Mach bei der Umfrage mit und&nbsp;
+      a.together(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone 11
   center
+    a(href="https://streetwise.space/about", target="_blank" title="Mehr erfahren zum Projekt auf streetwise.space")
+      img.logo(src="@/assets/streetwise_Logo.png")
+    .credit Ein Kooperationsprojekt der <a href="https://www.metropolitanraum-zuerich.ch/themen/kooperationsprogramm-2019-2022/streetwise.html" target="_blank">Metropolitankonferenz&nbsp;Zürich</a>
+    //vs-button(flat, color="black") Mehr zu&nbsp;
+      b Streetwise
+  center(style="margin-top:2em")
     .together
       span Fragen?&nbsp;
       a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
       span.material-icons email
     .together
-      span Bemerkungen?&nbsp;
+      span Bemerkungen zur Umfrage?&nbsp;
       a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
       span.material-icons event_available
     ul.attribution
-      li Ein Projekt der <a href="metropolitanraum-zuerich.ch/" target="_blank">Verein Metropolitanraum Zürich</a>
-      li Code (MIT) by <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a> &amp; contributors.
-      li Imagery (CC BY-SA) by <a href="https://www.mapillary.com/" target="_blank">Mapillary</a> &amp; contributors.
-      li Icons (FlatIcon) by <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev" target="_blank">Vitaly Gorbachev</a>.
+      li Code (MIT) von <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a>.
+      li Bilder (CC BY-SA) von <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>.
+      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev" target="_blank">Vitaly Gorbachev</a>.
       li Copyright &copy; 2020 Streetwise ARGE
 </template>
 
@@ -64,30 +65,46 @@ h1 {
   color: black;
   .material-icons {
     font-size: 120%;
+    float: left;
     vertical-align: middle;
   }
   .smaller {
-    color: #444; padding-left: 1em;
-    font-size: 80%; font-weight: normal;
+    color: #444;
+    font-size: 80%;
+    font-weight: normal;
   }
 }
 .together { white-space: nowrap; }
-p { text-align: left; margin: 0 20% 1em; }
+p { text-align: left; }
 p.lead, p.campaign { font-size: 120%; }
 p.campaign { color: darkblue; font-weight: bold; }
+p.tip .vs-icon { float: left; margin-bottom: 2em; margin-right: 0.2em; }
 img.logo {
   max-width: 80%;
 }
 img.icon {
-  width: 50px; margin-bottom: 2em;
+  width: 50px; margin: 10px;
   &.left { float:left; margin-right: 1em; }
   &.right { float:right; margin-left: 2em;  }
 }
-center { margin-top: 2em; }
+center { margin-top: 1em; }
+.lead {
+  margin: 0 20% 1em;
+}
+.infobox {
+  border: 1px dashed blue;
+  padding: 1em;
+  margin: 0 20% 1em;
+}
+.credit {
+  font-size: 90%;
+  color: black;
+  & a { color: black; text-decoration: underline; }
+}
 .attribution {
   font-size: 80%;
   color: #555;
-  text-align: right;
+  text-align: center;
   margin: 3em;
   list-style: none;
 }

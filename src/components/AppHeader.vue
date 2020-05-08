@@ -30,13 +30,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.devpanel { display: none }
+.devpanel { display: none !important }
 .vs-navbar--title {
   font-size: 120%;
+  margin-top: 6px;
   padding-top: 4px;
   padding-left: 2.5em;
-  background: url('/images/streetwise_192x192.png') no-repeat 10px;
+  background: url('~@/assets/streetwise_Logo.png') no-repeat 10px;
   background-size: contain;
+  font-size: 0px;
+  color: transparent;
+  width: 200px; height: 30px;
   a {
     color: black;
     u {
@@ -45,7 +49,11 @@ export default {
   }
 }
 header { min-height: 2em; }
+@media screen and (max-height: 400px) {
+  .vs-navbar--title { margin: 0px; padding-top: 0px; }
+}
 @media screen and (min-height: 800px) {
   header { min-height: 3em; }
+  .vs-navbar--title { margin-top: 0px; }
 }
 </style>

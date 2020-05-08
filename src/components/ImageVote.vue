@@ -1,24 +1,24 @@
 <template>
   <div class="imagevote">
     <div class="progressbar">
-      <p>{{ voteCount }} / {{ voteTotal }}</p>
       <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
     </div>
 
     <h4 class="lead">{{ msg }}</h4>
 
     <div class="imagepane">
-      <div class="left" @click="popupImage=true;popupLeft=true">
+      <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
         <img :src="imageLeftUrl">
       </div>
-      <div class="right" @click="popupImage=true;popupLeft=false">
+      <div class="right" @click="popupImage=true;popupLeft=false" ref="rightImagePane">
         <img :src="imageRightUrl">
       </div>
     </div>
 
     <vs-popup fullscreen
       classContent="lightbox-container" styleHeader="display:none"
-      :active.sync="popupImage" @close="popupImage=false" title="Zoom">
+      :active.sync="popupImage" @close="popupImage=false"
+      :title="`${popupLeft ? 'Linkes Bild' : 'Rechtes Bild'}`">
       <div class="lightbox" @click="popupImage=false"
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
@@ -34,11 +34,12 @@
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
     </p>
     <p class="undecided">
-      <vs-button flat size="large" color="warning" @click.prevent="voteUndecided">Beide / Weiss nicht</vs-button>
+      <vs-button flat size="large" color="warning" @click.prevent="voteUndecided">unentschieden</vs-button>
     </p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
+    <p class="vote-count">{{ voteCount }} / {{ voteTotal }}</p>
   </div>
 </template>
 
@@ -104,6 +105,10 @@ export default {
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
+      this.imageLeftUrl = imageLoading
+      this.imageRightUrl = imageLoading
+      this.$refs.leftImagePane.scrollLeft = 200
+      this.$refs.rightImagePane.scrollLeft = 200
       $backend.getRandomImages()
         .then(responseData => {
           // console.debug(responseData)
@@ -219,9 +224,11 @@ export default {
 /* Vertical positioning of images */
 @media screen and (min-height: 1200px) {
   .imagepane div img { height: 1000px; }
+  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 1200px) and (min-height: 900px) {
   .imagepane div img { height: 700px; }
+  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
   .imagepane div img { height: 480px; }
@@ -231,7 +238,6 @@ export default {
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   .imagepane div img { height: 333px; }
-  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
   .imagepane div img { height: 270px; }
@@ -251,7 +257,9 @@ export default {
   .buttons {
     position: absolute;
     bottom: 2em;
-    button { margin-right: 10px; }
+    width: 100%; margin-left: -30px;
+    text-align: center;
+    button:first-child { margin-right: 10px; }
   }
 }
 
@@ -266,25 +274,30 @@ export default {
   font-weight: bold;
   width: 5em;
   width: 50%;
-  border: 1px solid white;
+  border-radius: 0px;
+}
+
+.vote-count {
+  display: none; /* Ignore for now */
+  margin-top: 1em;
+  color: #999;
 }
 
 .undecided {
   text-align: center;
   width: 100%;
+  margin-top: 0.5em;
   button {
+    padding: 0px 2em;
     z-index: 99;
     height: 2.8em;
-    border-radius: 3px;
-    position: absolute;
-    color: #933;
-    margin-left: -5em;
-    margin-top: -2.8em;
+    color: #000;
+    font-weight: bold;
   }
 }
 @media screen and (max-width: 600px) and (min-height: 400px) {
   .undecided button {
-      position: relative; margin: 0px;
+    margin: 0px;
   }
 }
 .complain {
