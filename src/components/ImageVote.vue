@@ -176,22 +176,6 @@ export default {
     voteSkip () {
       this.nextImagePair(true)
       this.$vs.notify({ text: 'Übersprungen!', color: 'warning', position: 'top-center' })
-    },
-    complainImage () {
-      let voter = this
-      this.$vs.dialog({
-        type: 'confirm',
-        color: 'danger',
-        title: `Problem melden`,
-        text: 'Falls du den Bild nicht gut sehen kannst oder eine andere Problem melden willst, bitte im folgende Dialog kurz beschreiben. Wenn es um eine oder die beiden Bilder geht, bitte notiere um welchen es geht.',
-        accept: function () {
-          let note = prompt('Problem beschreiben:')
-          if (note) {
-            // TODO: needs API !
-            voter.$vs.notify({ text: 'Danke fürs melden!', color: 'warning', position: 'top-center' })
-          }
-        }
-      })
     }
   },
   mounted () {

@@ -76,7 +76,12 @@ h1 {
 p { text-align: left; }
 p.lead, p.campaign { font-size: 120%; }
 p.campaign { color: darkblue; font-weight: bold; }
-p.tip .vs-icon { float: left; margin-bottom: 2em; margin-right: 0.2em; }
+p.tip .vs-icon {
+  float: left;
+  margin-bottom: 2em;
+  margin-right: 0.2em;
+  clear: both;
+}
 img.logo {
   max-width: 80%;
 }
@@ -121,6 +126,6 @@ center { margin-top: 1em; }
   .wiselink { clear: both; display: block; }
 }
 @media screen and (max-width: 800px) {
-  p { margin-left: 10%; margin-right: 10%; }
+  .lead, .infobox { margin-left: 10%; margin-right: 10%; }
 }
 </style>
