@@ -222,7 +222,7 @@ export default {
   .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 1200px) and (min-height: 900px) {
-  .imagepane div img { height: 700px; }
+  .imagepane div img { height: 660px; }
   .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
