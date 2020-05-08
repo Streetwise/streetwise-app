@@ -72,12 +72,12 @@ export default {
       surveyCanton: null,
       // Survey values
       listAges: [
-        { text: '12 oder jünger', value: 0 },
-        { text: 'zwischen 13 und 19', value: 1 },
-        { text: 'zwischen 20 und 39', value: 2 },
-        { text: 'zwischen 40 und 64', value: 3 },
-        { text: 'zwischen 65 und 79', value: 4 },
-        { text: '80 oder älter', value: 5 },
+        { text: '12 oder jünger', value: 1 },
+        { text: 'zwischen 13 und 19', value: 13 },
+        { text: 'zwischen 20 und 39', value: 20 },
+        { text: 'zwischen 40 und 64', value: 40 },
+        { text: 'zwischen 65 und 79', value: 65 },
+        { text: '80 oder älter', value: 80 },
         { text: '(ich möchte keine Angaben machen)', value: -1 }
       ],
       listGenders: [
