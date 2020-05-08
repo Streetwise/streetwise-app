@@ -90,10 +90,8 @@ export default {
             text: 'Danke für deine Eingaben! Du kannst nun 10 weitere Bildpaaren beurteilen.',
             accept: function () {
               voter.voteCount = 0
-              voter.nextImagePair()
             },
             cancel: function () {
-              // TODO: forward session
               voter.$router.push('complete')
             }
           })
