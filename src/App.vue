@@ -30,4 +30,5 @@ export default {
 .lightbox-container {
   height: 100%;
 }
+.vs-navbar--header > button.vs-navbar--btn-responsive { visibility: hidden; }
 </style>

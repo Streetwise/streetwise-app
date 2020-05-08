@@ -10,7 +10,7 @@ from flask_restplus import Resource, fields
 
 from . import db, api_rest, api_limiter
 from .security import require_auth
-from ..models import Session, Vote, Image, Comment, Campaign, generate_hash
+from ..models import Session, Vote, Image, Campaign, generate_hash
 
 from sqlalchemy.sql.expression import func
 
@@ -24,15 +24,10 @@ VotingModel = api_rest.model('Vote', {
     'is_leftimage': fields.Boolean,
     'is_undecided': fields.Boolean,
     'time_elapsed': fields.Integer,
-    'session_hash': fields.String(attribute='session.hash'),
+    'comment': fields.String,
     'window_width': fields.Integer(attribute='session.agent_width'),
     'window_height': fields.Integer(attribute='session.agent_height'),
-})
-
-CommentModel  = api_rest.model('Comment', {
-    'session_hash': fields.String,
-    'image_id': fields.Integer,
-    'text': fields.String
+    'session_hash': fields.String(attribute='session.hash'),
 })
 
 class SecureResource(Resource):
@@ -104,6 +99,7 @@ class VoteCast(Resource):
             db.session.commit()
         new_vote = Vote(
             session = session,
+            comment = data['comment'],
             choice_id = int(data['choice_id']),
             other_id =  int(data['other_id']),
             is_leftimage = bool(data['is_leftimage']),

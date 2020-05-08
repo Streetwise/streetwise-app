@@ -22,7 +22,7 @@ $axios.interceptors.response.use(function (response) {
 })
 
 export default {
-  voteCast (isRight, imageLeft, imageRight, timeTaken) {
+  voteCast (isRight, imageLeft, imageRight, timeTaken, textComment) {
     let sessionHash = localStorage.getItem('streetwiseSession') || null
     return $axios.post(`vote/`, {
       session_hash: sessionHash,
@@ -32,7 +32,8 @@ export default {
       is_undecided: (isRight === null),
       time_elapsed: timeTaken,
       window_width: window.innerWidth,
-      window_height: window.innerHeight
+      window_height: window.innerHeight,
+      comment: textComment
     }).then(function (response) {
       if (response.status === 201) {
         if (typeof response.data.session_hash !== 'undefined' &&
