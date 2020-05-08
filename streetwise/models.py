@@ -74,18 +74,6 @@ class Session(Base):
     response = db.Column(db.JSON())
     is_complete = db.Column(db.Boolean(), default=False)
 
-class Comment(Base):
-    __tablename__ = "comments"
-
-    # User session that made the comment
-    session_id = db.Column(db.Integer, db.ForeignKey(Session.id))
-    session = db.relationship(Session)
-    # Image this comment applies to
-    image_id = db.Column(db.Integer, db.ForeignKey(Image.id))
-    image = db.relationship(Image, foreign_keys=[image_id])
-    # Content of this comment
-    text = db.Column(db.Text())
-
 class Vote(Base):
     __tablename__ = "votes"
 
@@ -104,6 +92,8 @@ class Vote(Base):
     is_undecided = db.Column(db.Boolean())
     # Seconds elapsed since the image was shown
     time_elapsed = db.Column(db.Integer)
+    # A free text comment, e.g. for undecideds
+    comment = db.Column(db.Text)
 
     def dict(self):
         id_right = self.other_id if self.is_leftimage else self.choice_id
@@ -122,5 +112,6 @@ class Vote(Base):
             'right_image_id': id_right,
             'winner': the_winner,
             'is_undecided': self.is_undecided,
-            'time_elapsed': self.time_elapsed
+            'time_elapsed': self.time_elapsed,
+            'comment': self.comment
         }

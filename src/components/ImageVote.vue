@@ -33,8 +33,9 @@
       <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
     </p>
+    <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
     <p class="undecided">
-      <vs-button flat size="large" color="warning" @click.prevent="voteUndecided">unentschieden</vs-button>
+      <vs-button flat size="large" color="warning" @click.prevent="openUndecided=true">unentschieden</vs-button>
     </p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
@@ -44,13 +45,17 @@
 </template>
 
 <script>
-import $backend from '../backend'
+import $backend from '@/backend'
+import IssueBox from '@/components/IssueBox.vue'
 const imageLoading = '/images/loading.gif'
 export default {
   name: 'ImageVote',
   props: {
     msg: String,
     skipintro: Boolean
+  },
+  components: {
+    IssueBox
   },
   data () {
     return {
@@ -66,7 +71,8 @@ export default {
       voteCount: 0,
       votePercent: 0,
       popupImage: false,
-      popupLeft: false
+      popupLeft: false,
+      openUndecided: false
     }
   },
   methods: {
@@ -118,13 +124,13 @@ export default {
           this.imageRightUrl = responseData[1].Url
         })
     },
-    vote (isRight) {
+    vote (isRight, textComment = '') {
       $backend.voteCast(
         isRight,
         this.imageLeft,
         this.imageRight,
         this.elapsedTime(),
-        this.session
+        textComment
       )
         .then(responseData => {
           if (responseData === null) {
@@ -148,17 +154,11 @@ export default {
     voteRight () {
       this.vote(true)
     },
-    voteUndecided () {
-      let voter = this
-      this.$vs.dialog({
-        type: 'confirm',
-        color: 'warning',
-        title: `Bestätigen`,
-        text: 'Kannst du dich bei diesem Bildpaar wirklich nicht entscheiden, wo du dich sicherer fühlen würdest? Hast du Probleme mit der Ansicht eines Bildes?',
-        accept: function () {
-          voter.vote(null)
-        }
-      })
+    voteUndecided (accept) {
+      this.openUndecided = false
+      if (accept === false) return
+      this.$vs.notify({ text: 'Danke für deine Rückmeldung.', color: 'warning', position: 'top-center' })
+      this.vote(null, accept)
     },
     voteSkip () {
       this.nextImagePair(true)

@@ -24,7 +24,7 @@ app = create_app()
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db,
-                Image=Image, Session=Session, Vote=Vote, Comment=Comment)
+        Image=Image, Session=Session, Vote=Vote, Campaign=Campaign)
 
 
 @app.cli.command()

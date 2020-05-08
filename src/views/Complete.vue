@@ -1,89 +1,57 @@
-<template>
-  <div class="complete">
-    <div class="survey" v-show="!surveyComplete">
-      <h1>Fast geschafft!</h1>
-      <p class="lead">
-        Erzähl uns kurz von dir.
-      </p>
-      <a @click="showBlockquote=true" href="#">
-        <span class="material-icons info-button">
-        info
-        </span>
-        Deine Angaben werden nicht an Dritte weitergegeben und von uns ausschliesslich für die anonyme Auswertung dieser Umfrage genutzt.
-      </a>
-      <blockquote v-show="showBlockquote">
-        Deine Angaben helfen uns, belastbare Aussagen über die Beteiligung der Umfrage machen zu können.
-        So ist es beispielweise wichtig für uns zu wissen, wie spezifische Altersgruppen räumliche Situationen einschätzen.
-      </blockquote>
-      <form>
-        <vs-row vs-w="12">
-          <vs-col vs-type="flex" vs-w="4">
-            Ich bin:
-          </vs-col>
-          <vs-col vs-type="flex" vs-w="8">
-            <select v-model="surveyAge"
-              v-bind:class="{ active: surveyAge }">
-              <option :key="index" :value="item.value" v-for="(item, index) in listAges">{{ item.text }}</option>
-            </select>
-          </vs-col>
-        </vs-row>
-        <vs-row vs-w="12" style="margin-top:1em">
-          <vs-col vs-type="flex" vs-w="4">
-            Geschlecht:
-          </vs-col>
-          <vs-col vs-type="flex" vs-w="8">
-            <select v-model="surveyGender"
-              v-bind:class="{ active: surveyGender }">
-              <option :key="index" :value="item.value" v-for="(item, index) in listGenders">{{ item.text }}</option>
-            </select>
-          </vs-col>
-        </vs-row>
-        <vs-row vs-w="12" style="margin-top:1em">
-          <vs-col vs-type="flex" vs-w="4">
-            Wohnort (Kanton):
-          </vs-col>
-          <vs-col vs-type="flex" vs-w="8">
-            <select v-model="surveyCanton"
-              v-bind:class="{ active: surveyCanton }">
-              <option :key="index" :value="item.c" v-for="(item, index) in listCantons">{{ item.n }}</option>
-            </select>
-          </vs-col>
-        </vs-row>
-        <center>
-          <vs-button flat size="large" color="success"
-            style="margin: 1em 0"
-            @click="submitForm">Abschliessen</vs-button>
-        </center>
-      </form>
-    </div>
+<template lang="pug">
+.complete
+  .survey(v-show='!surveyComplete')
+    h1 Fast geschafft!
+    p.lead
+      | Erz&auml;hl uns kurz von dir.
+    a(@click='showBlockquote=true', href='#')
+      span.material-icons.info-button
+        | info
+      | Deine Angaben werden nicht an Dritte weitergegeben und von uns ausschliesslich f&uuml;r die anonyme Auswertung dieser Umfrage genutzt.
 
-    <center class="thanks" v-show="surveyComplete">
-      Herzlichen Dank für deine Teilnahme!
-    </center>
+    blockquote(v-show='showBlockquote')
+      | Deine Angaben helfen uns, belastbare Aussagen &uuml;ber die Beteiligung der Umfrage machen zu k&ouml;nnen.
+      | So ist es beispielweise wichtig f&uuml;r uns zu wissen, wie spezifische Altersgruppen r&auml;umliche Situationen einsch&auml;tzen.
 
-    <div v-show="surveyComplete && surveyRaffle">
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-      <center class="survey-next">
-        <a href="https://forms.gle/SoFeC5tRiJdiEvoU6" target="_blank">
-          <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
-        </a>
-        <vs-button flat size="large" color="success" @click="surveyRaffle=false">Weiter 👉</vs-button>
-      </center>
-    </div>
+    form
+      vs-row(vs-w='12')
+        vs-col(vs-type='flex', vs-w='4')
+          | Ich bin:
+        vs-col(vs-type='flex', vs-w='8')
+          select(v-model='surveyAge', v-bind:class='{ active: surveyAge }')
+            option(:key='index', :value='item.value', v-for='(item, index) in listAges') {{ item.text }}
+      vs-row(vs-w='12', style='margin-top:1em')
+        vs-col(vs-type='flex', vs-w='4')
+          | Geschlecht:
+        vs-col(vs-type='flex', vs-w='8')
+          select(v-model='surveyGender', v-bind:class='{ active: surveyGender }')
+            option(:key='index', :value='item.value', v-for='(item, index) in listGenders') {{ item.text }}
+      vs-row(vs-w='12', style='margin-top:1em')
+        vs-col(vs-type='flex', vs-w='4')
+          | Wohnort (Kanton):
+        vs-col(vs-type='flex', vs-w='8')
+          select(v-model='surveyCanton', v-bind:class='{ active: surveyCanton }')
+            option(:key='index', :value='item.c', v-for='(item, index) in listCantons') {{ item.n }}
 
-    <div v-show="surveyComplete && !surveyRaffle">
-      <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-      <center class="survey-next">
-        <a href="https://forms.gle/fDcXHYkSire7GRiU9" target="_blank">
-          <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
-        </a>
-        <vs-button flat size="large" color="success" @click="skipSubscribe">Weitere Bilder bewerten 👉</vs-button>
-      </center>
-    </div>
+      center
+        vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') Abschliessen
 
-  </div>
+  center.thanks(v-show='surveyComplete')
+    | Herzlichen Dank f&uuml;r deine Teilnahme!
+
+  div(v-show='surveyComplete && surveyRaffle')
+    iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
+    center.survey-next
+      a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
+        vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
+      vs-button(flat='', size='large', color='success', @click='surveyRaffle=false') Weiter &#x1F449;
+
+  div(v-show='surveyComplete && !surveyRaffle')
+    iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
+    center.survey-next
+      a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
+        vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
+      vs-button(flat='', size='large', color='success', @click='skipSubscribe') Weitere Bilder bewerten &#x1F449;
 </template>
 
 <script>

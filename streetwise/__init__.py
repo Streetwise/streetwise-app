@@ -17,7 +17,7 @@ def create_app():
     app.logger.info('>>> {}'.format(Config.FLASK_ENV))
 
     db.init_app(app)
-    from .models import Base, Image, Session, Comment, Vote, Campaign
+    from .models import Base, Image, Session, Vote, Campaign
     migrate.init_app(app, db)
 
     # Initialize the API limiter
