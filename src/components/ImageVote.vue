@@ -128,7 +128,7 @@ export default {
       )
         .then(responseData => {
           if (responseData === null) {
-            return this.$vs.notify({ text: 'Bitte nochmal wiederholen', color: 'warning', position: 'top-center' })
+            return this.$vs.notify({ text: 'Das ging etwas zu schnell.', color: 'warning', position: 'top-center' })
           }
           this.session = responseData.session_hash
           this.resources.push(responseData)
@@ -136,9 +136,9 @@ export default {
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
-            this.$vs.notify({ text: 'Bitte nochmal wiederholen', color: 'warning', position: 'top-center' })
+            this.$vs.notify({ text: 'Bitte wiederhole deine Eingabe.', color: 'warning', position: 'top-center' })
           } else {
-            this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
+            this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
           }
         })
     },

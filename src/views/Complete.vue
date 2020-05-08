@@ -15,7 +15,7 @@
         Deine Angaben helfen uns, belastbare Aussagen über die Beteiligung der Umfrage machen zu können.
         So ist es beispielweise wichtig für uns zu wissen, wie spezifische Altersgruppen räumliche Situationen einschätzen.
       </blockquote>
-      <form style="margin-top:3em">
+      <form>
         <vs-row vs-w="12">
           <vs-col vs-type="flex" vs-w="4">
             Ich bin:
@@ -49,24 +49,40 @@
             </select>
           </vs-col>
         </vs-row>
-
-        <vs-button flat size="large" color="success"
-          style="margin: 1em 0"
-          @click="submitForm">Abschliessen</vs-button>
+        <center>
+          <vs-button flat size="large" color="success"
+            style="margin: 1em 0"
+            @click="submitForm">Abschliessen</vs-button>
+        </center>
       </form>
     </div>
 
-    <div class="raffle" v-show="surveyComplete">
-      <h1>Herzlichen Dank für deine Teilnahme!</h1>
-    </div>
-    <iframe v-show="surveyComplete"
-      src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-    <center v-show="surveyComplete" class="survey-next">
-      <a href="https://forms.gle/SoFeC5tRiJdiEvoU6" target="_blank">
-        <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
-      </a>
-      <vs-button flat size="large" color="success" @click="skipSubscribe">Weitere Bilder bewerten 👉</vs-button>
+    <center class="thanks" v-show="surveyComplete">
+      Herzlichen Dank für deine Teilnahme!
     </center>
+
+    <div v-show="surveyComplete && surveyRaffle">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <center class="survey-next">
+        <a href="https://forms.gle/SoFeC5tRiJdiEvoU6" target="_blank">
+          <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
+        </a>
+        <vs-button flat size="large" color="success" @click="surveyRaffle=false">Weiter 👉</vs-button>
+      </center>
+    </div>
+
+    <div v-show="surveyComplete && !surveyRaffle">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true" width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+      <center class="survey-next">
+        <a href="https://forms.gle/fDcXHYkSire7GRiU9" target="_blank">
+          <vs-button flat type="line">Formular im Vollbildmodus anzeigen</vs-button>
+        </a>
+        <vs-button flat size="large" color="success" @click="skipSubscribe">Weitere Bilder bewerten 👉</vs-button>
+      </center>
+    </div>
+
   </div>
 </template>
 
@@ -81,6 +97,7 @@ export default {
       // Form state
       showBlockquote: false,
       surveyComplete: false,
+      surveyRaffle: true,
       // Survey data
       surveyAge: null,
       surveyGender: null,
@@ -90,7 +107,8 @@ export default {
         { text: '19 oder jünger', value: 1 },
         { text: 'zwischen 20 und 39', value: 2 },
         { text: 'zwischen 40 und 64', value: 3 },
-        { text: '65 oder älter', value: 4 },
+        { text: 'zwischen 65 und 79', value: 4 },
+        { text: '80 oder älter', value: 5 },
         { text: '(ich möchte keine Angaben machen)', value: -1 }
       ],
       listGenders: [
@@ -120,7 +138,7 @@ export default {
       )
         .then(responseData => {
           if (responseData === null) {
-            return this.$vs.notify({ text: 'Bitte nochmal wiederholen', color: 'warning', position: 'top-center' })
+            return this.$vs.notify({ text: 'Da ist etwas schiefgegangen. Bitte wiederhole deine Eingabe.', color: 'warning', position: 'top-center' })
           }
           this.$vs.notify({ text: 'Gespeichert', color: 'success' })
           this.surveyComplete = true
@@ -196,9 +214,22 @@ export default {
   }
   iframe {
     width: 100%;
-    height: 330px;
     margin: 0px;
     padding: 0px;
   }
+}
+@media screen and (max-height: 800px) and (min-height: 601px) {
+  iframe { height: 440px; }
+}
+@media screen and (max-height: 600px) and (min-height: 401px) {
+  iframe { height: 360px; }
+}
+@media screen and (max-height: 500px) {
+  iframe { height: 210px; }
+  .complete { margin: 1em; }
+  .thanks { position: absolute; top: 0.7em; }
+}
+@media screen and (max-height: 500px) and (min-width: 750px) {
+  .thanks { right: 1em; }
 }
 </style>
