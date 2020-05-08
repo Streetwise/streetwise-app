@@ -11,9 +11,13 @@
       >
       <div class="body">
         <p>Kannst du dich bei diesem Bildpaar wirklich nicht entscheiden, wo du dich sicherer fühlen würdest?</p>
-        <vs-select v-model="selectedIssue">
-          <vs-select-item :key="index" :value="item.v" :text="item.t" v-for="(item,index) in issueList" />
-        </vs-select>
+        <select size="large" v-model="selectedIssue">
+          <option
+            :key="index" :value="item.v"
+            v-for="(item,index) in issueList">
+            {{ item.t }}
+          </option>
+        </select>
       </div>
      </vs-prompt>
   </div>
@@ -32,10 +36,10 @@ export default {
     return {
       selectedIssue: '',
       issueList: [
-        { v: 'left', t: 'das linke Bild ist unklar' },
-        { v: 'right', t: 'das rechte Bild ist unklar' },
-        { v: 'both', t: 'beide Bilder sind unklar' },
-        { v: 'same', t: 'beide Bilder sind zu ähnlich' }
+        { v: 'left', t: 'Das linke Bild ist unklar / schwierig zu beurteilen' },
+        { v: 'right', t: 'Das rechte Bild ist unklar / schwierig zu beurteilen' },
+        { v: 'both', t: 'Beide Bilder sind unklar / schwierig zu beurteilen' },
+        { v: 'same', t: 'Die zwei Bilder sind zu ähnlich' }
       ]
     }
   },
@@ -56,5 +60,10 @@ p {
   font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   font-size: 120%;
   margin-bottom: 1em;
+}
+
+select {
+  width: 100%;
+  font-size: 125%;
 }
 </style>
