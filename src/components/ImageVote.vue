@@ -122,6 +122,19 @@ export default {
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
           this.imageRightUrl = responseData[1].Url
+        }).catch(error => {
+          console.warn(error.message)
+          let self = this
+          this.$vs.dialog({
+            type: 'confirm',
+            color: 'danger',
+            title: `Verbindungsfehler`,
+            text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+            accept: function () {
+              self.voteCount--
+              self.nextImagePair()
+            }
+          })
         })
     },
     vote (isRight, textComment = '') {
