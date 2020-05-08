@@ -4,7 +4,7 @@
       <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
     </div>
 
-    <h4 class="lead">{{ msg }}</h4>
+    <h3 class="lead">{{ msg }}</h3>
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
@@ -216,7 +216,7 @@ export default {
   .imagevote .lead {
     font-size: 90%;
     position: relative;
-    margin: 1em;
+    margin: 0.3em;
     left: 0px;
   }
 }
@@ -232,20 +232,25 @@ export default {
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
   .imagepane div img { height: 480px; }
+  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
   .imagepane div img { height: 400px; }
+  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   .imagepane div img { height: 333px; }
+  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
   .imagepane div img { height: 270px; }
-  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
+  .progressbar { margin: 0.5em 0 0 !important; }
+  p.undecided { margin-top: -2.7em; position: relative; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 230px; }
-  .progressbar { position: absolute; right: auto; left: 50%; margin: -0.5em 0 0 -5em !important; }
+  .imagepane div img { height: 180px; }
+  .progressbar { top: 7px; }
+  p.undecided { margin-top: -2.7em; position: relative; }
 }
 
 .lightbox {
@@ -264,10 +269,7 @@ export default {
 }
 
 .lead {
-  position: absolute;
-  left: 50%;
-  margin-left: -9em;
-  margin-top: -2em;
+  padding: 0.5em;
 }
 
 .vs-button.vote {
@@ -275,6 +277,11 @@ export default {
   width: 5em;
   width: 50%;
   border-radius: 0px;
+  color: black;
+  text-shadow: 1px 1px 1px white;
+}
+.vs-button.vote:first-child {
+  border-right: 1px solid white;
 }
 
 .vote-count {
@@ -293,6 +300,7 @@ export default {
     height: 2.8em;
     color: #000;
     font-weight: bold;
+    text-shadow: 1px 1px 1px white;
   }
 }
 @media screen and (max-width: 600px) and (min-height: 400px) {
@@ -312,6 +320,8 @@ export default {
   border-radius: 5px;
   background: white;
   padding: 0 5px;
+  position: absolute;
+  right: 0px;
   p {
     display: none;
   }

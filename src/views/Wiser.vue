@@ -1,38 +1,31 @@
-<template>
-  <div class="wiser">
-    <ImageVote
-      msg="Wo fühlst du dich sicherer?"
-      :skipintro="skipintro"
-    />
-    <vs-popup title="Anleitungshilfe" :active.sync="popupActive">
-      <div class="content centerx">
-        <p>
-          Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
-          Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
-          Scrolle oder tippe auf ein Bild, um es zu vergrössern.
-        </p>
-        <center class="together">
-          links 👈
-          <vs-button disabled type="border" color="black" class="undecided">???</vs-button>
-          👉 rechts
-        </center>
-        <!-- <div><img style="max-width:100%" src="@/assets/example.jpg"></div> -->
-        <p>
-          Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «Beide / Weiss nicht».
-          Bitte beantworte <b>mindestens 10</b> Bildpaare.
-        </p>
-        <center>
-          <vs-button flat size="large" color="success" @click="popupActive=false">Los geht's !</vs-button>
-        </center>
-      </div>
-    </vs-popup>
-    <center class="help-icon">
-      <vs-button flat size="small" color="white" @click="popupActive=true" title="Anleitung">
-        <vs-icon icon="help" size="small" bg="orange" round></vs-icon>
-        <b>Anleitung</b>
-      </vs-button>
-    </center>
-  </div>
+<template lang="pug">
+.wiser
+  ImageVote(msg='Wo fühlst du dich sicherer?', :skipintro='skipintro')
+  vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
+    .content.centerx
+      p.tip
+        | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+      center.together
+        | links &#x1F448;
+        vs-button.undecided(disabled='', type='border', color='black') ???
+        | &#x1F449; rechts
+      p.tip
+        | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
+      center
+        vs-icon(icon="star", size="small", color="darkblue")
+      p.tip
+        span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+      // <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
+      p
+        | Bitte beantworte
+        b &nbsp;mindestens 10
+        | &nbsp;Bildpaare.
+      center
+        vs-button(flat='', size='large', color='success', @click='popupActive=false') Los geht&apos;s !
+  center.help-icon
+    vs-button(flat='', size='small', color='white', @click='popupActive=true', title='Anleitung')
+      vs-icon(icon='help', size='small', bg='orange', round='')
+      b Anleitung
 </template>
 
 <script>
@@ -63,16 +56,16 @@ export default {
 <style lang="scss" scoped>
 .wiser {
   text-align: center;
-  .lead {
-    margin-top: 1em;
-  }
 }
 .centerx {
   margin: 0 20%;
-  font-size: 150%;
+  font-size: 140%;
   p, div {
     margin: 1em 0;
   }
+}
+.lead {
+  margin-top: 1em;
 }
 .together { white-space: nowrap; }
 .help-icon {
@@ -84,14 +77,16 @@ export default {
   margin-bottom: 7px;
 }
 @media screen and (max-height: 500px) {
+  .centerx { font-size: normal; }
   .help-icon {
     position: absolute;
-    top: 0px; right: 0px;
+    top: 0px; right: 0px; left: 0px;
+    text-align: center;
     b { display: none; }
   }
 }
 @media screen and (max-width: 600px) {
-  .centerx { margin: 1em; }
+  .centerx { font-size: initial; margin: 1em; }
   .help-icon {
     position: absolute;
     top: 0px; left: 0px;

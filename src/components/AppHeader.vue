@@ -8,7 +8,9 @@
 
       <div slot="title">
         <vs-navbar-title>
-          <router-link to="/">street<u>wise</u></router-link>
+          <router-link to="/">
+            <img class="logo" src="@/assets/streetwise_Logo.png" alt="streetwise app" title="Zum Start">
+          </router-link>
         </vs-navbar-title>
       </div>
       <vs-navbar-item v-show="false">
@@ -33,14 +35,12 @@ export default {
 .devpanel { display: none !important }
 .vs-navbar--title {
   font-size: 120%;
-  margin-top: 6px;
   padding-top: 4px;
-  padding-left: 2.5em;
-  background: url('~@/assets/streetwise_Logo.png') no-repeat 10px;
-  background-size: contain;
   font-size: 0px;
   color: transparent;
-  width: 200px; height: 30px;
+  img {
+    height: 30px;
+  }
   a {
     color: black;
     u {

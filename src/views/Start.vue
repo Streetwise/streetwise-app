@@ -4,28 +4,27 @@
     span.material-icons emoji_people
     span.smaller Willkommen zum Crowdsourcing!
   p.lead
-    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut? Zeig es uns in dieser Umfrage und mach mit beim Wettbewerb eines iPhone 11. Die Umfrage dauert max. 5 Minuten.
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
+  p.lead
+    | Zeig es uns in dieser Umfrage und mach mit beim Wettbewerb eines iPhone 11. Die Umfrage dauert max. 5 Minuten.
   .infobox
     center
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgängerin, Skater, Trottinett- oder Velofahrer.
+      | Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
     p.tip
-      vs-icon(icon="star", size="small", color="green")
+      vs-icon(icon="star", size="small", color="darkblue")
       | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
     p.tip
-      vs-icon(icon="star", size="small", color="yellow")
+      vs-icon(icon="star", size="small", color="darkblue")
       | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
     p.tip
-      vs-icon(icon="star", size="small", color="orange")
-      span Ein kleiner Tipp für Handy-NutzerInnen: Haltet das Handy quer für eine bessere Ansicht!
+      vs-icon(icon="star", size="small", color="darkblue")
+      span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
     router-link.wiselink(to="/wise")
-      vs-button(flat) Hier geht es zur Umfrage.
-    center
-      b Mach bei der Umfrage mit und&nbsp;
-      a.together(href="https://streetwise.space/disclaimer", target="_blank") gewinne ein iPhone 11
+      vs-button(flat) Hier geht es zur Umfrage
   center
     a(href="https://streetwise.space/about", target="_blank" title="Mehr erfahren zum Projekt auf streetwise.space")
       img.logo(src="@/assets/streetwise_Logo.png")
@@ -65,7 +64,6 @@ h1 {
   color: black;
   .material-icons {
     font-size: 120%;
-    float: left;
     vertical-align: middle;
   }
   .smaller {
@@ -88,13 +86,12 @@ img.icon {
   &.right { float:right; margin-left: 2em;  }
 }
 center { margin-top: 1em; }
-.lead {
+.lead, .infobox {
   margin: 0 20% 1em;
 }
 .infobox {
   border: 1px dashed blue;
   padding: 1em;
-  margin: 0 20% 1em;
 }
 .credit {
   font-size: 90%;
