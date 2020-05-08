@@ -16,7 +16,9 @@ class Config(object):
     # If not set fall back to production for safety
     FLASK_ENV =  os.getenv('FLASK_ENV', 'production')
     # Set FLASK_SECRET on your production Environment
-    SECRET_KEY = os.getenv('FLASK_SECRET', 'Secret')
+    FLASK_SECRET = os.getenv('FLASK_SECRET', 'NoSecret')
+    # Set API_KEY on your production Environment
+    API_KEY = os.getenv('API_KEY', 'OpenData')
 
     SSL_REDIRECT = os.getenv('SSL_REDIRECT', False)
 

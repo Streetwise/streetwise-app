@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Corrects the ACLs and downloads latest image database
 

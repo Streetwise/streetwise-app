@@ -36,7 +36,7 @@ def test_secure_resource_fail(client):
 
 def test_secure_resource_pass(client):
     resp = client.get('/api/vote/export',
-                      headers={'authorization': 'Bearer x'})
+                      headers={'authorization': 'OpenData'})
     assert resp.status_code == 200
 
 @pytest.fixture(scope="module")

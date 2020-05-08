@@ -17,6 +17,10 @@
     "FLASK_SECRET": {
       "description": "Database Secret",
       "generator": "secret"
+    },
+    "APP_KEY": {
+      "description": "API Key",
+      "generator": "secret"
     }
    },
   "addons": [

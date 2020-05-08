@@ -16,6 +16,7 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 ## History
 
+- **0.3** 8.5.2020: First go live
 - **0.2** 6.5.2020: Patch release
 - **0.1** 29.4.2020: Initial release
 
@@ -76,7 +77,11 @@ Prepare your database using the Flask Migrate upgrade command:
 
 `flask db upgrade`
 
-Import the image files, defaulting from the `ch_data.csv` file in the `data` folder:
+Grab a copy of the image database:
+
+`cd data && ./get_data.sh`
+
+Import the image files from the `ch_data.csv` file in the `data` folder:
 
 `./manage.py images`
 
