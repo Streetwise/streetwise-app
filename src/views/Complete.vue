@@ -176,29 +176,28 @@ export default {
     button { margin-right: 1em; }
   }
 }
-
+@media screen and (min-height: 801px) {
+  iframe { height: 900px; }
+}
+@media screen and (max-height: 800px) and (min-height: 601px) {
+  iframe { height: 600px; }
+}
+@media screen and (max-height: 600px) and (min-height: 401px) {
+  iframe { height: 800px; }
+}
+@media screen and (max-height: 500px) and (min-width: 750px) {
+  .thanks { right: 1em; }
+  iframe { height: 1100px; }
+}
+@media screen and (max-height: 500px) and (max-width: 749px) {
+  .complete { margin: 1em; }
+  .thanks { position: absolute; top: 0.7em; }
+  iframe { height: 900px; }
+}
 @media screen and (max-width: 600px) {
   .complete {
     margin: 1em;
   }
-  iframe {
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-  }
-}
-@media screen and (max-height: 800px) and (min-height: 601px) {
-  iframe { height: 440px; }
-}
-@media screen and (max-height: 600px) and (min-height: 401px) {
-  iframe { height: 360px; }
-}
-@media screen and (max-height: 500px) {
-  iframe { height: 210px; }
-  .complete { margin: 1em; }
-  .thanks { position: absolute; top: 0.7em; }
-}
-@media screen and (max-height: 500px) and (min-width: 750px) {
-  .thanks { right: 1em; }
+  iframe { height: 1200px; }
 }
 </style>
