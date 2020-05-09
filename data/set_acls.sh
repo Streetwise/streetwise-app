@@ -1,5 +1,11 @@
 #!/bin/sh
 
+echo Trying to set ACLs with s3cmd ..
+s3cmd setacl s3://imagery.streetwise-app.ch/enhanced/ --acl-public --recursive
+
+read -p "Did that work? Ctrl-C if it did."
+
+echo Setting ACLs using linode-cli ..
 INPUT=ch_data.csv
 OLDIFS=$IFS
 IFS=','

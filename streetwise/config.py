@@ -10,7 +10,7 @@ DEFAULT_DB_PATH = os.path.dirname(__file__)
 DEFAULT_DB_PATH = os.path.join(DEFAULT_DB_PATH, os.pardir, 'data', 'streetwise.db')
 DEFAULT_DB_PATH = os.path.abspath(DEFAULT_DB_PATH)
 
-DEFAULT_BUCKET_URL = "https://eu-central-1.linodeobjects.com/streetwise/enhanced/"
+DEFAULT_BUCKET_URL = "https://imagery.streetwise-app.ch/enhanced/"
 
 class Config(object):
     # If not set fall back to production for safety
