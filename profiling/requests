@@ -1,0 +1,5 @@
+GET http://localhost:5000/api/image/random
+
+POST http://localhost:5000/api/vote/
+Content-Type: application/json
+@./vote.json
