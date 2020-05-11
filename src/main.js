@@ -28,12 +28,9 @@ Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (from.name === 'wise') {
-    // Implement Navigation Guards
-    // console.log(to, from, next)
-    if (to.name !== 'complete') {
-      return next(confirm('Bist du sicher, dass du aus der Umfrage aussteigen willst?'))
-    }
+  // Implement Navigation Guards
+  if (from.name === 'wise' && to.name !== 'complete') {
+    return next(window.confirm('Bist du dir sicher, dass du die Umfrage verlassen willst?'))
   }
   next()
 })

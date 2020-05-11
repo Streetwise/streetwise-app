@@ -29,6 +29,7 @@
     | Mach mit beim&#32;
     a(href="https://streetwise.space/disclaimer#teilnahmebedingungen", target="_blank") Wettbewerb
     | &#32;eines iPhone 11.&#32;
+  p.lead
     b Die Umfrage dauert max. 5 Minuten.&#32;
     | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
   center
