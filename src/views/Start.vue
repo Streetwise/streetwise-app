@@ -1,19 +1,12 @@
 <template lang="pug">
 .start
-  h1
-    span.material-icons emoji_people
-    span.smaller Willkommen zum Crowdsourcing!
-  p.lead
-    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
-  p.lead
-    | Zeig es uns in dieser Umfrage und mach mit beim Wettbewerb eines iPhone 11. Die Umfrage dauert max. 5 Minuten.
   .infobox
     center
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
+      | Stell dir vor, du betrachtest die Bilder je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
     p.tip
       vs-icon(icon="star", size="small", color="darkblue")
       | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
@@ -24,7 +17,15 @@
       vs-icon(icon="star", size="small", color="darkblue")
       span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
     router-link.wiselink(to="/wise")
-      vs-button(flat) Hier geht es zur Umfrage
+      vs-button(flat)
+        vs-icon(icon="assignment_turned_in", color="white", size="large")
+        span &nbsp; Umfrage starten
+  p.lead
+    | Mach mit beim&#32;
+    a(href="https://streetwise.space/disclaimer#teilnahmebedingungen", target="_blank") Wettbewerb
+    | &#32;eines iPhone 11.&#32;
+    b Die Umfrage dauert max. 5 Minuten.&#32;
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
   center
     a(href="https://streetwise.space/about", target="_blank" title="Mehr erfahren zum Projekt auf streetwise.space")
       img.logo(src="@/assets/streetwise_Logo.png")
@@ -43,8 +44,8 @@
     ul.attribution
       li Code (MIT) von <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a>.
       li Bilder (CC BY-SA) von <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>.
-      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev" target="_blank">Vitaly Gorbachev</a>.
-      li Copyright &copy; 2020 Streetwise ARGE
+      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>.
+      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise ARGE</a>
 </template>
 
 <script>
@@ -78,7 +79,7 @@ p.lead, p.campaign { font-size: 120%; }
 p.campaign { color: darkblue; font-weight: bold; }
 p.tip .vs-icon {
   float: left;
-  margin-bottom: 2em;
+  margin-bottom: 2.3em;
   margin-right: 0.2em;
   clear: both;
 }
@@ -94,10 +95,10 @@ center { margin-top: 1em; }
 .lead, .infobox {
   margin: 0 20% 1em;
 }
-.infobox {
-  border: 1px dashed blue;
-  padding: 1em;
-}
+// .infobox {
+//   border: 1px dashed blue;
+//   padding: 1em;
+// }
 .credit {
   font-size: 90%;
   color: black;

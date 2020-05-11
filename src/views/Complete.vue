@@ -191,7 +191,7 @@ export default {
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
-  .thanks { position: absolute; top: 0.7em; }
+  .thanks { position: absolute; top: 0.7em; background: white; }
   iframe { height: 900px; }
 }
 @media screen and (max-width: 600px) {

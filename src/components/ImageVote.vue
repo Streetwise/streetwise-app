@@ -259,6 +259,7 @@ export default {
     bottom: 2em;
     width: 100%; margin-left: -30px;
     text-align: center;
+    z-index: 1000;
     button:first-child { margin-right: 10px; }
   }
 }
