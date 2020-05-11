@@ -21,9 +21,10 @@
           vs-icon(icon="star", size="small", color="darkblue")
         td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
     router-link.wiselink(to="/wise")
-      vs-button(flat)
+      vs-button.start-button(flat)
         vs-icon(icon="assignment_turned_in", color="white", size="large")
-        span &nbsp; Umfrage starten
+        |
+        span Umfrage&nbsp;starten
   p.lead
     | Mach mit beim&#32;
     a(href="https://streetwise.space/disclaimer#teilnahmebedingungen", target="_blank") Wettbewerb
@@ -127,6 +128,8 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
   .wiselink { clear: both; display: block; }
 }
 @media screen and (max-width: 800px) {
+  .start-button { font-size: 110%; width: 100%; }
+  .start-button .vs-icon { transform: scale(0.6); }
   .lead, .infobox { margin-left: 10%; margin-right: 10%; }
 }
 </style>
