@@ -87,6 +87,7 @@ export default {
             color: 'success',
             title: `Weiter geht es`,
             text: 'Danke für deine Eingaben! Du kannst nun 10 weitere Bildpaaren beurteilen.',
+            acceptText: 'Bestätigen',
             accept: function () {
               // Continue responding to questions
               voter.voteCount = 0
@@ -130,10 +131,15 @@ export default {
             color: 'danger',
             title: `Verbindungsfehler`,
             text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+            acceptText: 'Bestätigen',
+            cancelText: 'Abbrechen',
             accept: function () {
               self.voteCount--
               self.voteTotal--
               self.nextImagePair()
+            },
+            cancel: function() {
+              self.$router.push({ name: 'finish' })
             }
           })
         })
