@@ -27,8 +27,10 @@ export default {
 .vs-popup {
   text-align: left;
 }
-.lightbox-container {
-  height: 100%;
+.fullscreen .vs-popup header { display: none; }
+.fullscreen .lightbox-container {
+  height: 100%; padding: 10px 0 0; margin: 0px;
+  .vs-button-text { color: black; text-shadow: 1px 1px 1px white; }
 }
 .vs-navbar--header > button.vs-navbar--btn-responsive { visibility: hidden; }
 </style>
