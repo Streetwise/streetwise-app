@@ -138,7 +138,7 @@ export default {
               self.voteTotal--
               self.nextImagePair()
             },
-            cancel: function() {
+            cancel: function () {
               self.$router.push({ name: 'finish' })
             }
           })
@@ -233,7 +233,7 @@ export default {
   .imagepane div img { height: 660px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
-  .imagepane div img { height: 480px; }
+  .imagepane div img { height: 500px; }
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
@@ -245,11 +245,11 @@ export default {
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
-  .imagepane div img { height: 270px;}
+  .imagepane div img { height: 260px;}
   .progressbar { margin: 0.5em 0 0 !important; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 240px; }
+  .imagepane div img { height: 205px; }
   .progressbar { top: 0px; }
 }
 

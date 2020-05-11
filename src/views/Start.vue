@@ -78,8 +78,7 @@ h1 {
 }
 .together { white-space: nowrap; }
 p { text-align: left; }
-p.lead, p.campaign { font-size: 120%; }
-p.campaign { color: darkblue; font-weight: bold; }
+p.campaign { font-size: 120%; color: darkblue; font-weight: bold; }
 img.logo {
   max-width: 80%;
 }
@@ -96,15 +95,14 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
 }
 .contest {
   & a {
-    color: #007aff;
+    color: darkblue;
     text-decoration: underline;
   }
-  color: #007aff;
+  color: darkblue;
   clear: both;
   display: inline-block;
   padding: 5px 1em;
   text-align: center;
-  font-size: 90% !important;
 }
 // .infobox {
 //   border: 1px dashed blue;
