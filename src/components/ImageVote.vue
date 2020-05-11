@@ -23,9 +23,9 @@
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button flat size="large" color="black" @click="popupImage=false">Zurück</vs-button>
-          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Dieses Bild auswählen</vs-button>
-          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Dieses Bild auswählen</vs-button>
+          <vs-button flat size="large" color="black" type="border" @click="popupImage=false">Zurück</vs-button>
+          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
+          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
         </div>
       </div>
     </vs-popup>
@@ -286,6 +286,7 @@ export default {
 }
 .vote-buttons {
   width: 100%;
+  z-index: 100;
   text-align: center;
   overflow: hidden;
   white-space: nowrap;
