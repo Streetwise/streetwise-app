@@ -7,15 +7,19 @@
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
       | Stell dir vor, du betrachtest die Bilder je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+    table
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
     router-link.wiselink(to="/wise")
       vs-button(flat)
         vs-icon(icon="assignment_turned_in", color="white", size="large")
@@ -77,12 +81,6 @@ h1 {
 p { text-align: left; }
 p.lead, p.campaign { font-size: 120%; }
 p.campaign { color: darkblue; font-weight: bold; }
-p.tip .vs-icon {
-  float: left;
-  margin-bottom: 2.3em;
-  margin-right: 0.2em;
-  clear: both;
-}
 img.logo {
   max-width: 80%;
 }
@@ -92,6 +90,8 @@ img.icon {
   &.right { float:right; margin-left: 2em;  }
 }
 center { margin-top: 1em; }
+table, table td { border: 0px; text-align: left; vertical-align: top; }
+table td { padding-bottom: 0.5em; padding-left: 1em; }
 .lead, .infobox {
   margin: 0 20% 1em;
 }

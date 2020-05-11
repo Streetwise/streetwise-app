@@ -29,18 +29,16 @@
         </div>
       </div>
     </vs-popup>
-    <p>
+    <div class="vote-buttons">
       <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
+      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
-    </p>
+    </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="undecided">
-      <vs-button flat size="large" color="warning" @click.prevent="openUndecided=true">unentschieden</vs-button>
-    </p>
+    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteTotal }}</p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
-    <p class="vote-count">{{ voteCount }} / {{ voteTotal }}</p>
   </div>
 </template>
 
@@ -219,11 +217,9 @@ export default {
 /* Vertical positioning of images */
 @media screen and (min-height: 1200px) {
   .imagepane div img { height: 1000px; }
-  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 1200px) and (min-height: 900px) {
   .imagepane div img { height: 660px; }
-  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
   .imagepane div img { height: 480px; }
@@ -238,14 +234,12 @@ export default {
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
-  .imagepane div img { height: 270px; }
+  .imagepane div img { height: 270px;}
   .progressbar { margin: 0.5em 0 0 !important; }
-  p.undecided { margin-top: -2.7em; position: relative; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 180px; }
-  .progressbar { top: 7px; }
-  p.undecided { margin-top: -2.7em; position: relative; }
+  .imagepane div img { height: 240px; }
+  .progressbar { top: 5px; }
 }
 
 .lightbox {
@@ -268,24 +262,53 @@ export default {
   padding: 0.5em;
 }
 
-.vs-button.vote {
-  font-weight: bold;
-  width: 5em;
-  width: 50%;
-  border-radius: 0px;
-  color: black;
-  text-shadow: 1px 1px 1px white;
+@media screen and (max-height: 600px) {
+  .vote-buttons {
+    position: fixed;
+    bottom: 0px;
+  }
 }
-.vs-button.vote:first-child {
-  border-right: 1px solid white;
+@media screen and (max-width: 600px) {
+  .vote-buttons .vs-button.vote {
+    width: 30% !important;
+  }
+}
+.vote-buttons {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0px; padding: 0px;
+  .vs-button {
+    border-radius: 0px;
+    color: black;
+    text-shadow: 1px 1px 1px white;
+  }
+  .vs-button.vote {
+    min-width: 5em;
+    width: 40%;
+    font-weight: bold;
+  }
+  .vs-button.undecided {
+    width: 18%;
+    min-width: 8em;
+  }
+  .vs-button {
+    border-right: 1px solid white;
+  }
+  .vs-button:last-child {
+    border-right: none;
+  }
 }
 
+/*
 .vote-count {
-  display: none; /* Ignore for now */
   margin-top: 1em;
   color: #999;
 }
+*/
 
+/*
 .undecided {
   text-align: center;
   width: 100%;
@@ -304,6 +327,7 @@ export default {
     margin: 0px;
   }
 }
+*/
 .complain {
   position: absolute;
   &.left { left: 5px; }
