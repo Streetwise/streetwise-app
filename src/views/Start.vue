@@ -25,9 +25,7 @@
         vs-button.start-button(flat, icon="assignment_turned_in")
           span Umfrage&nbsp;starten
   p.lead.contest
-    | Mach beim&#32;
-    a(href="https://streetwise.space/disclaimer#teilnahmebedingungen", target="_blank") Wettbewerb
-    | &#32;mit für die Chance eines iPhone 11 zu gewinnen.&#32;
+    | Mach mit bei der Verlosung eines iPhone 11.
   p.lead
     b Die Umfrage dauert max. 5 Minuten.&#32;
     | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
