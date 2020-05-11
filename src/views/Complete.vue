@@ -60,8 +60,12 @@ export default {
   name: 'Complete',
   components: {
   },
+  props: {
+    responses: 0
+  },
   data () {
     return {
+      responsesRequired: 10,
       // Form state
       showBlockquote: false,
       surveyComplete: false,
@@ -119,6 +123,13 @@ export default {
     },
     skipSubscribe: function () {
       this.$router.push({ name: 'wise', params: { skipintro: true } })
+    }
+  },
+  mounted () {
+    if (this.responses < this.responsesRequired) {
+      if (!window.prompt('Du hast weniger als ' + this.responsesRequired + ' beantwortet. Trotzdem weiterfahren?')) {
+        this.$router.push({ name: 'wise', params: { skipintro: false } })
+      }
     }
   }
 }
@@ -186,21 +197,22 @@ export default {
   iframe { height: 800px; }
 }
 @media screen and (max-height: 500px) and (min-width: 750px) {
-  .thanks { right: 1em; }
   iframe { height: 1100px; }
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
-  .thanks { position: absolute; top: 0.7em; background: white; }
   iframe { height: 900px; }
 }
 @media screen and (max-width: 600px) {
   .complete {
     margin: 1em;
   }
-  iframe { height: 1200px; }
+  iframe { height: 1400px; }
   .survey-next {
-    
+    position: fixed;
+    bottom: 3px;
+    z-index: 1000;
+    background: white;
   }
 }
 </style>

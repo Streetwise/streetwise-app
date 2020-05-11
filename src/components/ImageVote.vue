@@ -35,7 +35,7 @@
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteTotal }}</p>
+    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
@@ -57,7 +57,7 @@ export default {
   },
   data () {
     return {
-      voteTotal: 10, // number of images to require
+      voteRequired: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
       debug: false,
@@ -67,6 +67,7 @@ export default {
       imageRightUrl: imageLoading,
       timeStart: Date.now(),
       voteCount: 0,
+      voteTotal: 0,
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
@@ -78,7 +79,7 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.voteTotal) {
+      if (this.voteCount === this.voteRequired) {
         if (this.skipintro) {
           let voter = this
           this.$vs.dialog({
@@ -87,15 +88,17 @@ export default {
             title: `Weiter geht es`,
             text: 'Danke für deine Eingaben! Du kannst nun 10 weitere Bildpaaren beurteilen.',
             accept: function () {
+              // Continue responding to questions
               voter.voteCount = 0
             },
             cancel: function () {
-              voter.$router.push('complete')
+              // Return to home screen
+              voter.$router.push({ name: 'finish' })
             }
           })
         } else {
-          // TODO: forward session
-          this.$router.push('complete')
+          // Continue to finish survey screen
+          this.$router.push({ name: 'complete', params: { responses: this.voteTotal } })
         }
       }
       return false
@@ -103,7 +106,8 @@ export default {
     nextImagePair (skip = false) {
       if (!skip) {
         this.voteCount++
-        this.votePercent = 100 * this.voteCount / this.voteTotal
+        this.voteTotal++
+        this.votePercent = 100 * this.voteCount / this.voteRequired
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
@@ -128,6 +132,7 @@ export default {
             text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
             accept: function () {
               self.voteCount--
+              self.voteTotal--
               self.nextImagePair()
             }
           })

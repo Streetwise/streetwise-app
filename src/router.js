@@ -16,15 +16,21 @@ export default new Router({
       component: Start
     },
     {
+      path: '/finish',
+      name: 'finish',
+      component: Start
+    },
+    {
       path: '/wise',
       name: 'wise',
       component: Wiser,
       props: true
     },
     {
-      path: '/complete',
+      path: '/complete/:responses',
       name: 'complete',
-      component: Complete
+      component: Complete,
+      props: true
     },
     {
       path: '/tour',
