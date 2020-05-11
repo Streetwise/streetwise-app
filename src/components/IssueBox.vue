@@ -34,8 +34,9 @@ export default {
   },
   data () {
     return {
-      selectedIssue: '',
+      selectedIssue: 'na',
       issueList: [
+        { v: 'na', t: '...' },
         { v: 'left', t: 'Das linke Bild ist unklar / schwierig zu beurteilen' },
         { v: 'right', t: 'Das rechte Bild ist unklar / schwierig zu beurteilen' },
         { v: 'both', t: 'Beide Bilder sind unklar / schwierig zu beurteilen' },
@@ -45,10 +46,11 @@ export default {
   },
   methods: {
     accept () {
+      this.selectedIssue = 'na'
       this.$emit('close-box', this.selectedIssue)
     },
     close () {
-      this.selectedIssue = null
+      this.selectedIssue = 'na'
       this.$emit('close-box', false)
     }
   }

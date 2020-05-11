@@ -1,30 +1,34 @@
 <template lang="pug">
 .start
-  h1
-    span.material-icons emoji_people
-    span.smaller Willkommen zum Crowdsourcing!
-  p.lead
-    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
-  p.lead
-    | Zeig es uns in dieser Umfrage und mach mit beim Wettbewerb eines iPhone 11. Die Umfrage dauert max. 5 Minuten.
   .infobox
     center
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bilder aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-    p.tip
-      vs-icon(icon="star", size="small", color="darkblue")
-      span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
-    router-link.wiselink(to="/wise")
-      vs-button(flat) Hier geht es zur Umfrage
+      | Stell dir vor, du betrachtest die Bilder je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
+    table
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
+      tr
+        td
+          vs-icon(icon="star", size="small", color="darkblue")
+        td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+    center
+      router-link.wiselink(to="/wise")
+        vs-button.start-button(flat, icon="assignment_turned_in")
+          span Umfrage&nbsp;starten
+  p.lead.contest
+    | Mach mit bei der Verlosung eines iPhone 11.
+  p.lead
+    b Die Umfrage dauert max. 5 Minuten.&#32;
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
   center
     a(href="https://streetwise.space/about", target="_blank" title="Mehr erfahren zum Projekt auf streetwise.space")
       img.logo(src="@/assets/streetwise_Logo.png")
@@ -43,8 +47,8 @@
     ul.attribution
       li Code (MIT) von <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a>.
       li Bilder (CC BY-SA) von <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>.
-      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" title="Vitaly Gorbachev" target="_blank">Vitaly Gorbachev</a>.
-      li Copyright &copy; 2020 Streetwise ARGE
+      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>.
+      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise ARGE</a>
 </template>
 
 <script>
@@ -74,14 +78,7 @@ h1 {
 }
 .together { white-space: nowrap; }
 p { text-align: left; }
-p.lead, p.campaign { font-size: 120%; }
-p.campaign { color: darkblue; font-weight: bold; }
-p.tip .vs-icon {
-  float: left;
-  margin-bottom: 2em;
-  margin-right: 0.2em;
-  clear: both;
-}
+p.campaign { font-size: 120%; color: darkblue; font-weight: bold; }
 img.logo {
   max-width: 80%;
 }
@@ -91,13 +88,26 @@ img.icon {
   &.right { float:right; margin-left: 2em;  }
 }
 center { margin-top: 1em; }
+table, table td { border: 0px; text-align: left; vertical-align: top; }
+table td { padding-bottom: 0.5em; padding-left: 1em; }
 .lead, .infobox {
   margin: 0 20% 1em;
 }
-.infobox {
-  border: 1px dashed blue;
-  padding: 1em;
+.contest {
+  & a {
+    color: darkblue;
+    text-decoration: underline;
+  }
+  color: darkblue;
+  clear: both;
+  display: inline-block;
+  padding: 5px 1em;
+  text-align: center;
 }
+// .infobox {
+//   border: 1px dashed blue;
+//   padding: 1em;
+// }
 .credit {
   font-size: 90%;
   color: black;
@@ -119,6 +129,9 @@ center { margin-top: 1em; }
   width: 400px;
   margin: 20px;
 }
+.wiselink .vs-button {
+  float: none;
+}
 @media screen and (min-width: 800px) {
   .start { font-size: 125%; }
   p { line-height: 150%; }
@@ -126,6 +139,8 @@ center { margin-top: 1em; }
   .wiselink { clear: both; display: block; }
 }
 @media screen and (max-width: 800px) {
+  .start-button { font-size: 110%; width: 100%; }
+  .start-button .vs-icon { transform: scale(0.6); }
   .lead, .infobox { margin-left: 10%; margin-right: 10%; }
 }
 </style>

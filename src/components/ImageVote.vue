@@ -29,18 +29,16 @@
         </div>
       </div>
     </vs-popup>
-    <p>
+    <div class="vote-buttons">
       <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
+      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
-    </p>
+    </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="undecided">
-      <vs-button flat size="large" color="warning" @click.prevent="openUndecided=true">unentschieden</vs-button>
-    </p>
+    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
-    <p class="vote-count">{{ voteCount }} / {{ voteTotal }}</p>
   </div>
 </template>
 
@@ -59,7 +57,7 @@ export default {
   },
   data () {
     return {
-      voteTotal: 10, // number of images to require
+      voteRequired: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
       debug: false,
@@ -69,6 +67,7 @@ export default {
       imageRightUrl: imageLoading,
       timeStart: Date.now(),
       voteCount: 0,
+      voteTotal: 0,
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
@@ -80,7 +79,7 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.voteTotal) {
+      if (this.voteCount === this.voteRequired) {
         if (this.skipintro) {
           let voter = this
           this.$vs.dialog({
@@ -88,16 +87,19 @@ export default {
             color: 'success',
             title: `Weiter geht es`,
             text: 'Danke für deine Eingaben! Du kannst nun 10 weitere Bildpaaren beurteilen.',
+            acceptText: 'Bestätigen',
             accept: function () {
+              // Continue responding to questions
               voter.voteCount = 0
             },
             cancel: function () {
-              voter.$router.push('complete')
+              // Return to home screen
+              voter.$router.push({ name: 'finish' })
             }
           })
         } else {
-          // TODO: forward session
-          this.$router.push('complete')
+          // Continue to finish survey screen
+          this.$router.push({ name: 'complete', params: { responses: this.voteTotal } })
         }
       }
       return false
@@ -105,7 +107,8 @@ export default {
     nextImagePair (skip = false) {
       if (!skip) {
         this.voteCount++
-        this.votePercent = 100 * this.voteCount / this.voteTotal
+        this.voteTotal++
+        this.votePercent = 100 * this.voteCount / this.voteRequired
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
@@ -128,9 +131,15 @@ export default {
             color: 'danger',
             title: `Verbindungsfehler`,
             text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+            acceptText: 'Bestätigen',
+            cancelText: 'Abbrechen',
             accept: function () {
               self.voteCount--
+              self.voteTotal--
               self.nextImagePair()
+            },
+            cancel: function () {
+              self.$router.push({ name: 'finish' })
             }
           })
         })
@@ -219,14 +228,12 @@ export default {
 /* Vertical positioning of images */
 @media screen and (min-height: 1200px) {
   .imagepane div img { height: 1000px; }
-  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 1200px) and (min-height: 900px) {
   .imagepane div img { height: 660px; }
-  .vote-count { position: absolute; right: 10px; top: 0px; }
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
-  .imagepane div img { height: 480px; }
+  .imagepane div img { height: 500px; }
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
@@ -238,14 +245,12 @@ export default {
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
-  .imagepane div img { height: 270px; }
+  .imagepane div img { height: 260px;}
   .progressbar { margin: 0.5em 0 0 !important; }
-  p.undecided { margin-top: -2.7em; position: relative; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 180px; }
-  .progressbar { top: 7px; }
-  p.undecided { margin-top: -2.7em; position: relative; }
+  .imagepane div img { height: 205px; }
+  .progressbar { top: 0px; }
 }
 
 .lightbox {
@@ -259,6 +264,7 @@ export default {
     bottom: 2em;
     width: 100%; margin-left: -30px;
     text-align: center;
+    z-index: 1000;
     button:first-child { margin-right: 10px; }
   }
 }
@@ -267,24 +273,53 @@ export default {
   padding: 0.5em;
 }
 
-.vs-button.vote {
-  font-weight: bold;
-  width: 5em;
-  width: 50%;
-  border-radius: 0px;
-  color: black;
-  text-shadow: 1px 1px 1px white;
+@media screen and (max-height: 600px) {
+  .vote-buttons {
+    position: fixed;
+    bottom: 0px;
+  }
 }
-.vs-button.vote:first-child {
-  border-right: 1px solid white;
+@media screen and (max-width: 600px) {
+  .vote-buttons .vs-button.vote {
+    width: 30% !important;
+  }
+}
+.vote-buttons {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0px; padding: 0px;
+  .vs-button {
+    border-radius: 0px;
+    color: black;
+    text-shadow: 1px 1px 1px white;
+  }
+  .vs-button.vote {
+    min-width: 5em;
+    width: 40%;
+    font-weight: bold;
+  }
+  .vs-button.undecided {
+    width: 18%;
+    min-width: 8em;
+  }
+  .vs-button {
+    border-right: 1px solid white;
+  }
+  .vs-button:last-child {
+    border-right: none;
+  }
 }
 
+/*
 .vote-count {
-  display: none; /* Ignore for now */
   margin-top: 1em;
   color: #999;
 }
+*/
 
+/*
 .undecided {
   text-align: center;
   width: 100%;
@@ -303,6 +338,7 @@ export default {
     margin: 0px;
   }
 }
+*/
 .complain {
   position: absolute;
   &.left { left: 5px; }

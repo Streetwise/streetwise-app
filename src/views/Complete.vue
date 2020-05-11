@@ -36,22 +36,27 @@
       center
         vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') Abschliessen
 
-  center.thanks(v-show='surveyComplete')
-    | Herzlichen Dank f&uuml;r deine Teilnahme!
 
-  div(v-show='surveyComplete && surveyRaffle')
+  div.survey-contest(v-show='surveyComplete && surveyRaffle')
+    center.thanks
+      | Herzlichen Dank f&uuml;r deine Teilnahme!
     iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
       a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
         vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='success', @click='surveyRaffle=false') Weiter &#x1F449;
+      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter &#9755;
 
-  div(v-show='surveyComplete && !surveyRaffle')
+  div.survey-feedback(v-show='surveyComplete && !surveyRaffle')
+    center.thanks(@click='scrollToSubmit')
+      | Hast du auf&#32;
+      b Senden
+      | &#32;geklickt? Wenn nicht, tippe hier.
     iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
       a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
         vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='success', @click='skipSubscribe') Weitere Bilder bewerten &#x1F449;
+      vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') &#9754; Zurück
+      vs-button(flat='', size='large', color='success', @click='skipSubscribe') Mehr&nbsp;bewerten &#9755;
 </template>
 
 <script>
@@ -60,8 +65,12 @@ export default {
   name: 'Complete',
   components: {
   },
+  props: {
+    responses: 0
+  },
   data () {
     return {
+      responsesRequired: 10,
       // Form state
       showBlockquote: false,
       surveyComplete: false,
@@ -109,7 +118,7 @@ export default {
           if (responseData === null) {
             return this.$vs.notify({ text: 'Da ist etwas schiefgegangen. Bitte wiederhole deine Eingabe.', color: 'warning', position: 'top-center' })
           }
-          this.$vs.notify({ text: 'Gespeichert', color: 'success' })
+          // this.$vs.notify({ text: 'Gespeichert', color: 'success' })
           this.surveyComplete = true
           window.scrollTo(0, 0)
         }).catch(error => {
@@ -117,8 +126,27 @@ export default {
           this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
         })
     },
+    scrollToSubmit: function() {
+      this.backSubscribe()
+      window.scrollTo(0, 100000)
+    },
+    backSubscribe: function () {
+      this.surveyRaffle = true
+    },
+    nextSubscribe: function () {
+      this.surveyRaffle = false
+      window.scrollTo(0, 0)
+    },
     skipSubscribe: function () {
       this.$router.push({ name: 'wise', params: { skipintro: true } })
+    }
+  },
+  mounted () {
+    if (this.responses < this.responsesRequired) {
+      console.warn("Too few responses") // This should not happen.
+      // if (!window.prompt('Du hast weniger als ' + this.responsesRequired + ' beantwortet. Trotzdem weiterfahren?')) {
+      //   this.$router.push({ name: 'wise', params: { skipintro: false } })
+      // }
     }
   }
 }
@@ -175,29 +203,46 @@ export default {
     margin-top: 1em;
     button { margin-right: 1em; }
   }
+
+  .survey-feedback .thanks {
+    background: rgb(224, 69, 0); padding: 5px; color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 @media screen and (min-height: 801px) {
   iframe { height: 900px; }
 }
 @media screen and (max-height: 800px) and (min-height: 601px) {
   iframe { height: 600px; }
+  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   iframe { height: 800px; }
+  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 500px) and (min-width: 750px) {
-  .thanks { right: 1em; }
   iframe { height: 1100px; }
+  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
-  .thanks { position: absolute; top: 0.7em; }
   iframe { height: 900px; }
+  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-width: 600px) {
   .complete {
     margin: 1em;
   }
-  iframe { height: 1200px; }
+  iframe { height: 1400px; }
+  .survey-next {
+    position: fixed;
+    bottom: 0px;
+    padding-bottom: 3px;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+    background: white;
+  }
 }
 </style>
