@@ -199,5 +199,8 @@ export default {
     margin: 1em;
   }
   iframe { height: 1200px; }
+  .survey-next {
+    
+  }
 }
 </style>

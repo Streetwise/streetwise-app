@@ -20,15 +20,14 @@
         td
           vs-icon(icon="star", size="small", color="darkblue")
         td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
-    router-link.wiselink(to="/wise")
-      vs-button.start-button(flat)
-        vs-icon(icon="assignment_turned_in", color="white", size="large")
-        |
-        span Umfrage&nbsp;starten
-  p.lead
-    | Mach mit beim&#32;
+    center
+      router-link.wiselink(to="/wise")
+        vs-button.start-button(flat, icon="assignment_turned_in")
+          span Umfrage&nbsp;starten
+  p.lead.contest
+    | Mach beim&#32;
     a(href="https://streetwise.space/disclaimer#teilnahmebedingungen", target="_blank") Wettbewerb
-    | &#32;eines iPhone 11.&#32;
+    | &#32;mit für die Chance eines iPhone 11 zu gewinnen.&#32;
   p.lead
     b Die Umfrage dauert max. 5 Minuten.&#32;
     | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
@@ -97,6 +96,18 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
 .lead, .infobox {
   margin: 0 20% 1em;
 }
+.contest {
+  & a {
+    color: #007aff;
+    text-decoration: underline;
+  }
+  color: #007aff;
+  clear: both;
+  display: inline-block;
+  padding: 5px 1em;
+  text-align: center;
+  font-size: 90% !important;
+}
 // .infobox {
 //   border: 1px dashed blue;
 //   padding: 1em;
@@ -121,6 +132,9 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
   max-width: 100%;
   width: 400px;
   margin: 20px;
+}
+.wiselink .vs-button {
+  float: none;
 }
 @media screen and (min-width: 800px) {
   .start { font-size: 125%; }
