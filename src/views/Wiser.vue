@@ -78,14 +78,11 @@ export default {
 }
 @media screen and (max-height: 500px) {
   .centerx { font-size: normal; }
-  .help-icon button {
-    position: absolute;
-    top: 0px; left: 0px; 
-    b { display: none; }
-  }
 }
 @media screen and (max-width: 600px) {
   .centerx { font-size: initial; margin: 1em; }
+}
+@media (max-height: 500px), (max-width: 600px) {
   .help-icon button {
     position: absolute;
     top: 0px; left: 0px;

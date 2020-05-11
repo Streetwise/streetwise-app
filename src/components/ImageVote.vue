@@ -239,7 +239,7 @@ export default {
 }
 @media screen and (max-height: 400px) {
   .imagepane div img { height: 240px; }
-  .progressbar { top: 5px; }
+  .progressbar { top: 0px; }
 }
 
 .lightbox {

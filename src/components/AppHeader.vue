@@ -51,7 +51,7 @@ export default {
 }
 header { min-height: 2em; }
 @media screen and (max-height: 400px) {
-  .vs-navbar--title { margin: 0px; padding-top: 0px; }
+  .vs-navbar--title { margin: 0px; padding-top: 0px; top: 5px; right: 0px; position: absolute }
 }
 @media screen and (min-height: 800px) {
   header { min-height: 3em; }
