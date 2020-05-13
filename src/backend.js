@@ -69,5 +69,10 @@ export default {
   getRandomImages () {
     return $axios.get(`image/random`)
       .then(response => response.data)
+  },
+
+  getVoteCount () {
+    return $axios.get(`vote/count`)
+      .then(response => response.data)
   }
 }
