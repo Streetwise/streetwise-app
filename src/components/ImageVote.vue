@@ -39,12 +39,14 @@
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
+    <CrowdSourceGoals />
   </div>
 </template>
 
 <script>
 import $backend from '@/backend'
 import IssueBox from '@/components/IssueBox.vue'
+import CrowdSourceGoals from '@/components/CrowdSourceGoals.vue'
 const imageLoading = '/images/loading.gif'
 export default {
   name: 'ImageVote',
@@ -53,7 +55,8 @@ export default {
     skipintro: Boolean
   },
   components: {
-    IssueBox
+    IssueBox,
+    CrowdSourceGoals
   },
   data () {
     return {
