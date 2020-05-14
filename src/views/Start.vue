@@ -20,6 +20,7 @@
         td
           vs-icon(icon="star", size="small", color="darkblue")
         td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+    ProgressGoals
     center
       router-link.wiselink(to="/wise")
         vs-button.start-button(flat, icon="assignment_turned_in")
@@ -52,9 +53,12 @@
 </template>
 
 <script>
+import ProgressGoals from '@/components/ProgressGoals.vue'
+
 export default {
   name: 'Start',
   components: {
+    ProgressGoals
   },
   mounted () {
     localStorage.setItem('streetwiseSession', null)
