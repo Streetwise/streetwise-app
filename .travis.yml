@@ -7,7 +7,7 @@ install:
   - "pip install --upgrade pip"
   - "pip install poetry codecov"
   - "poetry install"
-  - "flask db upgrade"
+  - "FLASK_APP=streetwise flask db upgrade"
 after_success:
   - codecov
 cache: pip yarn
@@ -16,4 +16,3 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
   - yarn install
   - yarn build
-

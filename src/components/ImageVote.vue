@@ -23,7 +23,7 @@
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button flat size="large" color="black" style="background:white" type="border" @click="popupImage=false">Zurück</vs-button>
+          <vs-button class="back-btn" flat size="large" color="black" type="border" @click="popupImage=false">Zurück</vs-button>
           <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
           <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
         </div>
@@ -39,15 +39,15 @@
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
-    <CrowdSourceGoals />
   </div>
 </template>
 
 <script>
 import $backend from '@/backend'
 import IssueBox from '@/components/IssueBox.vue'
-import CrowdSourceGoals from '@/components/CrowdSourceGoals.vue'
+
 const imageLoading = '/images/loading.gif'
+
 export default {
   name: 'ImageVote',
   props: {
@@ -55,8 +55,7 @@ export default {
     skipintro: Boolean
   },
   components: {
-    IssueBox,
-    CrowdSourceGoals
+    IssueBox
   },
   data () {
     return {
@@ -269,6 +268,7 @@ export default {
     text-align: center;
     z-index: 1000;
     button:first-child { margin-right: 10px; }
+    .back-btn { background-color: white; }
   }
 }
 
