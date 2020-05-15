@@ -215,20 +215,16 @@ export default {
 }
 @media screen and (max-height: 800px) and (min-height: 601px) {
   iframe { height: 600px; }
-  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   iframe { height: 800px; }
-  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 500px) and (min-width: 750px) {
   iframe { height: 1100px; }
-  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
   iframe { height: 900px; }
-  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-width: 600px) {
   .complete {
