@@ -24,7 +24,7 @@
     center
       router-link.wiselink(to="/wise")
         vs-button.start-button(flat, icon="assignment_turned_in")
-          span Umfrage&nbsp;starten
+          span Zur&nbsp;Umfrage
   p.lead.contest
     | Mach mit bei der Verlosung eines iPhone 11.
   p.lead
