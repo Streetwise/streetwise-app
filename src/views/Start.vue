@@ -6,7 +6,7 @@
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bilder je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
+      | Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein intuitives Sicherheitsempfinden ist gefragt!
     table
       tr
         td
