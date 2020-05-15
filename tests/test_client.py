@@ -1,11 +1,8 @@
 """ Unit tests for the frontend """
 
 import pytest
-from streetwise import create_app, db
 
-app = create_app()
-app_context = app.app_context()
-
+from . import app
 
 @pytest.fixture(scope="module")
 def client():
