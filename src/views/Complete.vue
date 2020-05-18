@@ -36,7 +36,6 @@
       center
         vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') Abschliessen
 
-
   div.survey-contest(v-show='surveyComplete && surveyRaffle')
     center.thanks
       | Herzlichen Dank f&uuml;r deine Teilnahme!
@@ -126,7 +125,7 @@ export default {
           this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
         })
     },
-    scrollToSubmit: function() {
+    scrollToSubmit: function () {
       this.backSubscribe()
       window.scrollTo(0, 100000)
     },
@@ -143,7 +142,8 @@ export default {
   },
   mounted () {
     if (this.responses < this.responsesRequired) {
-      console.warn("Too few responses") // This should not happen.
+      // This should not happen.
+      console.warn('Too few responses')
       // if (!window.prompt('Du hast weniger als ' + this.responsesRequired + ' beantwortet. Trotzdem weiterfahren?')) {
       //   this.$router.push({ name: 'wise', params: { skipintro: false } })
       // }
@@ -215,20 +215,16 @@ export default {
 }
 @media screen and (max-height: 800px) and (min-height: 601px) {
   iframe { height: 600px; }
-  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   iframe { height: 800px; }
-  .survey-feedback iframe { height: 1700px; }
 }
 @media screen and (max-height: 500px) and (min-width: 750px) {
   iframe { height: 1100px; }
-  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
   iframe { height: 900px; }
-  .survey-feedback iframe { height: 1800px; }
 }
 @media screen and (max-width: 600px) {
   .complete {

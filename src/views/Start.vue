@@ -6,7 +6,7 @@
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bilder je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in.
+      | Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein intuitives Sicherheitsempfinden ist gefragt!
     table
       tr
         td
@@ -20,10 +20,11 @@
         td
           vs-icon(icon="star", size="small", color="darkblue")
         td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+    ProgressGoals
     center
       router-link.wiselink(to="/wise")
         vs-button.start-button(flat, icon="assignment_turned_in")
-          span Umfrage&nbsp;starten
+          span Zur&nbsp;Umfrage
   p.lead.contest
     | Mach mit bei der Verlosung eines iPhone 11.
   p.lead
@@ -52,9 +53,12 @@
 </template>
 
 <script>
+import ProgressGoals from '@/components/ProgressGoals.vue'
+
 export default {
   name: 'Start',
   components: {
+    ProgressGoals
   },
   mounted () {
     localStorage.setItem('streetwiseSession', null)

@@ -1,13 +1,10 @@
 """ Python unit tests """
 
 import pytest
-from streetwise import create_app, db
 
-app = create_app()
-app_context = app.app_context()
+from . import app
 
 TEST_VOTE = {"choice_id":2, "other_id":1, "is_leftimage":False, "is_undecided":False, "time_elapsed":2, "window_width":647, "window_height":928, "comment":""}
-
 
 @pytest.fixture(scope="module")
 def client():
