@@ -33,4 +33,15 @@ export default {
   .vs-button-text { color: black; text-shadow: 1px 1px 1px white; }
 }
 .vs-navbar--header > button.vs-navbar--btn-responsive { visibility: hidden; }
+
+// Note: for compatibility with IE11 - configured in main.js
+.vuesax-app-is-ltr {
+  .vs-button-primary { background-color: rgb(91, 60, 196) }
+  .vs-button-success { background-color: rgb(23, 201, 100) }
+  .vs-button-danger { background-color:  rgb(242, 19, 93) }
+  .vs-button-warning { background-color: rgb(255, 130, 0) }
+  .vs-button-light { background-color:   rgb(200, 200, 200) }
+  .vs-button-dark { background-color:    rgb(36, 33, 69) }
+}
+
 </style>

@@ -5,7 +5,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+require('swiper/css/swiper.css')
+Vue.use(VueAwesomeSwiper)
+
 import StartTour from '@/components/StartTour.vue'
 
 export default {

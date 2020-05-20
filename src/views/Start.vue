@@ -21,21 +21,20 @@
           vs-icon(icon="star", size="small", color="darkblue")
         td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
     ProgressGoals
-    center
-      router-link.wiselink(to="/wise")
-        vs-button.start-button(flat, icon="assignment_turned_in")
+    center.wiselink
+      router-link(to="/wise")
+        vs-button.start-button(flat, color="success", icon="assignment_turned_in")
           span Zur&nbsp;Umfrage
   p.lead.contest
     | Mach mit bei der Verlosung eines iPhone 11.
   p.lead
     b Die Umfrage dauert max. 5 Minuten.&#32;
-    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?
+    | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?&#32;
+    router-link(to="/wise") Jetzt starten!
   center
     a(href="https://streetwise.space/about", target="_blank" title="Mehr erfahren zum Projekt auf streetwise.space")
       img.logo(src="@/assets/streetwise_Logo.png")
     .credit Ein Kooperationsprojekt der <a href="https://www.metropolitanraum-zuerich.ch/themen/kooperationsprogramm-2019-2022/streetwise.html" target="_blank">Metropolitankonferenz&nbsp;Zürich</a>
-    //vs-button(flat, color="black") Mehr zu&nbsp;
-      b Streetwise
   center(style="margin-top:2em")
     .together
       span Fragen?&nbsp;
@@ -140,7 +139,7 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
   .start { font-size: 125%; }
   p { line-height: 150%; }
   img.icon { width: 80px; }
-  .wiselink { clear: both; display: block; }
+  .wiselink a { clear: both; display: block; }
 }
 @media screen and (max-width: 800px) {
   .start-button { font-size: 110%; width: 100%; }

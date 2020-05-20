@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Start from './views/Start.vue'
 import Wiser from './views/Wiser.vue'
 import Complete from './views/Complete.vue'
-import Tour from './views/Tour.vue'
 
 Vue.use(Router)
 
@@ -31,11 +30,6 @@ export default new Router({
       name: 'complete',
       component: Complete,
       props: true
-    },
-    {
-      path: '/tour',
-      name: 'tour',
-      component: Tour
     }
   ]
 })

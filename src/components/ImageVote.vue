@@ -23,7 +23,7 @@
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button class="back-btn" flat size="large" color="black" type="border" @click="popupImage=false">Zurück</vs-button>
+          <vs-button class="back-btn" flat size="large" color="dark" type="border" @click="popupImage=false">Zurück</vs-button>
           <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
           <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
         </div>
@@ -37,7 +37,7 @@
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
     <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
     <p style="margin:1em" v-show="debug">
-      <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
+      <vs-button type="line" color="light" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
   </div>
 </template>
