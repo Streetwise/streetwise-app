@@ -1,7 +1,9 @@
 <template>
   <div class="progress-goals">
     <vs-progress :height="45" :percent="votePercent" color="success" />
-    <div>{{voteCount}} von {{voteGoal.toLocaleString()}}</div>
+    <div><b class="count">{{voteCount}}</b>
+      <span>&nbsp;von&nbsp;</span>
+      <b class="goal">{{voteGoal.toLocaleString('de-CH')}}</b></div>
     <small>Bildbewertungen gesammelt</small>
   </div>
 </template>
@@ -32,13 +34,15 @@ export default {
 .progress-goals {
   clear: both;
   width: 100%;
-  margin: 1.5em 0;
+  margin: 3em 0 1.5em;
   height: 2em;
 
   & div {
-    font-weight: bold;
     margin-top: -2.7em;
     margin-bottom: 0.7em;
+    span, b.goal {
+      font-size: 85%
+    }
   }
 }
 </style>
