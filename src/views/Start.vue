@@ -23,7 +23,7 @@
     ProgressGoals
     center.wiselink
       router-link(to="/wise")
-        vs-button.start-button(flat, color="success", icon="assignment_turned_in")
+        vs-button.start-button(flat, color="success", icon="arrow_forward_ios")
           span Zur&nbsp;Umfrage
   p.lead.contest
     | Mach mit bei der Verlosung eines iPhone 11.
