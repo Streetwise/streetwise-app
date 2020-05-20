@@ -14,7 +14,7 @@
       center
         vs-icon(icon="star", size="small", color="darkblue")
       p.tip
-        span Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+        span Halte das Handy quer für eine bessere Ansicht!
       // <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
       p
         | Bitte beantworte
@@ -67,7 +67,6 @@ export default {
 .lead {
   margin-top: 1em;
 }
-.together { white-space: nowrap; }
 .help-icon {
   z-index: 10000;
   b { color: orange !important; font-size: 120%; }

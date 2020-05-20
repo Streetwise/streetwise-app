@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Start from './views/Start.vue'
 import Wiser from './views/Wiser.vue'
 import Complete from './views/Complete.vue'
+import Finish from './views/Finish.vue'
 
 Vue.use(Router)
 
@@ -17,7 +18,7 @@ export default new Router({
     {
       path: '/finish',
       name: 'finish',
-      component: Start
+      component: Finish
     },
     {
       path: '/wise',

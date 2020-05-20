@@ -24,15 +24,16 @@
       >
         <div class="buttons">
           <vs-button class="back-btn" flat size="large" color="dark" type="border" @click="popupImage=false">Zurück</vs-button>
-          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
-          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
+          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Bild auswählen</vs-button>
+          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Bild auswählen</vs-button>
+          <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">Unentschieden</vs-button>
         </div>
       </div>
     </vs-popup>
     <div class="vote-buttons">
-      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
-      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
-      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">Linkes&nbsp;Bild</vs-button>
+      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">Unentschieden</vs-button>
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">Rechtes&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
     <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
@@ -62,7 +63,6 @@ export default {
       voteRequired: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
-      debug: false,
       imageLeft: 0,
       imageRight: 0,
       imageLeftUrl: imageLoading,
@@ -73,7 +73,8 @@ export default {
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
-      openUndecided: false
+      openUndecided: false,
+      debug: process.env.VUE_APP_DEBUG || false
     }
   },
   methods: {
@@ -96,7 +97,7 @@ export default {
             },
             cancel: function () {
               // Return to home screen
-              voter.$router.push({ name: 'finish' })
+              voter.$router.push({ name: 'start' })
             }
           })
         } else {
@@ -141,7 +142,7 @@ export default {
               self.nextImagePair()
             },
             cancel: function () {
-              self.$router.push({ name: 'finish' })
+              self.$router.push({ name: 'start' })
             }
           })
         })
@@ -164,7 +165,7 @@ export default {
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
-            this.$vs.notify({ text: 'Bitte wiederhole deine Eingabe.', color: 'warning', position: 'top-center' })
+            this.$vs.notify({ text: 'Das ging etwas zu schnell ...', color: 'warning', position: 'top-center' })
           } else {
             this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
           }

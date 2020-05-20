@@ -79,7 +79,6 @@ h1 {
     font-weight: normal;
   }
 }
-.together { white-space: nowrap; }
 p { text-align: left; }
 p.campaign { font-size: 120%; color: darkblue; font-weight: bold; }
 img.logo {
@@ -135,6 +134,7 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
 .wiselink .vs-button {
   float: none;
 }
+.start-button .vs-button--text { font-size: 150%; }
 @media screen and (min-width: 800px) {
   .start { font-size: 125%; }
   p { line-height: 150%; }
@@ -142,8 +142,9 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
   .wiselink a { clear: both; display: block; }
 }
 @media screen and (max-width: 800px) {
-  .start-button { font-size: 110%; width: 100%; }
+  .start-button { width: 100%; }
   .start-button .vs-icon { transform: scale(0.6); }
+  .start-button .vs-button--text { font-size: normal; }
   .lead, .infobox { margin-left: 10%; margin-right: 10%; }
 }
 </style>
