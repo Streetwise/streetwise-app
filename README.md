@@ -132,6 +132,7 @@ $ flask run
 
 - The Vue application will be served from http://localhost:8080
 - The API and static files will be served from http://localhost:5000
+- Setting the `VUE_APP_DEBUG` environment variable to `true` shows additional app features for debugging.
 
 ### Notes
 
