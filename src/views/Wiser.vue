@@ -30,9 +30,11 @@
 
 <script>
 import ImageVote from '@/components/ImageVote.vue'
+import store from '@/store.js'
 
 export default {
   name: 'Wiser',
+  store: store,
   components: {
     ImageVote
   },
