@@ -6,29 +6,12 @@
 
     <h3 class="lead">{{ msg }}</h3>
 
-    <div class="imagepane">
-      <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
-        <img :src="imageLeftUrl">
-      </div>
-      <div class="right" @click="popupImage=true;popupLeft=false" ref="rightImagePane">
-        <img :src="imageRightUrl">
-      </div>
+    <div>
+      <ImagePair v-bind:leftImage=this.leftImage v-bind:rightImage=this.rightImage v-bind:voteLeft="voteLeft" v-bind:voteRight="voteRight" />
     </div>
 
-    <vs-popup fullscreen
-      classContent="lightbox-container" styleHeader="display:none"
-      :active.sync="popupImage" @close="popupImage=false"
-      :title="`${popupLeft ? 'Linkes Bild' : 'Rechtes Bild'}`">
-      <div class="lightbox" @click="popupImage=false"
-        :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
-      >
-        <div class="buttons">
-          <vs-button class="back-btn" flat size="large" color="black" type="border" @click="popupImage=false">Zurück</vs-button>
-          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
-          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
-        </div>
-      </div>
-    </vs-popup>
+    <div v-if=this.areImagesInvalid>{{this.onImageError()}}</div>
+
     <div class="vote-buttons">
       <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
       <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
@@ -45,8 +28,7 @@
 <script>
 import $backend from '@/backend'
 import IssueBox from '@/components/IssueBox.vue'
-
-const imageLoading = '/images/loading.gif'
+import ImagePair from '@/components/ImagePair.vue'
 
 export default {
   name: 'ImageVote',
@@ -55,7 +37,16 @@ export default {
     skipintro: Boolean
   },
   components: {
-    IssueBox
+    IssueBox,
+    ImagePair
+  },
+  computed: {
+    // Reactive computed values from the vuex store
+    leftImage () { return this.$store.state.images.left.url },
+    rightImage () { return this.$store.state.images.right.url },
+    leftImageId () { return this.$store.state.images.left.id },
+    rightImageId () { return this.$store.state.images.right.id },
+    areImagesInvalid () { return this.$store.state.images.invalid }
   },
   data () {
     return {
@@ -63,10 +54,6 @@ export default {
       resources: [], // response from voting
       session: null, // current session
       debug: false,
-      imageLeft: 0,
-      imageRight: 0,
-      imageLeftUrl: imageLoading,
-      imageRightUrl: imageLoading,
       timeStart: Date.now(),
       voteCount: 0,
       voteTotal: 0,
@@ -106,6 +93,26 @@ export default {
       }
       return false
     },
+    onImageError () {
+      let self = this
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: `Verbindungsfehler`,
+        text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+        acceptText: 'Bestätigen',
+        cancelText: 'Abbrechen',
+        accept: function () {
+          self.voteCount--
+          self.voteTotal--
+          self.nextImagePair()
+          console.log(self)
+        },
+        cancel: function () {
+          self.$router.push({ name: 'finish' })
+        }
+      })
+    },
     nextImagePair (skip = false) {
       if (!skip) {
         this.voteCount++
@@ -114,43 +121,15 @@ export default {
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
-      this.imageLeftUrl = imageLoading
-      this.imageRightUrl = imageLoading
-      this.$refs.leftImagePane.scrollLeft = 200
-      this.$refs.rightImagePane.scrollLeft = 200
-      $backend.getRandomImages()
-        .then(responseData => {
-          // console.debug(responseData)
-          this.imageLeft = responseData[0].id
-          this.imageLeftUrl = responseData[0].Url
-          this.imageRight = responseData[1].id
-          this.imageRightUrl = responseData[1].Url
-        }).catch(error => {
-          console.warn(error.message)
-          let self = this
-          this.$vs.dialog({
-            type: 'confirm',
-            color: 'danger',
-            title: `Verbindungsfehler`,
-            text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
-            acceptText: 'Bestätigen',
-            cancelText: 'Abbrechen',
-            accept: function () {
-              self.voteCount--
-              self.voteTotal--
-              self.nextImagePair()
-            },
-            cancel: function () {
-              self.$router.push({ name: 'finish' })
-            }
-          })
-        })
+      this.$store.dispatch('refreshImages')
     },
     vote (isRight, textComment = '') {
+      // Reset images to the initial loading state
+      this.$store.commit('resetImages')
       $backend.voteCast(
         isRight,
-        this.imageLeft,
-        this.imageRight,
+        this.leftImageId,
+        this.rightImageId,
         this.elapsedTime(),
         textComment
       )
@@ -194,26 +173,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.imagepane {
-  text-align: center;
-  width: 100%;
-  overflow: hidden;
-  div {
-    display: inline-block;
-    width: 50%;
-    height: 60%;
-    padding: 0px; margin: 0px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    img {
-      padding: 0px; border: 0px; margin: 0px;
-    }
-  }
-}
-
 @media screen and (max-width: 600px) {
   .vs-button.complain {
     margin-top: 9px;
@@ -228,48 +187,20 @@ export default {
 }
 
 /* Vertical positioning of images */
-@media screen and (min-height: 1200px) {
-  .imagepane div img { height: 1000px; }
-}
-@media screen and (max-height: 1200px) and (min-height: 900px) {
-  .imagepane div img { height: 660px; }
-}
 @media screen and (max-height: 900px) and (min-height: 700px) {
-  .imagepane div img { height: 500px; }
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
-  .imagepane div img { height: 400px; }
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
-  .imagepane div img { height: 333px; }
   .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
-  .imagepane div img { height: 260px;}
   .progressbar { margin: 0.5em 0 0 !important; }
 }
 @media screen and (max-height: 400px) {
-  .imagepane div img { height: 205px; }
   .progressbar { top: 0px; }
-}
-
-.lightbox {
-  width: 100%; height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  overflow: hidden;
-  .buttons {
-    position: absolute;
-    bottom: 2em;
-    width: 100%; margin-left: -30px;
-    text-align: center;
-    z-index: 1000;
-    button:first-child { margin-right: 10px; }
-    .back-btn { background-color: white; }
-  }
 }
 
 .lead {
