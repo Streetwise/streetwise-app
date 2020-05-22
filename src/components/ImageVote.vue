@@ -36,7 +36,7 @@
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechtes&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
+    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ votesRequired }}</p>
     <p style="margin:1em" v-show="debug">
       <vs-button type="line" color="light" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
@@ -60,7 +60,6 @@ export default {
   },
   data () {
     return {
-      voteRequired: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
       imageLeft: 0,
@@ -74,6 +73,9 @@ export default {
       popupImage: false,
       popupLeft: false,
       openUndecided: false,
+      // Environment variable: number of images to require
+      votesRequired: process.env.VUE_APP_VOTESREQUIRED || 10,
+      // Environment variable: whether to show debug information
       debug: process.env.VUE_APP_DEBUG || false
     }
   },
@@ -82,7 +84,7 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.voteRequired) {
+      if (this.voteCount === this.votesRequired) {
         if (this.skipintro) {
           let voter = this
           this.$vs.dialog({
@@ -111,7 +113,7 @@ export default {
       if (!skip) {
         this.voteCount++
         this.voteTotal++
-        this.votePercent = 100 * this.voteCount / this.voteRequired
+        this.votePercent = 100 * this.voteCount / this.votesRequired
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()

@@ -26,7 +26,7 @@
         vs-button.start-button(flat, color="success", icon="arrow_forward_ios")
           span Zur&nbsp;Umfrage
   p.lead.contest
-    | Mach mit bei der Verlosung eines iPhone 11.
+    | Mach mit bei der Verlosung eines iPhone&nbsp;11.
   p.lead
     b Die Umfrage dauert max. 5 Minuten.&#32;
     | Bald gibt es die erste Karte der Schweiz, die deine Wahrnehmung des öffentlichen Raumes abbildet. Wie nimmst du deinen Lebensraum wahr? Wo fühlst du dich sicher, wo fühlst du dich gut?&#32;
@@ -103,7 +103,7 @@ table td { padding-bottom: 0.5em; padding-left: 1em; }
   color: darkblue;
   clear: both;
   display: inline-block;
-  padding: 5px 1em;
+  padding: 0px 1em;
   text-align: center;
 }
 // .infobox {

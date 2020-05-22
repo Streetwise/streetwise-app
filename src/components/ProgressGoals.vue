@@ -1,6 +1,6 @@
 <template>
   <div class="progress-goals">
-    <vs-progress :height="45" :percent="votePercent" color="success" />
+    <vs-progress :height="40" :percent="votePercent" color="success" />
     <div><b class="count">{{voteCount}}</b>
       <span>&nbsp;von&nbsp;</span>
       <b class="goal">{{voteGoal.toLocaleString('de-CH')}}</b></div>
