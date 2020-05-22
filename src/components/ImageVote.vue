@@ -198,6 +198,17 @@ export default {
   },
   mounted () {
     this.nextImagePair()
+
+    // Notify mobile users about langscape mode
+    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 800) {
+      this.$vs.dialog({
+        type: 'alert',
+        color: 'success',
+        title: `Hinweis`,
+        text: 'Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!',
+        acceptText: 'OK'
+      })
+    }
   }
 }
 </script>
