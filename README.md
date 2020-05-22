@@ -16,9 +16,13 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 ## History
 
-- **0.4** 8.5.2020: First go live
-- **0.3** 8.5.2020: First go live
-- **0.2** 6.5.2020: Patch release
+For more details visit our [releases page](https://github.com/Streetwise/streetwise-app/releases).
+
+- **0.6** 22.5.2020: Compatibility patch
+- **0.5** 18.5.2020: Vote counter added
+- **0.4** 11.5.2020: Usability improved
+- **0.3** 8.5.2020: Go live
+- **0.2** 6.5.2020: Patch
 - **0.1** 29.4.2020: Initial release
 
 ### Components
