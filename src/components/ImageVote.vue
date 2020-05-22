@@ -18,26 +18,27 @@
     <vs-popup fullscreen
       classContent="lightbox-container" styleHeader="display:none"
       :active.sync="popupImage" @close="popupImage=false"
-      :title="`${popupLeft ? 'Linkes Bild' : 'Rechtes Bild'}`">
+      :title="`${popupLeft ? 'linkes Bild' : 'rechtes Bild'}`">
       <div class="lightbox" @click="popupImage=false"
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button class="back-btn" flat size="large" color="black" type="border" @click="popupImage=false">Zurück</vs-button>
-          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Linkes Bild auswählen</vs-button>
-          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Rechtes Bild auswählen</vs-button>
+          <vs-button class="back-btn" flat size="large" color="dark" type="border" @click="popupImage=false">zurück</vs-button>
+          <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Bild auswählen</vs-button>
+          <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Bild auswählen</vs-button>
+          <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
         </div>
       </div>
     </vs-popup>
     <div class="vote-buttons">
-      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">links</vs-button>
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft"><b>linkes</b>&nbsp;Bild</vs-button>
       <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
-      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechts</vs-button>
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight"><b>rechtes</b>&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
-    <p style="margin:1em" v-show="debug">
-      <vs-button type="line" color="rgb(200,200,200)" @click.prevent="voteSkip">Überspringen</vs-button>
+    <p class="vote-count" v-show="debugmode">{{ voteCount }} / {{ votesrequired }}</p>
+    <p style="margin:1em" v-show="debugmode">
+      <vs-button type="line" color="light" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
   </div>
 </template>
@@ -52,17 +53,23 @@ export default {
   name: 'ImageVote',
   props: {
     msg: String,
-    skipintro: Boolean
+    skipintro: Boolean,
+    debugmode: {
+      type: Boolean,
+      default: false
+    },
+    votesrequired: {
+      type: Number,
+      default: 10
+    }
   },
   components: {
     IssueBox
   },
   data () {
     return {
-      voteRequired: 10, // number of images to require
       resources: [], // response from voting
       session: null, // current session
-      debug: false,
       imageLeft: 0,
       imageRight: 0,
       imageLeftUrl: imageLoading,
@@ -81,7 +88,7 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.voteRequired) {
+      if (this.voteCount === this.votesrequired) {
         if (this.skipintro) {
           let voter = this
           this.$vs.dialog({
@@ -96,7 +103,7 @@ export default {
             },
             cancel: function () {
               // Return to home screen
-              voter.$router.push({ name: 'finish' })
+              voter.$router.push({ name: 'start' })
             }
           })
         } else {
@@ -110,7 +117,7 @@ export default {
       if (!skip) {
         this.voteCount++
         this.voteTotal++
-        this.votePercent = 100 * this.voteCount / this.voteRequired
+        this.votePercent = 100 * this.voteCount / this.votesrequired
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()
@@ -141,10 +148,19 @@ export default {
               self.nextImagePair()
             },
             cancel: function () {
-              self.$router.push({ name: 'finish' })
+              self.$router.push({ name: 'start' })
             }
           })
         })
+    },
+    promptVoteTooFast () {
+      this.$vs.dialog({
+        type: 'alert',
+        color: 'warning',
+        title: `Oops!`,
+        text: 'Das ging etwas zu schnell.',
+        acceptText: 'Nochmals versuchen'
+      })
     },
     vote (isRight, textComment = '') {
       $backend.voteCast(
@@ -156,7 +172,7 @@ export default {
       )
         .then(responseData => {
           if (responseData === null) {
-            return this.$vs.notify({ text: 'Das ging etwas zu schnell.', color: 'warning', position: 'top-center' })
+            return this.promptVoteTooFast()
           }
           this.session = responseData.session_hash
           this.resources.push(responseData)
@@ -164,10 +180,9 @@ export default {
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
-            this.$vs.notify({ text: 'Bitte wiederhole deine Eingabe.', color: 'warning', position: 'top-center' })
-          } else {
-            this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
+            return this.promptVoteTooFast()
           }
+          this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
         })
     },
     voteLeft () {
@@ -189,6 +204,17 @@ export default {
   },
   mounted () {
     this.nextImagePair()
+
+    // Notify mobile users about langscape mode
+    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768) {
+      this.$vs.dialog({
+        type: 'alert',
+        color: 'success',
+        title: `Hinweis`,
+        text: 'Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!',
+        acceptText: 'OK'
+      })
+    }
   }
 }
 </script>
@@ -285,6 +311,7 @@ export default {
 @media screen and (max-width: 600px) {
   .vote-buttons .vs-button.vote {
     width: 30% !important;
+    padding: 12px 4px;
   }
 }
 .vote-buttons {
@@ -300,9 +327,8 @@ export default {
     text-shadow: 1px 1px 1px white;
   }
   .vs-button.vote {
-    min-width: 5em;
     width: 40%;
-    font-weight: bold;
+    min-width: 6em;
   }
   .vs-button.undecided {
     width: 18%;

@@ -41,21 +41,22 @@
       | Herzlichen Dank f&uuml;r deine Teilnahme!
     iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
-      a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
-        vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter &#9755;
+      //- a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
+      //-   vs-button(flat='', type='line', color='light') Formular im Vollbildmodus anzeigen
+      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter
 
   div.survey-feedback(v-show='surveyComplete && !surveyRaffle')
-    center.thanks(@click='scrollToSubmit')
+    .thanks(@click='scrollToSubmit')
       | Hast du auf&#32;
       b Senden
       | &#32;geklickt? Wenn nicht, tippe hier.
     iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
-      a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
-        vs-button(flat='', type='line') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') &#9754; Zurück
-      vs-button(flat='', size='large', color='success', @click='skipSubscribe') Mehr&nbsp;bewerten &#9755;
+      //- a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
+      //-   vs-button(flat='', size='large', type='line', color='light') Formular im Vollbildmodus anzeigen
+      span.together
+        vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') Zurück
+        vs-button(flat='', size='large', color='success', @click='skipSubscribe') Fertig
 </template>
 
 <script>
@@ -137,7 +138,7 @@ export default {
       window.scrollTo(0, 0)
     },
     skipSubscribe: function () {
-      this.$router.push({ name: 'wise', params: { skipintro: true } })
+      this.$router.push({ name: 'finish' })
     }
   },
   mounted () {
@@ -200,13 +201,25 @@ export default {
   }
 
   .survey-next {
-    margin-top: 1em;
+    position: fixed;
+    bottom: 0px; left: 0px;
+    padding-bottom: 3px;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+    background: white;
+
     button { margin-right: 1em; }
   }
 
   .survey-feedback .thanks {
-    background: rgb(224, 69, 0); padding: 5px; color: white;
-    border-radius: 5px;
+    b {
+      border-radius: 5px;
+      background: rgb(224, 69, 0);
+      padding: 5px;
+      color: white;
+    }
+    opacity: 0.8;
     cursor: pointer;
   }
 }
@@ -221,24 +234,18 @@ export default {
 }
 @media screen and (max-height: 500px) and (min-width: 750px) {
   iframe { height: 1100px; }
+  .survey-feedback iframe { height: 1600px; }
 }
 @media screen and (max-height: 500px) and (max-width: 749px) {
   .complete { margin: 1em; }
   iframe { height: 900px; }
+  .survey-feedback iframe { height: 2000px; }
 }
 @media screen and (max-width: 600px) {
   .complete {
     margin: 1em;
   }
   iframe { height: 1400px; }
-  .survey-next {
-    position: fixed;
-    bottom: 0px;
-    padding-bottom: 3px;
-    width: 100%;
-    text-align: center;
-    z-index: 1000;
-    background: white;
-  }
+  .survey-feedback iframe { height: 2500px; }
 }
 </style>

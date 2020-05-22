@@ -16,8 +16,13 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 ## History
 
-- **0.3** 8.5.2020: First go live
-- **0.2** 6.5.2020: Patch release
+For more details visit our [releases page](https://github.com/Streetwise/streetwise-app/releases).
+
+- **0.6** 22.5.2020: Compatibility patch
+- **0.5** 18.5.2020: Vote counter added
+- **0.4** 11.5.2020: Usability improved
+- **0.3** 8.5.2020: Go live
+- **0.2** 6.5.2020: Patch
 - **0.1** 29.4.2020: Initial release
 
 ### Components
@@ -103,6 +108,12 @@ Install JS dependencies:
 $ yarn
 ```
 
+Build the frontend into the `dist` folder:
+
+```
+$ yarn build
+```
+
 Run the test suite to make sure we're up to scratch (do it at this point, since it will expect frontend set up to be complete):
 
 ```
@@ -125,12 +136,15 @@ $ flask run
 
 - The Vue application will be served from http://localhost:8080
 - The API and static files will be served from http://localhost:5000
+- Setting the `VUE_APP_DEBUG` environment variable to `true` shows additional app features for debugging.
 
 ### Notes
 
 The dual dev-server setup allows you to take advantage of Webpack's development server with hot module replacement.
 
 Proxy config in `vue.config.js` is used to route the requests back to Flask's API on port 5000.
+
+If you get errors about a `DIST_DIR` not found, make sure to run `yarn build` once in your local environment.
 
 If you would rather run a single dev server, you can run Flask's development server only on `:5000`, but you have to build build the Vue app first, and the page will not reload on changes:
 

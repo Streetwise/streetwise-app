@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuesax from 'vuesax'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 import App from './App.vue'
 
@@ -13,17 +12,16 @@ import 'material-icons/iconfont/material-icons.css'
 import './filters'
 
 Vue.use(Vuesax, {
+  // Note: see also CSS specified in App.vue
   colors: {
-    primary: '#5b3cc4',
+    primary: 'rgb(91, 60, 196)',
     success: 'rgb(23, 201, 100)',
     danger: 'rgb(242, 19, 93)',
     warning: 'rgb(255, 130, 0)',
+    light: 'rgb(200, 200, 200)',
     dark: 'rgb(36, 33, 69)'
   }
 })
-
-require('swiper/css/swiper.css')
-Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false
 
