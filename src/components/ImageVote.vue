@@ -18,22 +18,22 @@
     <vs-popup fullscreen
       classContent="lightbox-container" styleHeader="display:none"
       :active.sync="popupImage" @close="popupImage=false"
-      :title="`${popupLeft ? 'Linkes Bild' : 'Rechtes Bild'}`">
+      :title="`${popupLeft ? 'linkes Bild' : 'rechtes Bild'}`">
       <div class="lightbox" @click="popupImage=false"
         :style="{ backgroundImage: `url(${popupLeft ? imageLeftUrl : imageRightUrl})`  }"
       >
         <div class="buttons">
-          <vs-button class="back-btn" flat size="large" color="dark" type="border" @click="popupImage=false">Zurück</vs-button>
+          <vs-button class="back-btn" flat size="large" color="dark" type="border" @click="popupImage=false">zurück</vs-button>
           <vs-button v-show="popupLeft" flat size="large" color="success" @click.prevent="voteLeft">Bild auswählen</vs-button>
           <vs-button v-show="!popupLeft" flat size="large" color="success" @click.prevent="voteRight">Bild auswählen</vs-button>
-          <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">Unentschieden</vs-button>
+          <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
         </div>
       </div>
     </vs-popup>
     <div class="vote-buttons">
-      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">Linkes&nbsp;Bild</vs-button>
-      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">Unentschieden</vs-button>
-      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">Rechtes&nbsp;Bild</vs-button>
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">linkes&nbsp;Bild</vs-button>
+      <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechtes&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
     <p class="vote-count" v-show="debug">{{ voteCount }} / {{ voteRequired }}</p>
@@ -147,6 +147,15 @@ export default {
           })
         })
     },
+    promptVoteTooFast () {
+      this.$vs.dialog({
+        type: 'alert',
+        color: 'warning',
+        title: `Oops!`,
+        text: 'Das ging etwas zu schnell.',
+        acceptText: 'Nochmals versuchen'
+      })
+    },
     vote (isRight, textComment = '') {
       $backend.voteCast(
         isRight,
@@ -157,7 +166,7 @@ export default {
       )
         .then(responseData => {
           if (responseData === null) {
-            return this.$vs.notify({ text: 'Das ging etwas zu schnell.', color: 'warning', position: 'top-center' })
+            return this.promptVoteTooFast()
           }
           this.session = responseData.session_hash
           this.resources.push(responseData)
@@ -165,10 +174,9 @@ export default {
         }).catch(error => {
           console.warn(error.message)
           if (error.message.indexOf('429')) {
-            this.$vs.notify({ text: 'Das ging etwas zu schnell ...', color: 'warning', position: 'top-center' })
-          } else {
-            this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
+            return this.promptVoteTooFast()
           }
+          this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
         })
     },
     voteLeft () {

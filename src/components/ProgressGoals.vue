@@ -40,9 +40,7 @@ export default {
   & div {
     margin-top: -2.7em;
     margin-bottom: 0.7em;
-    span, b.goal {
-      font-size: 85%
-    }
+    // span, b.goal { font-size: 85% }
   }
 }
 </style>

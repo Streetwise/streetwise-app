@@ -1,10 +1,12 @@
 <template lang="pug">
 .finish-page
-  h2 Herzlichen Dank f&uuml;r deine Teilnahme!
-  p Wir werden das teilen vom Projekt in deine Netzwerke schätzen.
+  h2 Herzlichen Dank f&uuml;r deine Teilnahme.
+  p Teile die streetwise Umfrage mit deinen Freunden und Bekannten!
   center.survey-next
     router-link(to="/")
-      vs-button(flat='', size='large', color='success', @click='skipSubscribe') Zum Start
+      vs-button(flat, size='large', color='success') Schliessen
+    router-link(to="/wise")
+      vs-button(flat, size='large', color="success", icon="arrow_forward_ios") Weitere Bilder bewerten
   SocialIcons(expand=true)
 </template>
 

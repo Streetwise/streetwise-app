@@ -43,7 +43,7 @@
     center.survey-next
       a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
         vs-button(flat='', type='line', color='light') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter &#9755;
+      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter
 
   div.survey-feedback(v-show='surveyComplete && !surveyRaffle')
     center.thanks(@click='scrollToSubmit')
@@ -52,11 +52,11 @@
       | &#32;geklickt? Wenn nicht, tippe hier.
     iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
-      a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
-        vs-button(flat='', type='line', color='light') Formular im Vollbildmodus anzeigen
+      //- a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
+      //-   vs-button(flat='', size='large', type='line', color='light') Formular im Vollbildmodus anzeigen
       span.together
-        vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') &#9754; Zurück
-        vs-button(flat='', size='large', color='success', @click='skipSubscribe') Fertig &#9755;
+        vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') Zurück
+        vs-button(flat='', size='large', color='success', @click='skipSubscribe') Fertig
 </template>
 
 <script>
