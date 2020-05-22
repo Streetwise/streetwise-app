@@ -31,9 +31,9 @@
       </div>
     </vs-popup>
     <div class="vote-buttons">
-      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft">linkes&nbsp;Bild</vs-button>
+      <vs-button flat size="large" color="success" class="vote left" @click.prevent="voteLeft"><b>linkes</b>&nbsp;Bild</vs-button>
       <vs-button flat size="large" color="warning" class="undecided" @click.prevent="openUndecided=true">unentschieden</vs-button>
-      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechtes&nbsp;Bild</vs-button>
+      <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight"><b>rechtes</b>&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
     <p class="vote-count" v-show="debugmode">{{ voteCount }} / {{ votesrequired }}</p>
@@ -206,7 +206,7 @@ export default {
     this.nextImagePair()
 
     // Notify mobile users about langscape mode
-    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 800) {
+    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768) {
       this.$vs.dialog({
         type: 'alert',
         color: 'success',
@@ -311,6 +311,7 @@ export default {
 @media screen and (max-width: 600px) {
   .vote-buttons .vs-button.vote {
     width: 30% !important;
+    padding: 12px 4px;
   }
 }
 .vote-buttons {
@@ -326,9 +327,8 @@ export default {
     text-shadow: 1px 1px 1px white;
   }
   .vs-button.vote {
-    min-width: 5em;
     width: 40%;
-    font-weight: bold;
+    min-width: 6em;
   }
   .vs-button.undecided {
     width: 18%;
