@@ -36,8 +36,8 @@
       <vs-button flat size="large" color="success" class="vote right" @click.prevent="voteRight">rechtes&nbsp;Bild</vs-button>
     </div>
     <IssueBox :active="openUndecided" v-on:close-box="voteUndecided($event)" />
-    <p class="vote-count" v-show="debug">{{ voteCount }} / {{ votesRequired }}</p>
-    <p style="margin:1em" v-show="debug">
+    <p class="vote-count" v-show="debugmode">{{ voteCount }} / {{ votesrequired }}</p>
+    <p style="margin:1em" v-show="debugmode">
       <vs-button type="line" color="light" @click.prevent="voteSkip">Überspringen</vs-button>
     </p>
   </div>
@@ -53,7 +53,15 @@ export default {
   name: 'ImageVote',
   props: {
     msg: String,
-    skipintro: Boolean
+    skipintro: Boolean,
+    debugmode: {
+      type: Boolean,
+      default: false
+    },
+    votesrequired: {
+      type: Number,
+      default: 10
+    }
   },
   components: {
     IssueBox
@@ -72,11 +80,7 @@ export default {
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
-      openUndecided: false,
-      // Environment variable: number of images to require
-      votesRequired: process.env.VUE_APP_VOTESREQUIRED || 10,
-      // Environment variable: whether to show debug information
-      debug: process.env.VUE_APP_DEBUG || false
+      openUndecided: false
     }
   },
   methods: {
@@ -84,7 +88,7 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.votesRequired) {
+      if (this.voteCount === this.votesrequired) {
         if (this.skipintro) {
           let voter = this
           this.$vs.dialog({
@@ -113,7 +117,7 @@ export default {
       if (!skip) {
         this.voteCount++
         this.voteTotal++
-        this.votePercent = 100 * this.voteCount / this.votesRequired
+        this.votePercent = 100 * this.voteCount / this.votesrequired
         if (this.checkVotesComplete()) { return }
       }
       this.timeStart = Date.now()

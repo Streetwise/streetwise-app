@@ -1,6 +1,6 @@
 <template lang="pug">
 .wiser
-  ImageVote(msg='Wo fühlst du dich sicherer?', :skipintro='skipintro')
+  ImageVote(msg='Wo fühlst du dich sicherer?', :skipintro='skipintro', :debugmode='debugMode', :votesrequired='votesRequired')
   vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
     .content.centerx
       p.tip
@@ -11,15 +11,14 @@
         | &#x1F449; rechts
       p.tip
         | Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-      center
-        vs-icon(icon="star", size="small", color="darkblue")
+      //- center
+      //-   vs-icon(icon="star", size="small", color="darkblue")
+      //- <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
       p.tip
-        span Halte das Handy quer für eine bessere Ansicht!
-      // <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
-      p
-        | Bitte beantworte
-        b &nbsp;mindestens 10
-        | &nbsp;Bildpaare.
+        | Halte das Handy quer für eine bessere Ansicht.
+        | Beantworte
+        b &nbsp;mindestens {{ votesRequired }}
+        | &nbsp;Bildpaare, bitte.
       center
         vs-button(flat='', size='large', color='success', @click='popupActive=false') Los geht&apos;s !
   center.help-icon
@@ -44,7 +43,12 @@ export default {
   },
   data () {
     return {
-      popupActive: false
+      popupActive: false,
+
+      // Environment variable: number of images to require
+      votesRequired: process.env.VUE_APP_VOTESREQUIRED || 10,
+      // Environment variable: whether to show debug information
+      debugMode: process.env.VUE_APP_DEBUG || false
     }
   },
   mounted () {
