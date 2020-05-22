@@ -6,7 +6,7 @@
   .footer
     router-link(to="/")
       vs-button(flat, size='large', color='dark') Schliessen
-    router-link(to="/wise")
+    router-link(:to="{ name: 'wise', params: { skipintro: true }}")
       vs-button(flat, size='large', color='success') Weitere Bilder bewerten
 </template>
 
