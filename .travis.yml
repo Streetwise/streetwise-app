@@ -1,13 +1,17 @@
 language: python
 python:
   - 3.7
+services:
+  - "postgresql"
+before_script:
+  - psql -c 'create database streetwise_ci_test;' -U postgres
 script:
   - poetry run pytest --cov=streetwise --cov-report=xml
 install:
   - "pip install --upgrade pip"
   - "pip install poetry codecov"
   - "poetry install"
-  - "FLASK_APP=streetwise flask db upgrade"
+  - "FLASK_APP=streetwise DATABASE_URL="postgresql://postgres@localhost/streetwise_ci_test" flask db upgrade"
 after_success:
   - codecov
 cache: pip yarn
