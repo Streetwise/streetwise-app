@@ -1,6 +1,6 @@
 """ Python unit tests """
 
-import pytest
+import pytest, json
 
 from . import app
 
@@ -28,13 +28,21 @@ def test_vote_patch(client):
     assert resp.status_code == 405
 
 def test_secure_resource_fail(client):
-    resp = client.get('/api/result/votes')
+    resp = client.get('/api/results/latest')
     assert resp.status_code == 401
 
 def test_secure_resource_pass(client):
-    resp = client.get('/api/result/votes',
+    resp = client.get('/api/results/latest',
                       headers={'authorization': 'OpenData'})
     assert resp.status_code == 200
+
+def test_data_export_format(client):
+    resp = client.post('/api/vote/', json=TEST_VOTE)
+    resp = client.get('/api/results/latest',
+                      headers={'authorization': 'OpenData'})
+    assert resp.status_code == 200
+    result = json.loads(resp.data)
+    assert TEST_VOTE['choice_id'] == result[0]['right_image']['id']
 
 @pytest.fixture(scope="module")
 def request_context():

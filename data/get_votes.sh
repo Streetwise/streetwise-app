@@ -6,6 +6,6 @@ timestamp=$(date "+%Y.%m.%d-%H.%M")
 filename=streetwise-votes-$timestamp.json
 
 echo Downloading votes from $url ...
-curl -X GET "$url/api/result/votes" -H "accept: application/json" -H "authorization: $apikey" > $filename
+curl -X GET "$url/api/results/votes" -H "accept: application/json" -H "authorization: $apikey" > $filename
 
 echo $filename
