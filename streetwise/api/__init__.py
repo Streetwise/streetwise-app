@@ -22,3 +22,4 @@ def add_header(response):
 # from .resources import * # NOQA
 from .images import * # NOQA
 from .votes import * # NOQA
+from .results import * # NOQA

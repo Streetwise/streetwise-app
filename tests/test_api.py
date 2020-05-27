@@ -28,11 +28,11 @@ def test_vote_patch(client):
     assert resp.status_code == 405
 
 def test_secure_resource_fail(client):
-    resp = client.get('/api/vote/export')
+    resp = client.get('/api/result/votes')
     assert resp.status_code == 401
 
 def test_secure_resource_pass(client):
-    resp = client.get('/api/vote/export',
+    resp = client.get('/api/result/votes',
                       headers={'authorization': 'OpenData'})
     assert resp.status_code == 200
 
