@@ -7,9 +7,16 @@
 
 <script>
 import AppHeader from '@/components/AppHeader.vue'
-
 export default {
   name: 'App',
+  metaInfo: {
+    script: [{
+      src: 'https://cdn.usefathom.com/3.js',
+      site: process.env.VUE_APP_FATHOM_ANALYTICS_CODE,
+      async: true,
+      defer: true
+    }]
+  },
   components: {
     AppHeader
   }
