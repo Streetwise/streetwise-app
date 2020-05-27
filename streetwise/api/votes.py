@@ -9,7 +9,6 @@ from flask import request, current_app
 from flask_restplus import Resource, fields
 
 from . import db, api_rest, api_limiter
-from .security import require_auth
 from ..models import Session, Vote, Image, Campaign, generate_hash
 
 from sqlalchemy.sql.expression import func
@@ -29,21 +28,6 @@ VotingModel = api_rest.model('Vote', {
     'window_height': fields.Integer(attribute='session.agent_height'),
     'session_hash': fields.String(attribute='session.hash'),
 })
-
-class SecureResource(Resource):
-    """ Calls require_auth decorator on all requests """
-    method_decorators = [require_auth]
-
-@ns.route('/export')
-class VoteExport(SecureResource):
-    """ List all votes entered """
-
-    @ns.doc('export_votes')
-    def get(self):
-        return [p.dict() for p in Vote.query
-                # .filter_by(is_undecided=False)
-                # .limit(24000)
-                .all()]
 
 @ns.route('/count')
 class VoteCounter(Resource):

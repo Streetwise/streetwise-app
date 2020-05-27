@@ -94,24 +94,3 @@ class Vote(Base):
     time_elapsed = db.Column(db.Integer)
     # A free text comment, e.g. for undecideds
     comment = db.Column(db.Text)
-
-    def dict(self):
-        id_right = self.other_id if self.is_leftimage else self.choice_id
-        id_left = self.other_id if not self.is_leftimage else self.choice_id
-        if self.is_undecided:
-            the_winner = 'equal'
-        elif self.is_leftimage:
-            the_winner = 'left'
-        else:
-            the_winner = 'right'
-        return {
-            'id': self.id,
-            'session_id': self.session.id,
-            'created': self.created.isoformat(),
-            'left_image_id': id_left,
-            'right_image_id': id_right,
-            'winner': the_winner,
-            'is_undecided': self.is_undecided,
-            'time_elapsed': self.time_elapsed,
-            'comment': self.comment
-        }
