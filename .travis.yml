@@ -2,7 +2,7 @@ language: python
 python:
   - 3.7
 services:
-  - "postgresql"
+  - postgresql
 script:
   - DATABASE_URL="postgresql://postgres@localhost" poetry run pytest --cov=streetwise --cov-report=xml
 install:
