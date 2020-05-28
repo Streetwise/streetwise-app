@@ -49,6 +49,11 @@ def test_secure_resource_pass(client):
     assert resp.status_code == 200
 
 def test_data_export_format(client):
+    TEST_VOTE = {
+        "choice_id":2, "other_id":1, "is_leftimage":False, 
+        "is_undecided":False, "time_elapsed":2, "window_width":647, 
+        "window_height":928, "comment":""
+    }
     resp = client.post('/api/vote/', json=TEST_VOTE)
     resp = client.get('/api/results/latest',
                       headers={'authorization': 'OpenData'})
