@@ -49,17 +49,25 @@ def test_secure_resource_pass(client):
     assert resp.status_code == 200
 
 def test_data_export_format(client):
-    TEST_VOTE = {
-        "choice_id":2, "other_id":1, "is_leftimage":False, 
-        "is_undecided":False, "time_elapsed":2, "window_width":647, 
-        "window_height":928, "comment":""
-    }
-    resp = client.post('/api/vote/', json=TEST_VOTE)
-    resp = client.get('/api/results/latest',
-                      headers={'authorization': 'OpenData'})
-    assert resp.status_code == 200
-    result = json.loads(resp.data)
-    assert TEST_VOTE['choice_id'] == result[0]['right_image']['id']
+    with app_context:
+        image1 = Image()
+        image2 = Image()
+        db.session.add(image1)
+        db.session.add(image2)
+        db.session.commit()
+
+        vote_request = {"choice_id": image1.id, "other_id": image2.id,
+                        "is_leftimage": False,
+                        "is_undecided": False, "time_elapsed": 2,
+                        "window_width": 647, "window_height": 928,
+                        "comment": ""}
+
+        resp = client.post('/api/vote/', json=vote_request)
+        resp = client.get('/api/results/latest',
+                        headers={'authorization': 'OpenData'})
+        assert resp.status_code == 200
+        result = json.loads(resp.data)
+        assert vote_request['choice_id'] == result[0]['right_image']['id']
 
 @pytest.fixture(scope="module")
 def request_context():

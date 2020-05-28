@@ -55,6 +55,7 @@ class VoteLatest(SecureResource):
     def get(self):
         return [voteModel(p) for p in Vote.query
                 .filter_by(is_undecided=False)
+                .order_by(Vote.created.desc())
                 .limit(50)
                 .all()]
 
