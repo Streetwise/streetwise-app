@@ -2,9 +2,8 @@
 
 import pytest, json
 
-from . import app
-
-TEST_VOTE = {"choice_id":2, "other_id":1, "is_leftimage":False, "is_undecided":False, "time_elapsed":2, "window_width":647, "window_height":928, "comment":""}
+from streetwise.models import Image
+from . import app, app_context, db
 
 @pytest.fixture(scope="module")
 def client():
@@ -20,8 +19,21 @@ def test_vote_count(client):
     assert resp.status_code == 200
 
 def test_vote_post(client):
-    resp = client.post('/api/vote/', json=TEST_VOTE)
-    assert resp.status_code == 201
+    with app_context:
+        image1 = Image()
+        image2 = Image()
+        db.session.add(image1)
+        db.session.add(image2)
+        db.session.commit()
+
+        vote_request = {"choice_id": image1.id, "other_id": image2.id,
+                        "is_leftimage": False,
+                        "is_undecided": False, "time_elapsed": 2,
+                        "window_width": 647, "window_height": 928,
+                        "comment": ""}
+
+        resp = client.post('/api/vote/', json=vote_request)
+        assert resp.status_code == 201
 
 def test_vote_patch(client):
     resp = client.patch('/api/vote/')
