@@ -54,6 +54,7 @@ class Image(Base):
         return {
             'id':  self.id,
             'key': self.key,
+            'filename': self.filename,
             'seq': self.sequence_key,
             'lat': self.latitude,
             'lon': self.longitude
