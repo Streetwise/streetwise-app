@@ -16,6 +16,7 @@
     "vue": "^2.5.13",
     "vue-awesome-swiper": "^4.1.1",
     "vue-feather-icons": "^5.0.0",
+    "vue-meta": "^2.3.4",
     "vue-router": "^3.0.1",
     "vuesax": "^3.11.13",
     "vuex": "^3.0.1"
