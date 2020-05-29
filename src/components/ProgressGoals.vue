@@ -34,12 +34,12 @@ export default {
 .progress-goals {
   clear: both;
   width: 100%;
-  margin: 3em 0 1.5em;
+  margin: 2em 0 1.5em;
   height: 2em;
 
   & div {
-    margin-top: -2.7em;
-    margin-bottom: 0.7em;
+    margin-top: -3.3em;
+    margin-bottom: 0.3em;
     // span, b.goal { font-size: 85% }
   }
 }
