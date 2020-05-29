@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import logError from '@/errorLogger.js'
 export default {
   name: 'ImageContainer',
   props: {
@@ -11,14 +12,9 @@ export default {
   methods: {
     onImageLoadError () {
       // Set the images as invalid
+      logError('ImageContainer.vue', 'on image load', 'Failed to load image: ' + this.source)
       this.$store.commit('invalidImages')
     }
-  },
-  created: function () {
-    console.log('created Image container', this.leftImageSrc)
-  },
-  updated: function () {
-    console.log('updated Image container', this.leftImageSrc)
   }
 }
 </script>
