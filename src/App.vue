@@ -29,6 +29,10 @@ export default {
 </script>
 
 <style lang="scss">
+#app {
+  display: flex;
+  flex-direction: column;
+}
 #app, .vs-popup, .vs-dialog {
   font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
