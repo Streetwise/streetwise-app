@@ -79,17 +79,17 @@ FLASK_APP = "streetwise"
 FLASK_DEBUG = 1
 ```
 
-Prepare your database using the Flask Migrate upgrade command:
+Prepare your database using Flask Alembic commands:
 
-`flask db upgrade`
+`./manage.py init`
 
 Grab a copy of the image database:
 
 `cd data && ./get_data.sh`
 
-Import the image files from the `ch_data.csv` file in the `data` folder:
+Import the image files, e.g. from a test file in the `data` folder (where there is also a `get_data` script to get the complete dataset):
 
-`./manage.py images`
+`./manage.py images --src data/ch_data_test.csv`
 
 ### Dependency management
 
@@ -170,9 +170,22 @@ Or using Heroku's cli:
 
 `heroku local`
 
+Production DB migrations are tracked in the `deploy` folder. Set the `MIGRATION_PATH` variable to the folder you wish deployments to pick up, e.g. _"deploy/streetwise-prod"_.
+
 Heroku's nodejs buildpack will handle install for all the dependencies from the `packages.json` file.
 It will then trigger the `postinstall` command which calls `yarn build`.
 This will create the bundled `dist` folder which will be served by whitenoise.
+
+Other useful variables to set in production include:
+
+- **API_KEY** - the key (default: _OpenData_) with which you can export results
+- **IMAGE_BUCKET_URL** - source of remote images to use
+- **VUE_APP_FATHOM_ANALYTICS_CODE** - embed code for web analytics (usefathom.com)
+- **VUE_APP_FRONTEND_LOGGER_KEY** - embed code for error logging (coralogix.com)
+- **DATABASE_URL** - set automatically by Heroku, this specifies the DB endpoint
+- **FLASK_SECRET** - auto-generated
+- **FLASK_APP** - `streetwise`
+- **FLASK_ENV** - `production`
 
 For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
 
