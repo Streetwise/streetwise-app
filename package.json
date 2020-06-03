@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "coralogix-logger": "^1.1.25",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "swiper": "^5.3.7",

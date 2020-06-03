@@ -25,6 +25,10 @@
     "VUE_APP_FATHOM_ANALYTICS_CODE": {
       "description": "Fathom analytics API Key",
       "generator": "secret"
+    },
+    "VUE_APP_FRONTEND_LOGGER_KEY": {
+      "description": "CoraLogix API key for frontend logging",
+      "generator": "secret"
     }
    },
   "addons": [
