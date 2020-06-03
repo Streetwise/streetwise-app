@@ -66,7 +66,11 @@ export default {
   components: {
   },
   props: {
-    responses: 0
+    responses: 0,
+    campaign: {
+      type: Number,
+      default: 1
+    }
   },
   data () {
     return {

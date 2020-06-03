@@ -39,6 +39,10 @@ export default {
     skipintro: {
       type: Boolean,
       default: false
+    },
+    campaign: {
+      type: Number,
+      default: 1
     }
   },
   data () {

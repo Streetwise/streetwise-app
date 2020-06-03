@@ -67,7 +67,8 @@ class VoteCast(Resource):
         if session is None:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
-            my_campaign = Campaign.query.first() # No support for multiple campaigns yet
+            # Support for multiple campaigns
+            my_campaign = Campaign.query.filter_by(id=int(data['campaign'])).one_or_404()
             session = Session(
                 hash = generate_hash(),
                 campaign = my_campaign,

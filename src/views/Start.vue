@@ -5,13 +5,19 @@
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
-    p.campaign
+    p.campaign(v-show="campaign==1")
       | Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein intuitives Sicherheitsempfinden ist gefragt!
+    p.campaign(v-show="campaign==2")
+      | Anderer Campaign
     table
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
-        td Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+        td
+          span(v-show="campaign==1")
+            | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
+          span(v-show="campaign==2")
+            | Wir zeigen dir Bildpaare und du ... machst etwas anderes.
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
@@ -58,6 +64,12 @@ export default {
   name: 'Start',
   components: {
     ProgressGoals
+  },
+  props: {
+    campaign: {
+      type: Number,
+      default: 1
+    }
   },
   mounted () {
     localStorage.setItem('streetwiseSession', null)
