@@ -1,7 +1,7 @@
 import Coralogix from 'coralogix-logger'
 
 const loggerConfig = new Coralogix.LoggerConfig({
-  applicationName: 'streetwise-stage',
+  applicationName: process.env.VUE_APP_FRONTEND_APP_NAME,
   privateKey: process.env.VUE_APP_FRONTEND_LOGGER_KEY,
   subsystemName: 'frontend'
 })
