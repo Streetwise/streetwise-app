@@ -86,6 +86,7 @@ def deploy():
     migration_path = os.environ.get('MIGRATION_PATH')
     if not migration_path:
         print('MIGRATION_PATH not provided, not upgrading')
+    else:
         # migrate database to latest revision
         upgrade(migration_path)
     # Generate some bytes to create entropy
