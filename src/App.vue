@@ -13,7 +13,7 @@ export default {
     script: [{
       // Add the fathom analytics script to the webpage
       // The site code will be injected by config vars at runtime
-      src: 'https://lemur.streetwise-app.ch/script.js',
+      src: process.env.VUE_APP_FATHOM_ANALYTICS_URL,
       site: process.env.VUE_APP_FATHOM_ANALYTICS_CODE,
       async: true,
       defer: true
