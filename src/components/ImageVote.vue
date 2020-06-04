@@ -116,28 +116,26 @@ export default {
       }
       return false
     },
-    promptNetworkError (error) {
-      if (!this.errorPromptVisible) {
-        console.warn(error.message)
-        let self = this
-        self.errorPromptVisible = true
-        this.$vs.dialog({
-          type: 'confirm',
-          color: 'danger',
-          title: `Verbindungsfehler`,
-          text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
-          acceptText: 'Bestätigen',
-          cancelText: 'Abbrechen',
-          accept: function () {
-            self.errorPromptVisible = false
-            self.nextImagePair(true)
-          },
-          cancel: function () {
-            self.errorPromptVisible = false
-            self.$router.push({ name: 'start', query: { 'reason': 'net_err' } })
-          }
-        })
-      }
+    promptNetworkError () {
+      if (this.errorPromptVisible) return
+      this.errorPromptVisible = true
+      let self = this
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: `Verbindungsfehler`,
+        text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+        acceptText: 'Bestätigen',
+        cancelText: 'Abbrechen',
+        accept: function () {
+          self.errorPromptVisible = false
+          self.nextImagePair(true)
+        },
+        cancel: function () {
+          self.errorPromptVisible = false
+          self.$router.push({ name: 'start', query: { 'reason': 'net_err' } })
+        }
+      })
     },
     nextImagePair (skip = false) {
       if (!skip) {
@@ -185,7 +183,6 @@ export default {
           this.resources.push(responseData)
           this.nextImagePair()
         }).catch(error => {
-          console.warn(error.message)
           if (error.message.indexOf('429')) {
             return this.promptVoteTooFast()
           }
