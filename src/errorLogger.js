@@ -1,16 +1,22 @@
 import Coralogix from 'coralogix-logger'
 
-const loggerConfig = new Coralogix.LoggerConfig({
-  applicationName: process.env.VUE_APP_FRONTEND_APP_NAME,
-  privateKey: process.env.VUE_APP_FRONTEND_LOGGER_KEY,
-  subsystemName: 'frontend'
-})
+let loggerConfig = null
+let logger = null
 
-Coralogix.CoralogixLogger.configure(loggerConfig)
-const logger = new Coralogix.CoralogixLogger('FrontEnd')
+if (process.env.VUE_APP_FRONTEND_APP_NAME &&
+    process.env.VUE_APP_FRONTEND_LOGGER_KEY) {
+  // Initialize with Coralogix
+  loggerConfig = new Coralogix.LoggerConfig({
+    applicationName: process.env.VUE_APP_FRONTEND_APP_NAME,
+    privateKey: process.env.VUE_APP_FRONTEND_LOGGER_KEY,
+    subsystemName: 'frontend'
+  })
+  Coralogix.CoralogixLogger.configure(loggerConfig)
+  logger = new Coralogix.CoralogixLogger('FrontEnd')
+}
 
 function logError (fileName = '', funcName = '', errorMessage = '') {
-  try {
+  if (logger !== null) {
     const error = new Coralogix.Log({
       severity: Coralogix.Severity.error,
       className: fileName,
@@ -19,8 +25,9 @@ function logError (fileName = '', funcName = '', errorMessage = '') {
     })
 
     logger.addLog(error)
-  } catch (_exception) {
-    console.error('Failed to log error on the server. Logging on the console instead', errorMessage)
+  } else {
+    // Just use a standard console error
+    console.warn(errorMessage)
   }
 }
 
