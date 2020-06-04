@@ -82,7 +82,8 @@ export default {
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
-      openUndecided: false
+      openUndecided: false,
+      errorPromptVisible: false
     }
   },
   methods: {
@@ -116,22 +117,27 @@ export default {
       return false
     },
     promptNetworkError (error) {
-      console.warn(error.message)
-      let self = this
-      this.$vs.dialog({
-        type: 'confirm',
-        color: 'danger',
-        title: `Verbindungsfehler`,
-        text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
-        acceptText: 'Bestätigen',
-        cancelText: 'Abbrechen',
-        accept: function () {
-          self.nextImagePair(true)
-        },
-        cancel: function () {
-          self.$router.push({ name: 'start' })
-        }
-      })
+      if (!this.errorPromptVisible) {
+        console.warn(error.message)
+        let self = this
+        self.errorPromptVisible = true
+        this.$vs.dialog({
+          type: 'confirm',
+          color: 'danger',
+          title: `Verbindungsfehler`,
+          text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+          acceptText: 'Bestätigen',
+          cancelText: 'Abbrechen',
+          accept: function () {
+            self.errorPromptVisible = false
+            self.nextImagePair(true)
+          },
+          cancel: function () {
+            self.errorPromptVisible = false
+            self.$router.push({ name: 'start' })
+          }
+        })
+      }
     },
     nextImagePair (skip = false) {
       if (!skip) {
