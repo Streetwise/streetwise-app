@@ -8,10 +8,10 @@
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
-        <ImageContainer v-bind:errorHandler="this.promptBadImage" v-bind:source="imageLeftUrl" />
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageLeftUrl" />
       </div>
       <div class="right" @click="popupImage=true;popupLeft=false" ref="rightImagePane">
-        <ImageContainer v-bind:errorHandler="this.promptBadImage" v-bind:source="imageRightUrl" />
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageRightUrl" />
       </div>
     </div>
 
@@ -115,7 +115,7 @@ export default {
       }
       return false
     },
-    promptBadImage (error) {
+    promptNetworkError (error) {
       console.warn(error.message)
       let self = this
       this.$vs.dialog({
@@ -126,9 +126,7 @@ export default {
         acceptText: 'Bestätigen',
         cancelText: 'Abbrechen',
         accept: function () {
-          self.voteCount--
-          self.voteTotal--
-          self.nextImagePair()
+          self.nextImagePair(true)
         },
         cancel: function () {
           self.$router.push({ name: 'start' })
@@ -154,7 +152,7 @@ export default {
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
           this.imageRightUrl = responseData[1].Url
-        }).catch((error) => this.promptBadImage(error))
+        }).catch((error) => this.promptNetworkError(error))
     },
     promptVoteTooFast () {
       this.$vs.dialog({
