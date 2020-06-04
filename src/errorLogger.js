@@ -10,14 +10,18 @@ Coralogix.CoralogixLogger.configure(loggerConfig)
 const logger = new Coralogix.CoralogixLogger('FrontEnd')
 
 function logError (fileName = '', funcName = '', errorMessage = '') {
-  const error = new Coralogix.Log({
-    severity: Coralogix.Severity.error,
-    className: fileName,
-    methodName: funcName,
-    text: errorMessage
-  })
+  try {
+    const error = new Coralogix.Log({
+      severity: Coralogix.Severity.error,
+      className: fileName,
+      methodName: funcName,
+      text: errorMessage
+    })
 
-  logger.addLog(error)
+    logger.addLog(error)
+  } catch (_exception) {
+    console.error('Failed to log error on the server. Logging on the console instead', errorMessage)
+  }
 }
 
 export default logError
