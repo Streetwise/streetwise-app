@@ -134,7 +134,7 @@ export default {
           },
           cancel: function () {
             self.errorPromptVisible = false
-            self.$router.push({ name: 'start' })
+            self.$router.push({ name: 'start', query: { 'reason': 'net_err' } })
           }
         })
       }
