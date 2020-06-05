@@ -183,7 +183,7 @@ export default {
           this.resources.push(responseData)
           this.nextImagePair()
         }).catch(error => {
-          if (error.message.indexOf('429')) {
+          if (error.message.indexOf('429') !== -1) {
             return this.promptVoteTooFast()
           }
           this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })

@@ -26,7 +26,6 @@ Vue.use(Vuesax, {
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  // console.log(to)
   // Implement Navigation Guards
   if (from.name === 'wise' && to.name === 'start' && to.fullPath === '/?reason=net_err') {
     // Do not prompt for confirmation while going to /start on network error
