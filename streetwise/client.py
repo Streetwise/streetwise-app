@@ -17,6 +17,10 @@ IMAGE_ROOT = path.join(Config.DIST_DIR, 'images')
 def index_client():
     return send_file(path.join(Config.DIST_DIR, 'index.html'))
 
+@client_bp.route('/manifest.json')
+def index_manifest():
+    return send_file(path.join(Config.DIST_DIR, 'manifest.json'))
+
 @client_bp.route('/favicon.ico')
 def index_favicon():
     return send_file(path.join(IMAGE_ROOT, 'favicon.ico'))
