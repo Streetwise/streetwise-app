@@ -8,10 +8,10 @@
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
-        <img :src="imageLeftUrl">
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageLeftUrl" />
       </div>
       <div class="right" @click="popupImage=true;popupLeft=false" ref="rightImagePane">
-        <img :src="imageRightUrl">
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageRightUrl" />
       </div>
     </div>
 
@@ -46,6 +46,7 @@
 <script>
 import $backend from '@/backend'
 import IssueBox from '@/components/IssueBox.vue'
+import ImageContainer from '@/components/ImageContainer.vue'
 
 const imageLoading = '/images/loading.gif'
 
@@ -64,7 +65,8 @@ export default {
     }
   },
   components: {
-    IssueBox
+    IssueBox,
+    ImageContainer
   },
   data () {
     return {
@@ -80,7 +82,8 @@ export default {
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
-      openUndecided: false
+      openUndecided: false,
+      errorPromptVisible: false
     }
   },
   methods: {
@@ -113,6 +116,27 @@ export default {
       }
       return false
     },
+    promptNetworkError () {
+      if (this.errorPromptVisible) return
+      this.errorPromptVisible = true
+      let self = this
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: `Verbindungsfehler`,
+        text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
+        acceptText: 'Bestätigen',
+        cancelText: 'Abbrechen',
+        accept: function () {
+          self.errorPromptVisible = false
+          self.nextImagePair(true)
+        },
+        cancel: function () {
+          self.errorPromptVisible = false
+          self.$router.push({ name: 'start', query: { 'reason': 'net_err' } })
+        }
+      })
+    },
     nextImagePair (skip = false) {
       if (!skip) {
         this.voteCount++
@@ -132,26 +156,7 @@ export default {
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
           this.imageRightUrl = responseData[1].Url
-        }).catch(error => {
-          console.warn(error.message)
-          let self = this
-          this.$vs.dialog({
-            type: 'confirm',
-            color: 'danger',
-            title: `Verbindungsfehler`,
-            text: 'Zurzeit kann keine Verbindung hergestellt werden. Überprüfen Sie bitte das Netzwerk und versuchen Sie es später erneut.',
-            acceptText: 'Bestätigen',
-            cancelText: 'Abbrechen',
-            accept: function () {
-              self.voteCount--
-              self.voteTotal--
-              self.nextImagePair()
-            },
-            cancel: function () {
-              self.$router.push({ name: 'start' })
-            }
-          })
-        })
+        }).catch((error) => this.promptNetworkError(error))
     },
     promptVoteTooFast () {
       this.$vs.dialog({
@@ -178,8 +183,7 @@ export default {
           this.resources.push(responseData)
           this.nextImagePair()
         }).catch(error => {
-          console.warn(error.message)
-          if (error.message.indexOf('429')) {
+          if (error.message.indexOf('429') !== -1) {
             return this.promptVoteTooFast()
           }
           this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })

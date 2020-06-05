@@ -10,14 +10,17 @@ import AppHeader from '@/components/AppHeader.vue'
 export default {
   name: 'App',
   metaInfo: {
-    script: [{
-      // Add the fathom analytics script to the webpage
-      // The site code will be injected by config vars at runtime
-      src: process.env.VUE_APP_FATHOM_ANALYTICS_URL,
-      site: process.env.VUE_APP_FATHOM_ANALYTICS_CODE,
-      async: true,
-      defer: true
-    }]
+    script: [
+      // Add the fathom analytics script, if configured
+      (process.env.VUE_APP_FATHOM_ANALYTICS_URL &&
+       process.env.VUE_APP_FATHOM_ANALYTICS_CODE
+        ? {
+          src: process.env.VUE_APP_FATHOM_ANALYTICS_URL,
+          site: process.env.VUE_APP_FATHOM_ANALYTICS_CODE,
+          async: true,
+          defer: true
+        } : {})
+    ]
   },
   components: {
     AppHeader

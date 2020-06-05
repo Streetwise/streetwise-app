@@ -27,7 +27,10 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   // Implement Navigation Guards
-  if (from.name === 'wise' && to.name !== 'complete' && to.name !== 'finish') {
+  if (from.name === 'wise' && to.name === 'start' && to.fullPath === '/?reason=net_err') {
+    // Do not prompt for confirmation while going to /start on network error
+    next()
+  } else if (from.name === 'wise' && to.name !== 'complete' && to.name !== 'finish') {
     return next(window.confirm('Bist du dir sicher, dass du die Umfrage verlassen willst?'))
   }
   next()
