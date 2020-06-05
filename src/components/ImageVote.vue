@@ -162,7 +162,7 @@ export default {
       this.$vs.dialog({
         type: 'alert',
         color: 'warning',
-        title: `Oops!`,
+        title: 'Upps!',
         text: 'Das ging etwas zu schnell.',
         acceptText: 'Nochmals versuchen'
       })
