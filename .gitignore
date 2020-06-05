@@ -3,9 +3,10 @@
 .mypy_cache\
 .env
 .flaskenv
+/migrations
 
 /data/.xdp*
-/data/*.csv
+/data/ch_data.csv
 /data/*.db
 
 /dist

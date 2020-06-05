@@ -66,13 +66,29 @@ def profile(length, profile_dir):
                                       profile_dir=profile_dir)
     app.run()
 
+@app.cli.command()
+def init():
+    """Run initial deployment tasks."""
+    from flask_migrate import init, migrate, upgrade
+    # determine the appropriate migration folder
+    migration_path = os.environ.get('MIGRATION_PATH')
+    if not migration_path: migration_path = 'migrations'
+    print('Upgrading from', migration_path)
+    init(migration_path)
+    migrate(migration_path)
+    upgrade(migration_path)
 
 @app.cli.command()
 def deploy():
     """Run deployment tasks."""
     from flask_migrate import upgrade
-    # migrate database to latest revision
-    upgrade()
+    # determine the appropriate migration folder
+    migration_path = os.environ.get('MIGRATION_PATH')
+    if not migration_path:
+        print('MIGRATION_PATH not provided, not upgrading')
+    else:
+        # migrate database to latest revision
+        upgrade(migration_path)
     # Generate some bytes to create entropy
     os.urandom(256)
 
