@@ -1,6 +1,6 @@
 <template lang="pug">
 .wiser
-  ImageVote(msg='Wo fühlst du dich sicherer?', :skipintro='skipintro', :debugmode='debugMode', :votesrequired='votesRequired')
+  ImageVote(v-bind:msg='this.campaignQuestion', :skipintro='skipintro', :debugmode='debugMode', :votesrequired='votesRequired')
   vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
     .content.centerx
       p.tip
@@ -43,6 +43,14 @@ export default {
     campaign: {
       type: Number,
       default: 1
+    }
+  },
+  computed: {
+    campaignQuestion: function () {
+      switch (this.campaign) {
+        default:
+          return 'Wo fühlst du dich sicherer?'
+      }
     }
   },
   data () {
