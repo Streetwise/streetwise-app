@@ -99,6 +99,7 @@ export default {
       if (this.voteCount >= this.votesrequired) {
         if (this.skipcomplete && this.skipfeedback) {
           let voter = this
+          this.voteCount = 0
           this.$vs.dialog({
             type: 'alert',
             color: 'success',
@@ -107,7 +108,6 @@ export default {
             acceptText: 'Bestätigen',
             accept: function () {
               // Continue responding to questions
-              voter.voteCount = 0
             },
             cancel: function () {
               // Return to home screen
