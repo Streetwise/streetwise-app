@@ -175,8 +175,10 @@ Other useful variables to set in production include:
 
 - **API_KEY** - the key (default: _OpenData_) with which you can export results
 - **IMAGE_BUCKET_URL** - source of remote images to use
+- **VUE_APP_VOTESREQUIRED** - number of votes per session (default: 10)
 - **VUE_APP_FATHOM_ANALYTICS_CODE** - embed code for web analytics (usefathom.com)
 - **VUE_APP_FRONTEND_LOGGER_KEY** - embed code for error logging (coralogix.com)
+- **VUE_APP_DEBUG** - set to `true` for frontend troubleshooting
 - **DATABASE_URL** - set automatically by Heroku, this specifies the DB endpoint
 - **FLASK_SECRET** - auto-generated
 - **FLASK_APP** - `streetwise`
