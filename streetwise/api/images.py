@@ -16,6 +16,7 @@ ns = api_rest.namespace('image',
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
+    'campaign_id': fields.Integer,
     'key': fields.String,
     'filename': fields.String,
     'latitude': fields.Float,
@@ -37,14 +38,16 @@ class ImageBrowser(Resource):
     def get(self):
         return Image.query.limit(100).all()
 
-@ns.route('/random')
+@ns.route('/random/<int:campaign_id>')
 class ImageRandom(Resource):
-    """ Get two random images """
+    """ Get two random images from campaign """
 
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
-    def get(self):
-        return Image.query.order_by(func.random()).limit(2).all(), 201
+    def get(self, campaign_id):
+        q = Image.query.filter_by(campaign_id=campaign_id)
+        q = q.order_by(func.random()).limit(2).all()
+        return q, 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):

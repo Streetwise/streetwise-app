@@ -1,9 +1,12 @@
 <template lang="pug">
 .wiser
-  ImageVote(v-bind:msg='text.question',
+  ImageVote(
+    v-bind:msg='text.question',
+    v-bind:campaign='campaignId',
     :skipintro='skipintro',
     :debugmode='debugMode',
-    :votesrequired='votesRequired')
+    :votesrequired='votesRequired'
+    ref="imageVote")
   vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
     .content.centerx
       p.campaign {{ text.intro }}
@@ -46,22 +49,15 @@ export default {
       type: Boolean,
       default: false
     },
-    campaign: {
+    setcampaign: {
       type: Number,
       default: 1
-    }
-  },
-  computed: {
-    campaignQuestion: function () {
-      switch (this.campaign) {
-        default:
-          return ''
-      }
     }
   },
   data () {
     return {
       text: {},
+      campaignId: this.setcampaign,
 
       popupActive: false,
 
@@ -78,11 +74,13 @@ export default {
     let self = this
     $backend.getNextCampaign()
       .then((res) => {
-        let campaign_id = res.id
-        self.$appstate.campaign_id = campaign_id
-        self.text = (campaign_id === 1)
-          ? Campaign1.start : Campaign2.start
-        console.debug(self.text.id, 'text loaded')
+        let campaignId = res.id
+        self.campaignId = campaignId
+        let selectContent = CampaignTexts[campaignId]
+        self.text = selectContent.start
+        console.debug(selectContent.id, 'text loaded')
+        // Trigger loading images from the selected campaign
+        self.$refs.imageVote.nextImagePair()
       })
   }
 }

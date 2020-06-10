@@ -5,7 +5,6 @@ http://flask-restplus.readthedocs.io
 
 from flask import request
 from flask_restplus import Resource, fields
-from sqlalchemy.sql.expression import func
 
 from ..models import Campaign
 from . import api_rest
@@ -28,11 +27,13 @@ class CampaignBrowser(Resource):
     def get(self):
         return Campaign.query.all()
 
-@ns.route('/random')
-class CampaignRandom(Resource):
-    """ Get a random campaign """
+@ns.route('/next')
+class CampaignNext(Resource):
+    """ Get the next campaign """
 
-    @ns.doc('random_campaign')
+    @ns.doc('next_campaign')
     @ns.marshal_list_with(CampaignModel)
     def get(self):
-        return Campaign.query.order_by(func.random()).limit(1).all(), 201
+        # TODO: sequential on user session
+        campaign_sequence = 2
+        return Campaign.query.get(campaign_sequence), 201

@@ -62,6 +62,10 @@ export default {
     votesrequired: {
       type: Number,
       default: 10
+    },
+    campaign: {
+      type: Number,
+      default: null
     }
   },
   components: {
@@ -207,8 +211,6 @@ export default {
     }
   },
   mounted () {
-    this.nextImagePair()
-
     // Notify mobile users about langscape mode
     if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768) {
       this.$vs.dialog({

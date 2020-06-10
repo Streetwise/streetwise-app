@@ -73,7 +73,8 @@ export default {
   },
 
   getRandomImages () {
-    return $axios.get(`image/random`)
+    let campaignId = localStorage.getItem('currentCampaignId') || null
+    return $axios.get(`image/random/` + campaignId)
       .then(response => response.data)
   },
 
@@ -83,12 +84,14 @@ export default {
   },
 
   getNextCampaign () {
-    return $axios.get(`campaign/random`)
+    return $axios.get(`campaign/next`)
       .then(function (response) {
         if (response.status === 201) {
+          localStorage.setItem('currentCampaignId', response.data.id)
           return response.data
         }
         console.debug('Default campaign selected')
+        localStorage.setItem('currentCampaignId', 1)
         return { id: 1 }
       })
   }
