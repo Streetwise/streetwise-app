@@ -77,12 +77,12 @@ export default {
   },
 
   getNextCampaign () {
-    return $axios.get(`campaign/next`)
+    return $axios.get(`campaign/random`)
       .then(function (response) {
-        console.log('blah')
         if (response.status === 201) {
           return response.data
         }
+        console.log('Default campaign selected')
         return { id: 1 }
       })
   }

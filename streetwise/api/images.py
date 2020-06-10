@@ -37,7 +37,6 @@ class ImageBrowser(Resource):
     def get(self):
         return Image.query.limit(100).all()
 
-
 @ns.route('/random')
 class ImageRandom(Resource):
     """ Get two random images """
