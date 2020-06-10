@@ -8,10 +8,10 @@
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
-        <ImageContainer v-bind:errorHandler="this.promptBadImage" v-bind:source="imageLeftUrl" />
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageLeftUrl" />
       </div>
       <div class="right" @click="popupImage=true;popupLeft=false" ref="rightImagePane">
-        <ImageContainer v-bind:errorHandler="this.promptBadImage" v-bind:source="imageRightUrl" />
+        <ImageContainer v-bind:errorHandler="this.promptNetworkError" v-bind:source="imageRightUrl" />
       </div>
     </div>
 
@@ -82,7 +82,8 @@ export default {
       votePercent: 0,
       popupImage: false,
       popupLeft: false,
-      openUndecided: false
+      openUndecided: false,
+      errorPromptVisible: false
     }
   },
   methods: {
@@ -115,8 +116,9 @@ export default {
       }
       return false
     },
-    promptBadImage (error) {
-      console.warn(error.message)
+    promptNetworkError () {
+      if (this.errorPromptVisible) return
+      this.errorPromptVisible = true
       let self = this
       this.$vs.dialog({
         type: 'confirm',
@@ -126,12 +128,12 @@ export default {
         acceptText: 'Bestätigen',
         cancelText: 'Abbrechen',
         accept: function () {
-          self.voteCount--
-          self.voteTotal--
-          self.nextImagePair()
+          self.errorPromptVisible = false
+          self.nextImagePair(true)
         },
         cancel: function () {
-          self.$router.push({ name: 'start' })
+          self.errorPromptVisible = false
+          self.$router.push({ name: 'start', query: { 'reason': 'net_err' } })
         }
       })
     },
@@ -154,13 +156,13 @@ export default {
           this.imageLeftUrl = responseData[0].Url
           this.imageRight = responseData[1].id
           this.imageRightUrl = responseData[1].Url
-        }).catch((error) => this.promptBadImage(error))
+        }).catch((error) => this.promptNetworkError(error))
     },
     promptVoteTooFast () {
       this.$vs.dialog({
         type: 'alert',
         color: 'warning',
-        title: `Oops!`,
+        title: 'Upps!',
         text: 'Das ging etwas zu schnell.',
         acceptText: 'Nochmals versuchen'
       })
@@ -181,8 +183,7 @@ export default {
           this.resources.push(responseData)
           this.nextImagePair()
         }).catch(error => {
-          console.warn(error.message)
-          if (error.message.indexOf('429')) {
+          if (error.message.indexOf('429') !== -1) {
             return this.promptVoteTooFast()
           }
           this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })

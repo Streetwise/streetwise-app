@@ -5,21 +5,17 @@
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
-    p.campaign {{ text.intro }}
+    p.campaign
+      | Deine Wahrnehmung ist gefragt: schau dir auf den Bildern die ganze
+      | Umgebung an und bewerte diese als Fussgänger*in oder Velofahrer*in.
     table
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
         td
-          span {{ text.tip }}
-      tr
-        td
-          vs-icon(icon="star", size="small", color="darkblue")
-        td Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-      tr
-        td
-          vs-icon(icon="star", size="small", color="darkblue")
-        td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+          | Tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend links
+          | oder rechts für deine Auswahl. Kannst du dich nicht entscheiden?
+          | Dann wähle «unentschieden».
     ProgressGoals
     center.wiselink
       router-link(to="/wise")
@@ -53,7 +49,6 @@
 
 <script>
 import ProgressGoals from '@/components/ProgressGoals.vue'
-import CampaignText from '../texts/campaign-1.yaml'
 
 export default {
   name: 'Start',
@@ -66,13 +61,7 @@ export default {
       default: 1
     }
   },
-  data () {
-    return {
-      text: CampaignText.start
-    }
-  },
   mounted () {
-    console.log(CampaignText.id, 'text loaded')
     localStorage.setItem('streetwiseSession', null)
   }
 }

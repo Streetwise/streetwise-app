@@ -1,30 +1,34 @@
 import Coralogix from 'coralogix-logger'
 
-const loggerConfig = process.env.VUE_APP_FRONTEND_LOGGER_KEY
-  ? new Coralogix.LoggerConfig({
-    applicationName: 'streetwise-stage',
+let loggerConfig = null
+let logger = null
+
+if (process.env.VUE_APP_FRONTEND_APP_NAME &&
+    process.env.VUE_APP_FRONTEND_LOGGER_KEY) {
+  // Initialize with Coralogix
+  loggerConfig = new Coralogix.LoggerConfig({
+    applicationName: process.env.VUE_APP_FRONTEND_APP_NAME,
     privateKey: process.env.VUE_APP_FRONTEND_LOGGER_KEY,
     subsystemName: 'frontend'
-  }) : null
-
-if (loggerConfig !== null) {
+  })
   Coralogix.CoralogixLogger.configure(loggerConfig)
+  logger = new Coralogix.CoralogixLogger('FrontEnd')
 }
 
-const logger = (loggerConfig !== null)
-  ? new Coralogix.CoralogixLogger('FrontEnd') : null
-
 function logError (fileName = '', funcName = '', errorMessage = '') {
-  if (loggerConfig === null) return
+  if (logger !== null) {
+    const error = new Coralogix.Log({
+      severity: Coralogix.Severity.error,
+      className: fileName,
+      methodName: funcName,
+      text: errorMessage
+    })
 
-  const error = new Coralogix.Log({
-    severity: Coralogix.Severity.error,
-    className: fileName,
-    methodName: funcName,
-    text: errorMessage
-  })
-
-  logger.addLog(error)
+    logger.addLog(error)
+  } else {
+    // Just use a standard console error
+    console.warn(errorMessage)
+  }
 }
 
 export default logError

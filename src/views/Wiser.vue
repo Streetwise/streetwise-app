@@ -3,6 +3,7 @@
   ImageVote(v-bind:msg='this.campaignQuestion', :skipintro='skipintro', :debugmode='debugMode', :votesrequired='votesRequired')
   vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
     .content.centerx
+      p.campaign {{ text.intro }}
       p.tip
         | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
       center.together
@@ -30,6 +31,11 @@
 <script>
 import ImageVote from '@/components/ImageVote.vue'
 
+// TODO: refactor into CampaignText component
+import Campaign1 from '../texts/campaign-1.yaml'
+import Campaign2 from '../texts/campaign-2.yaml'
+import $backend from '@/backend'
+
 export default {
   name: 'Wiser',
   components: {
@@ -55,6 +61,8 @@ export default {
   },
   data () {
     return {
+      text: {},
+
       popupActive: false,
 
       // Environment variable: number of images to require
@@ -65,6 +73,15 @@ export default {
   },
   mounted () {
     // this.popupActive = !this.skipintro
+  },
+  beforeCreate: function () {
+    let self = this
+    $backend.getNextCampaign()
+      .then((res) => {
+        self.text = (res.id === 1)
+          ? Campaign1.start : Campaign2.start
+        console.log(self.text.id, 'text loaded')
+      })
   }
 }
 </script>

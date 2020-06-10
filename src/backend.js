@@ -74,5 +74,16 @@ export default {
   getVoteCount () {
     return $axios.get(`vote/count`)
       .then(response => response.data)
+  },
+
+  getNextCampaign () {
+    return $axios.get(`campaign/next`)
+      .then(function (response) {
+        console.log('blah')
+        if (response.status === 201) {
+          return response.data
+        }
+        return { id: 1 }
+      })
   }
 }
