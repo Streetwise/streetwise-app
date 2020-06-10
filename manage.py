@@ -37,6 +37,19 @@ def test(coverage, test_names):
         import subprocess
         os.environ['FLASK_COVERAGE'] = '1'
         sys.exit(subprocess.call(sys.argv))
+    if os.environ.get('FLASK_ENV') != 'test':
+        import subprocess
+        # ../data/test.db
+        APP_DIR = os.path.dirname(__file__)
+        TEST_PATH = os.path.abspath(os.path.join(APP_DIR, 'data', 'test.db'))
+        os.environ['FLASK_ENV'] = 'test'
+        os.environ['DATABASE_URL'] = 'sqlite:///' + TEST_PATH
+        # clear before each run
+        try:
+            os.remove(TEST_PATH)
+        except FileNotFoundError:
+            pass
+        sys.exit(subprocess.call(sys.argv))
 
     import pytest
     errno = pytest.main(['tests'])
@@ -93,7 +106,7 @@ def deploy():
     os.urandom(256)
 
 @app.cli.command()
-@click.option('--name', default="safety-1",
+@click.option('--name', default="safety",
               help='Name of the campaign to use for import.')
 @click.option('--src', default="data/ch_data.csv",
               help='Filename of the CSV database to import.')

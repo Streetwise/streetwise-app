@@ -27,13 +27,19 @@ class CampaignBrowser(Resource):
     def get(self):
         return Campaign.query.all()
 
+current_campaign = None
+
 @ns.route('/next')
 class CampaignNext(Resource):
-    """ Get the next campaign """
+    """ Get alternating campaigns """
 
     @ns.doc('next_campaign')
     @ns.marshal_list_with(CampaignModel)
     def get(self):
-        # TODO: sequential on user session
-        campaign_sequence = 2
-        return Campaign.query.get(campaign_sequence), 201
+        global current_campaign
+        if current_campaign is not None:
+            campaign = Campaign.query.get(current_campaign + 1)
+        if current_campaign is None or campaign is None:
+            campaign = Campaign.query.first()
+        current_campaign = campaign.id
+        return campaign, 201

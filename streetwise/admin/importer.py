@@ -9,7 +9,7 @@ from .. import db
 
 # ../../data/ch_data.csv
 DEFAULT_DATA_PATH = os.getenv('DATA_PATH', os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'ch_data.csv')))
-DEFAULT_CAMPAIGN = os.getenv('CAMPAIGN', 'safety-1')
+DEFAULT_CAMPAIGN = os.getenv('CAMPAIGN', 'safety')
 
 def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DEFAULT_CAMPAIGN):
     if not skip_existing:
