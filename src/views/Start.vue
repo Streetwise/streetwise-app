@@ -63,6 +63,7 @@ export default {
   },
   mounted () {
     localStorage.setItem('streetwiseSession', null)
+    localStorage.setItem('currentCampaignId', null)
   }
 }
 </script>

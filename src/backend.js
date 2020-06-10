@@ -24,8 +24,10 @@ $axios.interceptors.response.use(function (response) {
 export default {
   voteCast (isRight, imageLeft, imageRight, timeTaken, textComment) {
     let sessionHash = localStorage.getItem('streetwiseSession') || null
+    let campaignId = localStorage.getItem('currentCampaignId') || null
     return $axios.post(`vote/`, {
       session_hash: sessionHash,
+      campaign_id: campaignId,
       choice_id: isRight ? imageRight : imageLeft,
       other_id: isRight ? imageLeft : imageRight,
       is_leftimage: (isRight !== null && !isRight),
@@ -40,10 +42,14 @@ export default {
             response.data.session_hash !== sessionHash) {
           localStorage.setItem('streetwiseSession', response.data.session_hash)
         }
+        if (typeof response.data.campaign !== 'undefined' &&
+            response.data.campaign.id !== campaignId) {
+          localStorage.setItem('currentCampaignId', response.data.campaign.id)
+        }
         return response.data
       }
       alert(response.statusText)
-      console.log(response.data)
+      console.debug(response.data)
       return null
     })
   },
@@ -61,7 +67,7 @@ export default {
         return true
       }
       alert(response.statusText)
-      console.log(response.data)
+      console.debug(response.data)
       return null
     })
   },
@@ -82,7 +88,7 @@ export default {
         if (response.status === 201) {
           return response.data
         }
-        console.log('Default campaign selected')
+        console.debug('Default campaign selected')
         return { id: 1 }
       })
   }

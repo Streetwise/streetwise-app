@@ -1,6 +1,9 @@
 <template lang="pug">
 .wiser
-  ImageVote(v-bind:msg='this.campaignQuestion', :skipintro='skipintro', :debugmode='debugMode', :votesrequired='votesRequired')
+  ImageVote(v-bind:msg='text.question',
+    :skipintro='skipintro',
+    :debugmode='debugMode',
+    :votesrequired='votesRequired')
   vs-popup(title='Anleitungshilfe', :active.sync='popupActive')
     .content.centerx
       p.campaign {{ text.intro }}
@@ -30,10 +33,7 @@
 
 <script>
 import ImageVote from '@/components/ImageVote.vue'
-
-// TODO: refactor into CampaignText component
-import Campaign1 from '../texts/campaign-1.yaml'
-import Campaign2 from '../texts/campaign-2.yaml'
+import CampaignTexts from '@/texts/campaigns.yaml'
 import $backend from '@/backend'
 
 export default {
@@ -55,7 +55,7 @@ export default {
     campaignQuestion: function () {
       switch (this.campaign) {
         default:
-          return 'Wo fühlst du dich sicherer?'
+          return ''
       }
     }
   },
@@ -78,9 +78,11 @@ export default {
     let self = this
     $backend.getNextCampaign()
       .then((res) => {
-        self.text = (res.id === 1)
+        let campaign_id = res.id
+        self.$appstate.campaign_id = campaign_id
+        self.text = (campaign_id === 1)
           ? Campaign1.start : Campaign2.start
-        console.log(self.text.id, 'text loaded')
+        console.debug(self.text.id, 'text loaded')
       })
   }
 }

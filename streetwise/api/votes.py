@@ -64,14 +64,13 @@ class VoteCast(Resource):
             my_sh = data['session_hash']
             # Sessions have unique hashes
             session = Session.query.filter_by(hash=my_sh).one_or_none()
+        # Create a session if needed
         if session is None:
             my_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) or request.remote_addr
             my_ua = request.user_agent
-            # Support for multiple campaigns
-            my_campaign = Campaign.query.filter_by(id=int(data['campaign'])).one_or_404()
+            # Commit the session
             session = Session(
                 hash = generate_hash(),
-                campaign = my_campaign,
                 agent_address = my_ip,
                 agent_platform = my_ua.platform,
                 agent_browser = my_ua.browser,
@@ -82,8 +81,17 @@ class VoteCast(Resource):
             )
             db.session.add(session)
             db.session.commit()
+        # Support for campaigns
+        my_campaign = None
+        if 'campaign_id' in data:
+            my_campaign_id = int(data['campaign_id'])
+            my_campaign = Campaign.query.filter_by(id=my_campaign_id).one_or_none()
+        if my_campaign is None:
+            my_campaign = Campaign.query.first()
+        # Register a new vote
         new_vote = Vote(
             session = session,
+            campaign = my_campaign,
             comment = data['comment'],
             choice_id = int(data['choice_id']),
             other_id =  int(data['other_id']),

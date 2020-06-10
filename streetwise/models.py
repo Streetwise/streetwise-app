@@ -71,9 +71,6 @@ class Session(Base):
 
     # A hash to identify this session by
     hash = db.Column(db.String(33), unique=True, default=generate_hash())
-    # Campaign that this session belongs to
-    campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
-    campaign = db.relationship(Campaign)
     # Agent details for this user session
     agent_address = db.Column(db.String(64))
     agent_platform = db.Column(db.String(128))
@@ -101,6 +98,9 @@ class Vote(Base):
     # User session that made the vote
     session_id = db.Column(db.Integer, db.ForeignKey(Session.id))
     session = db.relationship(Session)
+    # Campaign that this vote is part of
+    campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
+    campaign = db.relationship(Campaign)
     # The image chosen
     choice_id = db.Column(db.Integer, db.ForeignKey(Image.id))
     choice = db.relationship(Image, foreign_keys=[choice_id])
