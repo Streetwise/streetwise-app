@@ -18,6 +18,7 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 For more details visit our [releases page](https://github.com/Streetwise/streetwise-app/releases).
 
+- **0.8** 5.6.2020: Monitoring patch
 - **0.7** 29.5.2020: Result export APIs
 - **0.6** 22.5.2020: Compatibility patch
 - **0.5** 18.5.2020: Vote counter added
@@ -103,16 +104,10 @@ Heroku's buildpack currently does not support loading Python dependencies from p
 
 ### Frontend setup
 
-Install JS dependencies:
+Install JS dependencies and build the frontend into the `dist` folder:
 
 ```
 $ yarn
-```
-
-Build the frontend into the `dist` folder:
-
-```
-$ yarn build
 ```
 
 Run the test suite to make sure we're up to scratch (do it at this point, since it will expect frontend set up to be complete):

@@ -5,19 +5,13 @@
       img.icon(src="@/assets/icons/road.svg")
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
-    p.campaign(v-show="campaign==1")
-      | Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein intuitives Sicherheitsempfinden ist gefragt!
-    p.campaign(v-show="campaign==2")
-      | Anderer Campaign
+    p.campaign {{ text.intro }}
     table
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
         td
-          span(v-show="campaign==1")
-            | Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
-          span(v-show="campaign==2")
-            | Wir zeigen dir Bildpaare und du ... machst etwas anderes.
+          span {{ text.tip }}
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
@@ -59,6 +53,7 @@
 
 <script>
 import ProgressGoals from '@/components/ProgressGoals.vue'
+import CampaignText from '../texts/campaign-1.yaml'
 
 export default {
   name: 'Start',
@@ -71,7 +66,13 @@ export default {
       default: 1
     }
   },
+  data () {
+    return {
+      text: CampaignText.start
+    }
+  },
   mounted () {
+    console.log(CampaignText.id, 'text loaded')
     localStorage.setItem('streetwiseSession', null)
   }
 }
