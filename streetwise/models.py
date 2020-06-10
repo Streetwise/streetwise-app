@@ -30,7 +30,7 @@ class Image(Base):
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)
     # Data source identifier
-    key = db.Column(db.String(100), unique=True)
+    key = db.Column(db.String(100))
     # Filename the image refers to
     filename = db.Column(db.String(100))
     # Geographic coordinates of the photo

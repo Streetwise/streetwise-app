@@ -17,7 +17,7 @@ def create_app():
     app.logger.debug('>>> {}'.format(Config.FLASK_ENV))
 
     if "postgres://" in app.config['SQLALCHEMY_DATABASE_URI']:
-        raise ValueError('Connecting to Postgres database')
+        app.logger.info('Connecting to Postgres database')
 
     db.init_app(app)
     from .models import Base, Image, Session, Vote, Campaign

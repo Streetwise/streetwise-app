@@ -92,6 +92,15 @@ def init():
     upgrade(migration_path)
 
 @app.cli.command()
+def migrate():
+    """Run database migration task."""
+    from flask_migrate import migrate
+    migration_path = os.environ.get('MIGRATION_PATH')
+    if not migration_path: migration_path = 'migrations'
+    print('Migrating from', migration_path)
+    migrate(migration_path)
+    
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     from flask_migrate import upgrade
