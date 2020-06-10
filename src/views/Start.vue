@@ -6,7 +6,7 @@
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Deine Wahrnehmung ist gefragt: schau dir auf den Bildern die ganze
+      | Deine Wahrnehmung ist gefragt: Schau dir auf den Bildern die ganze
       | Umgebung an und bewerte diese als Fussgänger*in oder Velofahrer*in.
     table
       tr
@@ -41,9 +41,9 @@
       a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
       span.material-icons event_available
     ul.attribution
-      li Code (MIT) von <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a>.
-      li Bilder (CC BY-SA) von <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>.
-      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>.
+      li Code (MIT): <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise Team</a>
+      li Bilder (CC BY-SA): <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>
+      li Icons (FlatIcon): <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>
       li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise ARGE</a>
 </template>
 

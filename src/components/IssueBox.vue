@@ -5,12 +5,12 @@
       @cancel="close"
       @close="close"
       :active="active"
-      acceptText="Bestätigen"
-      cancelText="Zurück"
-      title="Unentschieden"
+      acceptText="bestätigen"
+      cancelText="zurück"
+      title="unentschieden"
       >
       <div class="body">
-        <p>Kannst du dich bei diesem Bildpaar wirklich nicht entscheiden, wo du dich sicherer fühlen würdest?</p>
+        <p>Warum kannst du dich nicht entscheiden?</p>
         <select size="large" v-model="selectedIssue">
           <option
             :key="index" :value="item.v"

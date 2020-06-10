@@ -1,22 +1,19 @@
 safety:
   id: campaign-1-safety
   start:
-    intro: >
-      Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive
-      als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein
-      intuitives Sicherheitsempfinden ist gefragt!
-    tip: >
-      Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich
-      sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
     question: >
       Wo fühlst du dich sicherer?
+    task: |
+      Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
+    hint: |
+      Schau dir im Bild die ganze Umgebung an und bewerte diese als Fussgänger*in oder Velofahrer*in.
 
 atmos:
   id: campaign-2-atmosphere
   start:
-    intro: >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla a risus at eleifend. Maecenas rhoncus, risus et aliquet viverra, risus ipsum tempus orci, ac facilisis justo nulla nec urna. Praesent laoreet magna vel interdum laoreet. Praesent interdum libero sit amet turpis finibus facilisis sit amet sit amet mauris.
-    tip: >
-      Donec sit amet posuere metus. Etiam sapien ligula, pulvinar eleifend iaculis ut, auctor non odio. Pellentesque aliquam orci sed mollis semper.
     question: >
-      Unos dos tres.
+      In welcher Umgebung würdest du dich lieber aufhalten?
+    task: |
+      Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich lieber aufhalten würdest.
+    hint: |
+      Schau dir im Bild die ganze Umgebung an und bewerte diese als Fussgänger*in.

@@ -39,6 +39,10 @@ export default {
 }
 .vs-popup {
   text-align: left;
+  p.tip {
+    font-size: 90%;
+    color: #777;
+  }
 }
 .fullscreen .vs-popup header { display: none; }
 .fullscreen .lightbox-container {

@@ -54,7 +54,8 @@ export default {
   name: 'ImageVote',
   props: {
     msg: String,
-    skipintro: Boolean,
+    skipcomplete: Boolean,
+    skipfeedback: Boolean,
     debugmode: {
       type: Boolean,
       default: false
@@ -95,8 +96,8 @@ export default {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
     checkVotesComplete () {
-      if (this.voteCount === this.votesrequired) {
-        if (this.skipintro) {
+      if (this.voteCount >= this.votesrequired) {
+        if (this.skipcomplete && this.skipfeedback) {
           let voter = this
           this.$vs.dialog({
             type: 'alert',
@@ -113,6 +114,9 @@ export default {
               voter.$router.push({ name: 'start' })
             }
           })
+        } else if (this.skipcomplete) {
+          // Continue to feedback screen
+          this.$router.push({ name: 'complete', params: { skipsurvey: true, responses: this.voteTotal } })
         } else {
           // Continue to finish survey screen
           this.$router.push({ name: 'complete', params: { responses: this.voteTotal } })
@@ -168,7 +172,7 @@ export default {
         color: 'warning',
         title: 'Upps!',
         text: 'Das ging etwas zu schnell.',
-        acceptText: 'Nochmals versuchen'
+        acceptText: 'Wiederholen'
       })
     },
     vote (isRight, textComment = '') {
@@ -208,18 +212,6 @@ export default {
     voteSkip () {
       this.nextImagePair(true)
       this.$vs.notify({ text: 'Übersprungen!', color: 'warning', position: 'top-center' })
-    }
-  },
-  mounted () {
-    // Notify mobile users about langscape mode
-    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768) {
-      this.$vs.dialog({
-        type: 'alert',
-        color: 'success',
-        title: `Hinweis`,
-        text: 'Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!',
-        acceptText: 'OK'
-      })
     }
   }
 }
