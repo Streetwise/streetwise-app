@@ -74,9 +74,8 @@ export default {
     let self = this
     $backend.getNextCampaign()
       .then((res) => {
-        let campaignId = res.id
-        self.campaignId = campaignId
-        let selectContent = CampaignTexts[campaignId]
+        self.campaignId = res.id
+        let selectContent = CampaignTexts[res.name]
         self.text = selectContent.start
         console.debug(selectContent.id, 'text loaded')
         // Trigger loading images from the selected campaign

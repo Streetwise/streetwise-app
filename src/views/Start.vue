@@ -55,12 +55,6 @@ export default {
   components: {
     ProgressGoals
   },
-  props: {
-    campaign: {
-      type: Number,
-      default: 1
-    }
-  },
   mounted () {
     localStorage.setItem('streetwiseSession', null)
     localStorage.setItem('currentCampaignId', null)

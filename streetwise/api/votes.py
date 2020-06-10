@@ -36,7 +36,8 @@ class VoteCounter(Resource):
     @ns.doc('count_votes')
     def get(self):
         latest_vote = Vote.query.first()
-        if latest_vote is None: return {}
+        if latest_vote is None:
+            return { 'total_count': 0 }
         latest_vote = latest_vote.created
         vote_count = db.session.query(func.count(Vote.id)).scalar()
         return {

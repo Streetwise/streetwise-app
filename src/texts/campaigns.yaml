@@ -1,5 +1,5 @@
-1:
-  id: campaign-1
+safety:
+  id: campaign-1-safety
   start:
     intro: >
       Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive
@@ -11,8 +11,8 @@
     question: >
       Wo fühlst du dich sicherer?
 
-2:
-  id: campaign-2
+atmos:
+  id: campaign-2-atmosphere
   start:
     intro: >
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla a risus at eleifend. Maecenas rhoncus, risus et aliquet viverra, risus ipsum tempus orci, ac facilisis justo nulla nec urna. Praesent laoreet magna vel interdum laoreet. Praesent interdum libero sit amet turpis finibus facilisis sit amet sit amet mauris.
