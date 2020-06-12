@@ -14,8 +14,8 @@ ns = api_rest.namespace('image',
     description = 'Image operations'
 )
 
-IMAGE_DISPAY_MAP = {}
-IMAGE_RESPONSE_COUNT = 2
+# In-memory store for image counting at runtime
+IMAGE_COUNTER_MAP = {}
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
@@ -50,10 +50,7 @@ class ImageRandom(Resource):
     def get(self):
         images = Image.query.order_by(func.random()).limit(10).all()
         sortedImages = sortImagesByDisplayCount(images)
-        leastDispalyedImages = selectLeastDisplayedImages(sortedImages)
-        for i in leastDispalyedImages:
-            incrementImageDisplayCount(i)
-        return leastDispalyedImages, 201
+        return selectLeastDisplayedImages(sortedImages), 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):
@@ -65,20 +62,19 @@ class ImageSelect(Resource):
         return Image.query.get(image_id), 201
 
 def selectLeastDisplayedImages(sortedImageList):
+    """ Return two images in the form of a list """
+    IMAGE_RESPONSE_COUNT = 2
     images = sortedImageList[0:IMAGE_RESPONSE_COUNT]
     return list(map(lambda i: i[0], images))
 
 def sortImagesByDisplayCount(images):
+    """ Sorting function for images, based on the frequency of their being displayed """
     imageCount = {}
     for i in images:
-        if not IMAGE_DISPAY_MAP.get(i.id):
+        if not IMAGE_COUNTER_MAP.get(i.id):
             imageCount[i] = 1
+            IMAGE_COUNTER_MAP[imageId] = 1
         else:
-            imageCount[i] = IMAGE_DISPAY_MAP[i.id]
+            imageCount[i] = IMAGE_COUNTER_MAP[i.id]
+            IMAGE_COUNTER_MAP[imageId] += 1
     return sorted(imageCount.items(), key=lambda n: n[1])
-
-def incrementImageDisplayCount(imageId):
-    if not IMAGE_DISPAY_MAP.get(imageId):
-        IMAGE_DISPAY_MAP[imageId] = 1
-    else:
-        IMAGE_DISPAY_MAP[imageId] += 1
