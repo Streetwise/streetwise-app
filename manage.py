@@ -117,8 +117,8 @@ def deploy():
     os.urandom(256)
 
 @app.cli.command()
-@click.option('--name', default="safety",
-              help='Name of the campaign to use for import.')
+@click.option('--name',
+              help='Name of the campaign (safety, atmos) to use for import.')
 @click.option('--src', default="data/ch_data.csv",
               help='Filename of the CSV database to import.')
 @click.option('--update/--no-update', default=True,
