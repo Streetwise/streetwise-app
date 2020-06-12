@@ -1,10 +1,12 @@
 <template>
   <div class="imagevote">
-    <div class="progressbar">
-      <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
-    </div>
 
-    <h3 class="lead">{{ msg }}</h3>
+    <div class="info-header">
+      <div class="progressbar">
+        <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
+      </div>
+      <h3 class="lead">{{ msg }}</h3>
+    </div>
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
@@ -302,6 +304,12 @@ export default {
   }
 }
 
+.info-header {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
 .lead {
   padding: 0.5em;
 }
@@ -379,19 +387,22 @@ export default {
   &.right { right: 5px; }
 }
 
+.lead {
+  width: 60%;
+}
+
 .progressbar {
   text-align: right;
   margin: 1em;
   border-radius: 5px;
   background: white;
   padding: 0 5px;
-  position: absolute;
-  right: 0px;
+  width: 33%;
   p {
     display: none;
   }
   div {
-    width: 10em;
+    width: 100%;
   }
 }
 </style>
