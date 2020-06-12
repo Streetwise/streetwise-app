@@ -51,6 +51,8 @@ def test(coverage, test_names):
             pass
         sys.exit(subprocess.call(sys.argv))
 
+    from flask_migrate import upgrade
+    upgrade()
     import pytest
     errno = pytest.main(['tests'])
 
@@ -99,7 +101,7 @@ def migrate():
     if not migration_path: migration_path = 'migrations'
     print('Migrating from', migration_path)
     migrate(migration_path)
-    
+
 @app.cli.command()
 def deploy():
     """Run deployment tasks."""
