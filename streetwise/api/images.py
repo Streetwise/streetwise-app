@@ -14,6 +14,9 @@ ns = api_rest.namespace('image',
     description = 'Image operations'
 )
 
+IMAGE_DISPAY_MAP = {}
+IMAGE_RESPONSE_COUNT = 2
+
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
     'key': fields.String,
@@ -45,7 +48,12 @@ class ImageRandom(Resource):
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
     def get(self):
-        return Image.query.order_by(func.random()).limit(2).all(), 201
+        images = Image.query.order_by(func.random()).limit(10).all()
+        sortedImages = sortImagesByDisplayCount(images)
+        leastDispalyedImages = selectLeastDisplayedImages(sortedImages)
+        for i in leastDispalyedImages:
+            incrementImageDisplayCount(i)
+        return leastDispalyedImages, 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):
@@ -55,3 +63,22 @@ class ImageSelect(Resource):
     @ns.marshal_with(ImageModel, code=201)
     def get(self, image_id):
         return Image.query.get(image_id), 201
+
+def selectLeastDisplayedImages(sortedImageList):
+    images = sortedImageList[0:IMAGE_RESPONSE_COUNT]
+    return list(map(lambda i: i[0], images))
+
+def sortImagesByDisplayCount(images):
+    imageCount = {}
+    for i in images:
+        if not IMAGE_DISPAY_MAP.get(i.id):
+            imageCount[i] = 1
+        else:
+            imageCount[i] = IMAGE_DISPAY_MAP[i.id]
+    return sorted(imageCount.items(), key=lambda n: n[1])
+
+def incrementImageDisplayCount(imageId):
+    if not IMAGE_DISPAY_MAP.get(imageId):
+        IMAGE_DISPAY_MAP[imageId] = 1
+    else:
+        IMAGE_DISPAY_MAP[imageId] += 1
