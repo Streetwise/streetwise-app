@@ -36,15 +36,11 @@
       span Fragen?&nbsp;
       a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
       span.material-icons email
-    .together
-      span Bemerkungen zur Umfrage?&nbsp;
-      a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
-      span.material-icons event_available
     ul.attribution
       li Code (MIT): <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise Team</a>
       li Bilder (CC BY-SA): <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>
       li Icons (FlatIcon): <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>
-      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise ARGE</a>
+      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise Team</a>
 </template>
 
 <script>
