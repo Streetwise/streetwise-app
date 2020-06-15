@@ -47,7 +47,7 @@ class Image(Base):
 
     @property
     def Url(self):
-        return IMG_BASE_URL + self.filename
+        return "%s/%s/images/%s" % IMG_BASE_URL, self.campaign.name, self.filename
 
     @property
     def json(self):

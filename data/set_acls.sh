@@ -1,12 +1,18 @@
 #!/bin/sh
 
-echo Trying to set ACLs with s3cmd ..
-s3cmd setacl s3://streetwise.eu-central-1.linodeobjects.com/campaigns/ --acl-public --recursive
+echo Note: ACLs can also be set during an s3cmd sync with the --acl-public option
+echo About to set ACLs with s3cmd setacl ..
+
+read -p "Continue? Ctrl-C to cancel"
+
+s3cmd setacl s3://streetwise --acl-public --recursive
 
 read -p "Did that work? Ctrl-C if it did."
 
 echo Setting ACLs using linode-cli ..
+
 INPUT=ch-data-atmos.csv
+
 OLDIFS=$IFS
 IFS=','
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
