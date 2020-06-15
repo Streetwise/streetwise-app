@@ -90,7 +90,7 @@ Grab a copy of the image database:
 
 Import the image files, e.g. from a test file in the `data` folder (where there is also a `get_data` script to get the complete dataset):
 
-`./manage.py images --src data/ch_data_test.csv`
+`./manage.py images --src data/test.csv`
 
 ### Dependency management
 

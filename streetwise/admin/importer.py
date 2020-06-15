@@ -7,46 +7,64 @@ from dateutil import parser
 from ..models import Image, Campaign
 from .. import db
 
-# ../../data/ch_data.csv
-DEFAULT_DATA_PATH = os.getenv('DATA_PATH', os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, 'data', 'ch_data.csv')))
-DEFAULT_CAMPAIGN = os.getenv('CAMPAIGN', 'safety')
+DEFAULT_DATA_PATH = os.getenv('DATA_PATH', None)
+DEFAULT_CAMPAIGN = os.getenv('CAMPAIGN', None)
 
-def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DEFAULT_CAMPAIGN):
-    if not skip_existing:
-        print("Warning: skipping existance check, images may be duplicated")
+campaigns = {}
 
-    # Surely there's a better way to count rows in 2020
-    with open(filename) as csvfile:
-        total = count = 0
-        for row in csv.reader(csvfile):
-            total = total + 1
-        total = total - 1 # skip header
-        print(total, 'rows loaded')
-
-    # Set up a campaign
+def get_campaign(campaign_name):
+    """ Set up the campaign, if needed """
+    if campaign_name is None:
+        print("Error: use the CAMPAIGN environment variable to set a default")
+        exit()
+    if campaign_name in campaigns:
+        return campaigns[campaign_name]
     campaign = Campaign.query.filter_by(name=campaign_name).first()
     if not campaign:
         print("Creating campaign:", campaign_name)
         campaign = Campaign(name=campaign_name)
         db.session.add(campaign)
         db.session.commit()
-    campaign_id = campaign.id
+    campaigns[campaign_name] = campaign.id
+    return campaign.id
+
+def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DEFAULT_CAMPAIGN):
+    if filename is None:
+        print("Error: no image source specified using command or DATA_PATH environment")
+        exit()
+    if not skip_existing:
+        print("Warning: skipping existance check, images may be duplicated")
+
+    # Count rows
+    with open(filename) as csvfile:
+        total = sum(1 for row in csvfile) - 1
+        print(total, 'rows loaded')
+        if total < 2:
+            exit()
 
     # Main importer
     with open(filename) as csvfile:
         reader = csv.DictReader(csvfile)
+        Image_Key = 'Image_Key'
+        if '\ufeffImage_Key' in reader.fieldnames:
+            Image_Key = '\ufeffImage_Key'
+        count = 0
         for row in reader:
             count = count + 1
-            ik = row['Image_Key']
+            ik = row[Image_Key]
             img = None
+            if 'Campaign' in row:
+                campaign_id = get_campaign(row['Campaign'])
+            else:
+                campaign_id = get_campaign(campaign_name)
             if skip_existing:
-                img = Image.query.filter_by(key=ik).first()
+                img = Image.query.filter_by(key=ik, campaign_id=campaign_id).first()
                 if img: print('Skipping', ik)
             if not img:
                 print('Importing', ik, ' ...', count, '/', total)
                 img = Image(
-                    campaign        = campaign,
                     key             = ik,
+                    campaign_id     = campaign_id,
                     filename        = row['Filename'],
                     latitude        = float(row['Latitude']),
                     longitude       = float(row['Longitude']),
@@ -60,4 +78,5 @@ def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DE
                 # To improve performance
                 if count % 200 == 0:
                     db.session.commit()
+        # Commit any remaining
         db.session.commit()

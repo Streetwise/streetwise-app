@@ -117,17 +117,17 @@ def deploy():
     os.urandom(256)
 
 @app.cli.command()
-@click.option('--name',
-              help='Name of the campaign (safety, atmos) to use for import.')
-@click.option('--src', default="data/ch_data.csv",
-              help='Filename of the CSV database to import.')
+@click.option('--campaign',
+              help='Default name of the campaign (safety, atmos, ..) to use for import.')
+@click.option('--src',
+              help='Filename of the CSV database to import, e.g. data/test.csv')
 @click.option('--update/--no-update', default=True,
               help='Check to see if images are already in database.')
-def images(name, src, update):
+def images(campaign, src, update):
     """Import the images."""
     from streetwise.admin import load_images
     with app.app_context():
-        load_images(update, src, name)
+        load_images(update, src, campaign)
 
 @app.cli.command()
 def profile():
