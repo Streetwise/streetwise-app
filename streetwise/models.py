@@ -29,6 +29,10 @@ class Image(Base):
     # Campaign that this image belongs to
     campaign_id = db.Column(db.Integer, db.ForeignKey(Campaign.id))
     campaign = db.relationship(Campaign)
+
+    # Skip any images that were flagged as invalid
+    shown = db.Column(db.Boolean(), default=True)
+
     # Data source identifier
     key = db.Column(db.String(100))
     # Filename the image refers to

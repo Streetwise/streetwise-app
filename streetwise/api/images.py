@@ -17,6 +17,7 @@ ns = api_rest.namespace('image',
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
     'campaign_id': fields.Integer,
+    'skip': fields.Boolean,
     'key': fields.String,
     'filename': fields.String,
     'latitude': fields.Float,
@@ -26,12 +27,12 @@ ImageModel = api_rest.model('Image', {
     'sequence_key': fields.String,
     'is_panorama': fields.Boolean,
     'captured_at': fields.DateTime,
-    'Url': fields.String,
+    'Url': fields.String, # TODO: inconsistent capitalisation
 })
 
 @ns.route('/all')
 class ImageBrowser(Resource):
-    """ List all images available """
+    """ List images, for testing """
 
     @ns.doc('list_images')
     @ns.marshal_list_with(ImageModel)
@@ -45,7 +46,7 @@ class ImageRandom(Resource):
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
     def get(self, campaign_id):
-        q = Image.query.filter_by(campaign_id=campaign_id)
+        q = Image.query.filter_by(campaign_id=campaign_id, shown=True)
         q = q.order_by(func.random()).limit(2).all()
         return q, 201
 

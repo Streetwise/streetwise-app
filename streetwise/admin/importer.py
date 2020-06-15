@@ -52,6 +52,9 @@ def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DE
         for row in reader:
             count = count + 1
             ik = row[Image_Key]
+            if len(ik) < 22:
+                print('Invalid image key', row)
+                continue
             img = None
             if 'Campaign' in row:
                 campaign_id = get_campaign(row['Campaign'])
@@ -59,7 +62,13 @@ def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DE
                 campaign_id = get_campaign(campaign_name)
             if skip_existing:
                 img = Image.query.filter_by(key=ik, campaign_id=campaign_id).first()
-                if img: print('Skipping', ik)
+                if img:
+                    if row['Skip'] == 'TRUE':
+                        print('Deactivating', ik)
+                        img.shown = False
+                        db.session.add(img)
+                    #print('Skipping', ik)
+                    continue
             if not img:
                 print('Importing', ik, ' ...', count, '/', total)
                 img = Image(
@@ -73,6 +82,7 @@ def load_images(skip_existing=True, filename=DEFAULT_DATA_PATH, campaign_name=DE
                     sequence_key    = row['Sequence_Key'],
                     is_panorama     = bool(row['Panorama']),
                     captured_at     = parser.parse(row['Captured_At']),
+                    shown           = (row['Skip'] != 'TRUE')
                 )
                 db.session.add(img)
                 # To improve performance
