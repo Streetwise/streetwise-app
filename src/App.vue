@@ -43,6 +43,7 @@ export default {
     font-size: 90%;
     color: #777;
   }
+  p, h1, h2, h3, h4, h5 { line-height: 1.4em; }
 }
 .fullscreen .vs-popup header { display: none; }
 .fullscreen .lightbox-container {
