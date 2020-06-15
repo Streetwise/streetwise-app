@@ -6,7 +6,7 @@
 /migrations
 
 /data/.xdp*
-/data/ch_data.csv
+/data/ch-data*.csv
 /data/*.db
 
 /dist
