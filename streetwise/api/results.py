@@ -32,6 +32,7 @@ def voteModel(vote):
         'time_elapsed':    vote.time_elapsed,
         'campaign':        {
             'id':          vote.campaign.id,
+            'name':        vote.campaign.name,
         },
         'session': {
             'id':          vote.session.id,
