@@ -9,7 +9,7 @@
     :skipfeedback='didfeedback',
     ref="imageVote")
 
-  vs-popup(title='Info', :active.sync='infoActive')
+  vs-popup(title='Info', :active.sync='infoActive', button-close-hidden)
     .content.centerx
       p(v-show="!didsurvey")
         | Für dich geht’s los mit der Frage:
@@ -19,7 +19,7 @@
       p {{ text.task }}
       p.tip {{ text.hint }}
       p.tip(v-show="portraitMode")
-        | Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+        | Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht der Bilder!
       center
         vs-button(flat='', size='large', color='success', @click='infoActive=false') alles klar
 

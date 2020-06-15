@@ -51,6 +51,7 @@ export default {
   .vs-button-text { color: black; text-shadow: 1px 1px 1px white; }
 }
 .vs-navbar--header > button.vs-navbar--btn-responsive { visibility: hidden; }
+.vs-popup-primary .vs-popup--background { background: rgba(60,90,60,0.9); }
 
 // Note: for compatibility with IE11 - configured in main.js
 .vuesax-app-is-ltr {

@@ -172,7 +172,7 @@ export default {
         color: 'warning',
         title: 'Upps!',
         text: 'Das ging etwas zu schnell.',
-        acceptText: 'Wiederholen'
+        acceptText: 'wiederholen'
       })
     },
     vote (isRight, textComment = '') {

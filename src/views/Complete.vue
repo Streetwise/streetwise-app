@@ -1,7 +1,7 @@
 <template lang="pug">
 .complete
   .survey(v-show='!surveyComplete')
-    h1 Fast geschafft!
+    h1 Die Hälfte ist geschafft!
     p.lead
       | Erz&auml;hl uns kurz von dir.
     a(@click='showBlockquote=true', href='#')
@@ -34,7 +34,7 @@
             option(:key='index', :value='item.c', v-for='(item, index) in listCantons') {{ item.n }}
 
       center
-        vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') abschliessen
+        vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') weiter
 
   div.survey-contest(v-show='surveyComplete && surveyRaffle')
     center.thanks
