@@ -15,12 +15,14 @@ export default new Router({
     {
       path: '/',
       name: 'start',
-      component: Start
+      component: Start,
+      props: true
     },
     {
       path: '/finish',
       name: 'finish',
-      component: Finish
+      component: Finish,
+      props: true
     },
     {
       path: '/wise',

@@ -37,7 +37,22 @@ def test(coverage, test_names):
         import subprocess
         os.environ['FLASK_COVERAGE'] = '1'
         sys.exit(subprocess.call(sys.argv))
+    if os.environ.get('FLASK_ENV') != 'test':
+        import subprocess
+        # ../data/test.db
+        APP_DIR = os.path.dirname(__file__)
+        TEST_PATH = os.path.abspath(os.path.join(APP_DIR, 'data', 'test.db'))
+        os.environ['FLASK_ENV'] = 'test'
+        os.environ['DATABASE_URL'] = 'sqlite:///' + TEST_PATH
+        # clear before each run
+        try:
+            os.remove(TEST_PATH)
+        except FileNotFoundError:
+            pass
+        sys.exit(subprocess.call(sys.argv))
 
+    from flask_migrate import upgrade
+    upgrade()
     import pytest
     errno = pytest.main(['tests'])
 
@@ -79,6 +94,15 @@ def init():
     upgrade(migration_path)
 
 @app.cli.command()
+def migrate():
+    """Run database migration task."""
+    from flask_migrate import migrate
+    migration_path = os.environ.get('MIGRATION_PATH')
+    if not migration_path: migration_path = 'migrations'
+    print('Migrating from', migration_path)
+    migrate(migration_path)
+
+@app.cli.command()
 def deploy():
     """Run deployment tasks."""
     from flask_migrate import upgrade
@@ -93,17 +117,17 @@ def deploy():
     os.urandom(256)
 
 @app.cli.command()
-@click.option('--name', default="safety-1",
-              help='Name of the campaign to use for import.')
-@click.option('--src', default="data/ch_data.csv",
-              help='Filename of the CSV database to import.')
+@click.option('--campaign',
+              help='Default name of the campaign (safety, atmos, ..) to use for import.')
+@click.option('--src',
+              help='Filename of the CSV database to import, e.g. data/test.csv')
 @click.option('--update/--no-update', default=True,
               help='Check to see if images are already in database.')
-def images(name, src, update):
+def images(campaign, src, update):
     """Import the images."""
     from streetwise.admin import load_images
     with app.app_context():
-        load_images(update, src, name)
+        load_images(update, src, campaign)
 
 @app.cli.command()
 def profile():

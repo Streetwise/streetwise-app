@@ -24,8 +24,10 @@ $axios.interceptors.response.use(function (response) {
 export default {
   voteCast (isRight, imageLeft, imageRight, timeTaken, textComment) {
     let sessionHash = localStorage.getItem('streetwiseSession') || null
+    let campaignId = localStorage.getItem('currentCampaignId') || null
     return $axios.post(`vote/`, {
       session_hash: sessionHash,
+      campaign_id: campaignId,
       choice_id: isRight ? imageRight : imageLeft,
       other_id: isRight ? imageLeft : imageRight,
       is_leftimage: (isRight !== null && !isRight),
@@ -40,10 +42,14 @@ export default {
             response.data.session_hash !== sessionHash) {
           localStorage.setItem('streetwiseSession', response.data.session_hash)
         }
+        if (typeof response.data.campaign !== 'undefined' &&
+            response.data.campaign.id !== campaignId) {
+          localStorage.setItem('currentCampaignId', response.data.campaign.id)
+        }
         return response.data
       }
       alert(response.statusText)
-      console.log(response.data)
+      console.debug(response.data)
       return null
     })
   },
@@ -61,18 +67,32 @@ export default {
         return true
       }
       alert(response.statusText)
-      console.log(response.data)
+      console.debug(response.data)
       return null
     })
   },
 
   getRandomImages () {
-    return $axios.get(`image/random`)
+    let campaignId = localStorage.getItem('currentCampaignId') || null
+    return $axios.get(`image/random/` + campaignId)
       .then(response => response.data)
   },
 
   getVoteCount () {
     return $axios.get(`vote/count`)
       .then(response => response.data)
+  },
+
+  getNextCampaign () {
+    return $axios.get(`campaign/next`)
+      .then(function (response) {
+        if (response.status === 201) {
+          localStorage.setItem('currentCampaignId', response.data.id)
+          return response.data
+        }
+        console.debug('Default campaign selected')
+        localStorage.setItem('currentCampaignId', 1)
+        return { id: 1 }
+      })
   }
 }

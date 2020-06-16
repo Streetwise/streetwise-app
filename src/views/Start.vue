@@ -6,20 +6,16 @@
       img.icon(src="@/assets/icons/road2.svg")
       img.icon(src="@/assets/icons/nature.svg")
     p.campaign
-      | Stell dir vor, du betrachtest die Bildpaare je nachdem aus der Perspektive als Fussgänger*in, Skater*in, Trottinett- oder Velofahrer*in. Dein intuitives Sicherheitsempfinden ist gefragt!
+      | Deine Wahrnehmung ist gefragt: Schau dir auf den Bildern die ganze
+      | Umgebung an und bewerte diese als Fussgänger*in oder Velofahrer*in.
     table
       tr
         td
           vs-icon(icon="star", size="small", color="darkblue")
-        td Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest. Tippe auf ein Bild, um es zu vergrössern.
-      tr
         td
-          vs-icon(icon="star", size="small", color="darkblue")
-        td Klicke entsprechend links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-      tr
-        td
-          vs-icon(icon="star", size="small", color="darkblue")
-        td Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!
+          | Tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend links
+          | oder rechts für deine Auswahl. Kannst du dich nicht entscheiden?
+          | Dann wähle «unentschieden».
     ProgressGoals
     center.wiselink
       router-link(to="/wise")
@@ -40,15 +36,11 @@
       span Fragen?&nbsp;
       a(href="mailto:hallo@streetwise.space") hallo@streetwise.space
       span.material-icons email
-    .together
-      span Bemerkungen zur Umfrage?&nbsp;
-      a(href="https://forms.gle/fDcXHYkSire7GRiU9", target="_blank") Feedback
-      span.material-icons event_available
     ul.attribution
-      li Code (MIT) von <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise team</a>.
-      li Bilder (CC BY-SA) von <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>.
-      li Icons (FlatIcon) von <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>.
-      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">Streetwise ARGE</a>
+      li Code (MIT): <a href="https://github.com/Streetwise/" target="_blank" title="GitHub">Streetwise</a>
+      li Bilder (CC BY-SA): <a href="https://www.mapillary.com/" target="_blank">Mapillary</a>
+      li Icons (FlatIcon): <a href="https://www.flaticon.com/authors/vitaly-gorbachev" target="_blank">Vitaly Gorbachev</a>
+      li Copyright &copy; 2020 <a href="https://streetwise.space/impressum" target="_blank">streetwise.space</a>
 </template>
 
 <script>
@@ -61,6 +53,7 @@ export default {
   },
   mounted () {
     localStorage.setItem('streetwiseSession', null)
+    localStorage.setItem('currentCampaignId', null)
   }
 }
 </script>

@@ -6,7 +6,7 @@ http://flask-restplus.readthedocs.io
 from flask_restplus import Resource
 
 from . import db, api_rest
-from .security import require_auth
+from .util import require_auth
 from ..models import Session, Vote, Image, Campaign
 
 ns = api_rest.namespace('results',
@@ -30,9 +30,12 @@ def voteModel(vote):
         'id':              vote.id,
         'created':         vote.created.isoformat(),
         'time_elapsed':    vote.time_elapsed,
+        'campaign':        {
+            'id':          vote.campaign.id,
+            'name':        vote.campaign.name,
+        },
         'session': {
             'id':          vote.session.id,
-            'campaign':    vote.session.campaign_id,
             'is_mobile':   vote.session.is_mobile_agent,
             'is_portrait': aspect_ratio < 1,
             'resolution':  aspect_resolution

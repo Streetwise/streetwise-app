@@ -19,6 +19,8 @@ IMAGE_COUNTER_MAP = {}
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
+    'campaign_id': fields.Integer,
+    'skip': fields.Boolean,
     'key': fields.String,
     'filename': fields.String,
     'latitude': fields.Float,
@@ -28,27 +30,26 @@ ImageModel = api_rest.model('Image', {
     'sequence_key': fields.String,
     'is_panorama': fields.Boolean,
     'captured_at': fields.DateTime,
-    'Url': fields.String,
+    'Url': fields.String, # TODO: inconsistent capitalisation
 })
 
 @ns.route('/all')
 class ImageBrowser(Resource):
-    """ List all images available """
+    """ List images, for testing """
 
     @ns.doc('list_images')
     @ns.marshal_list_with(ImageModel)
     def get(self):
         return Image.query.limit(100).all()
 
-
-@ns.route('/random')
+@ns.route('/random/<int:campaign_id>')
 class ImageRandom(Resource):
-    """ Get two random images """
+    """ Get two random images from campaign """
 
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
-    def get(self):
-        images = Image.query.order_by(func.random()).limit(10).all()
+    def get(self, campaign_id):
+        images = Image.query.filter_by(campaign_id=campaign_id).order_by(func.random()).limit(10).all()
         sortedImages = sortImagesByDisplayCount(images)
         return selectLeastDisplayedImages(sortedImages), 201
 

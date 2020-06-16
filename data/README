@@ -1,1 +1,2 @@
-Data files, such as ch_data.csv, are stored in this folder
+Data files are stored in this folder.
+Any files with the ch-data- prefix will be ignored by git.

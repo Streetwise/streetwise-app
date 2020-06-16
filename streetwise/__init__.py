@@ -14,7 +14,10 @@ from .config import Config
 def create_app():
     app = Flask(__name__, static_folder='../dist/static')
     app.config.from_object('streetwise.config.Config')
-    app.logger.info('>>> {}'.format(Config.FLASK_ENV))
+    app.logger.debug('>>> {}'.format(Config.FLASK_ENV))
+
+    if "postgres://" in app.config['SQLALCHEMY_DATABASE_URI']:
+        app.logger.info('Connecting to Postgres database')
 
     db.init_app(app)
     from .models import Base, Image, Session, Vote, Campaign
