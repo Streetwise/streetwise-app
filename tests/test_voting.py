@@ -54,3 +54,4 @@ def test_post_and_export(client):
         result = json.loads(resp.data)
         assert vote_request['choice_id'] == result[0]['right_image']['id']
         assert result[0]['campaign']['id'] == campaign_id
+        assert result[0]['campaign']['name'] == None # default

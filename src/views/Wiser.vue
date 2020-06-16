@@ -94,11 +94,11 @@ export default {
     this.portraitMode = window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768
   },
   beforeCreate: function () {
-    let self = this
+    const self = this
     $backend.getNextCampaign()
       .then((res) => {
         self.campaignId = res.id
-        let selectContent = CampaignTexts[res.name]
+        const selectContent = CampaignTexts[res.name]
         self.text = selectContent.start
         console.debug(selectContent.id, 'text loaded')
         // Trigger loading images from the selected campaign

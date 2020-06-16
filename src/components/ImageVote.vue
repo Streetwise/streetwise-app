@@ -98,7 +98,7 @@ export default {
     checkVotesComplete () {
       if (this.voteCount >= this.votesrequired) {
         if (this.skipcomplete && this.skipfeedback) {
-          let voter = this
+          const voter = this
           this.voteCount = 0
           this.$vs.dialog({
             type: 'alert',
@@ -127,7 +127,7 @@ export default {
     promptNetworkError () {
       if (this.errorPromptVisible) return
       this.errorPromptVisible = true
-      let self = this
+      const self = this
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
