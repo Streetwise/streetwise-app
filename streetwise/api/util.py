@@ -1,5 +1,5 @@
 """
-Security Functions
+API utility functions
 https://github.com/auth0/auth0-python
 """
 

@@ -5,10 +5,10 @@ See `.flaskenv` for default settings.
 
 import os, os.path
 
+APP_DIR = os.path.dirname(__file__)
+
 # ../data/streetwise.db
-DEFAULT_DB_PATH = os.path.dirname(__file__)
-DEFAULT_DB_PATH = os.path.join(DEFAULT_DB_PATH, os.pardir, 'data', 'streetwise.db')
-DEFAULT_DB_PATH = os.path.abspath(DEFAULT_DB_PATH)
+DATA_PATH = os.path.abspath(os.path.join(APP_DIR, os.pardir, 'data', 'streetwise.db'))
 
 DEFAULT_BUCKET_URL = "https://imagery.streetwise-app.ch/enhanced/"
 
@@ -22,15 +22,15 @@ class Config(object):
 
     SSL_REDIRECT = os.getenv('SSL_REDIRECT', False)
 
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + DEFAULT_DB_PATH)
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
     IMAGE_BUCKET_URL = os.getenv('IMAGE_BUCKET_URL', DEFAULT_BUCKET_URL)
 
-    APP_DIR = os.path.dirname(__file__)
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///' + DATA_PATH)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     ROOT_DIR = os.path.dirname(APP_DIR)
     DIST_DIR = os.path.join(ROOT_DIR, 'dist')
 
+    # Check for frontend build
     if not os.path.exists(DIST_DIR):
         raise Exception(
             'DIST_DIR not found: {}'.format(DIST_DIR))

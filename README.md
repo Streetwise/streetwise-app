@@ -18,6 +18,8 @@ The easiest way to deploy this project is currently using this button (see Produ
 
 For more details visit our [releases page](https://github.com/Streetwise/streetwise-app/releases).
 
+- **0.9** 16.6.2020: Multi-campaigns
+- **0.8** 5.6.2020: Monitoring patch
 - **0.7** 29.5.2020: Result export APIs
 - **0.6** 22.5.2020: Compatibility patch
 - **0.5** 18.5.2020: Vote counter added
@@ -89,7 +91,7 @@ Grab a copy of the image database:
 
 Import the image files, e.g. from a test file in the `data` folder (where there is also a `get_data` script to get the complete dataset):
 
-`./manage.py images --src data/ch_data_test.csv`
+`./manage.py images --src data/test.csv`
 
 ### Dependency management
 
@@ -103,16 +105,10 @@ Heroku's buildpack currently does not support loading Python dependencies from p
 
 ### Frontend setup
 
-Install JS dependencies:
+Install JS dependencies and build the frontend into the `dist` folder:
 
 ```
 $ yarn
-```
-
-Build the frontend into the `dist` folder:
-
-```
-$ yarn build
 ```
 
 Run the test suite to make sure we're up to scratch (do it at this point, since it will expect frontend set up to be complete):
@@ -170,7 +166,7 @@ Or using Heroku's cli:
 
 `heroku local`
 
-Production DB migrations are tracked in the `deploy` folder. Set the `MIGRATION_PATH` variable to the folder you wish deployments to pick up, e.g. _"deploy/streetwise-prod"_.
+#### Deployment notes
 
 Heroku's nodejs buildpack will handle install for all the dependencies from the `packages.json` file.
 It will then trigger the `postinstall` command which calls `yarn build`.
@@ -180,12 +176,26 @@ Other useful variables to set in production include:
 
 - **API_KEY** - the key (default: _OpenData_) with which you can export results
 - **IMAGE_BUCKET_URL** - source of remote images to use
+- **VUE_APP_VOTESREQUIRED** - number of votes per session (default: 10)
 - **VUE_APP_FATHOM_ANALYTICS_CODE** - embed code for web analytics (usefathom.com)
 - **VUE_APP_FRONTEND_LOGGER_KEY** - embed code for error logging (coralogix.com)
+- **VUE_APP_DEBUG** - set to `true` for frontend troubleshooting
 - **DATABASE_URL** - set automatically by Heroku, this specifies the DB endpoint
 - **FLASK_SECRET** - auto-generated
 - **FLASK_APP** - `streetwise`
 - **FLASK_ENV** - `production`
+
+Production DB migrations are tracked in the `deploy` folder. Set the `MIGRATION_PATH` variable to the folder you wish deployments to pick up. Be aware that as this is currently also used in testing, any migrations will need to be propagated for CI to pass, i.e.:
+
+```
+export MIGRATION_PATH=deploy/streetwise-prod
+./manage.py migrate
+./manage.py deploy
+```
+
+Other useful Heroku commands include restoring backups from production to stage:
+
+`heroku pg:backups:restore streetwise-app::b008 DATABASE_URL --app streetwise-stage`
 
 For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
 

@@ -1,7 +1,7 @@
 <template lang="pug">
 .complete
   .survey(v-show='!surveyComplete')
-    h1 Fast geschafft!
+    h1 Die Hälfte ist geschafft!
     p.lead
       | Erz&auml;hl uns kurz von dir.
     a(@click='showBlockquote=true', href='#')
@@ -34,7 +34,7 @@
             option(:key='index', :value='item.c', v-for='(item, index) in listCantons') {{ item.n }}
 
       center
-        vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') Abschliessen
+        vs-button(flat='', size='large', color='success', style='margin: 1em 0', @click='submitForm') weiter
 
   div.survey-contest(v-show='surveyComplete && surveyRaffle')
     center.thanks
@@ -43,7 +43,7 @@
     center.survey-next
       //- a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
       //-   vs-button(flat='', type='line', color='light') Formular im Vollbildmodus anzeigen
-      vs-button(flat='', size='large', color='success', @click='nextSubscribe') Weiter
+      vs-button(flat='', size='large', color='success', @click='nextSubscribe') weiter
 
   div.survey-feedback(v-show='surveyComplete && !surveyRaffle')
     .thanks(@click='scrollToSubmit')
@@ -55,8 +55,8 @@
       //- a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
       //-   vs-button(flat='', size='large', type='line', color='light') Formular im Vollbildmodus anzeigen
       span.together
-        vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') Zurück
-        vs-button(flat='', size='large', color='success', @click='skipSubscribe') Fertig
+        vs-button(flat='', size='large', color='primary', type='border', @click='backSubscribe') zurück
+        vs-button(flat='', size='large', color='success', @click='skipSubscribe') fertig
 </template>
 
 <script>
@@ -66,14 +66,22 @@ export default {
   components: {
   },
   props: {
-    responses: 0
+    responses: 0,
+    campaign: {
+      type: Number,
+      default: 1
+    },
+    skipsurvey: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
       responsesRequired: 10,
       // Form state
       showBlockquote: false,
-      surveyComplete: false,
+      surveyComplete: this.skipsurvey,
       surveyRaffle: true,
       // Survey data
       surveyAge: null,
@@ -121,6 +129,8 @@ export default {
           // this.$vs.notify({ text: 'Gespeichert', color: 'success' })
           this.surveyComplete = true
           window.scrollTo(0, 0)
+          // Continue to 2nd round of wiser
+          this.$router.push({ name: 'wise', params: { didsurvey: true } })
         }).catch(error => {
           console.warn(error.message)
           this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })
@@ -144,9 +154,9 @@ export default {
   mounted () {
     if (this.responses < this.responsesRequired) {
       // This should not happen.
-      console.warn('Too few responses')
+      console.warn('Too few responses', this.responses)
       // if (!window.prompt('Du hast weniger als ' + this.responsesRequired + ' beantwortet. Trotzdem weiterfahren?')) {
-      //   this.$router.push({ name: 'wise', params: { skipintro: false } })
+      //   this.$router.push({ name: 'wise' })
       // }
     }
   }

@@ -17,5 +17,14 @@ module.exports = {
         target: 'http://localhost:5000/'
       }
     }
+  },
+  chainWebpack: config => {
+    config.module
+      .rule('yaml-loader')
+      .test(/\.ya?ml$/)
+      // .type('json')
+      .use('js-yaml-loader')
+      .loader('js-yaml-loader')
+      .end()
   }
 }

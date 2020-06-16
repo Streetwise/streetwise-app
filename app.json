@@ -11,7 +11,7 @@
       "value": "production"
     },
     "FLASK_APP": {
-      "description": "Flask App",
+      "description": "Flask App name",
       "value": "streetwise"
     },
     "FLASK_SECRET": {
@@ -20,22 +20,6 @@
     },
     "APP_KEY": {
       "description": "API Key",
-      "generator": "secret"
-    },
-    "VUE_APP_FATHOM_ANALYTICS_URL": {
-      "description": "Fathom analytics URL",
-      "generator": "secret"
-    },
-    "VUE_APP_FATHOM_ANALYTICS_CODE": {
-      "description": "Fathom analytics API Key",
-      "generator": "secret"
-    },
-    "VUE_APP_FRONTEND_LOGGER_KEY": {
-      "description": "CoraLogix API key for frontend logging",
-      "generator": "secret"
-    },
-    "VUE_APP_FRONTEND_APP_NAME": {
-      "description": "App name for CoraLogix logging",
       "generator": "secret"
     }
    },

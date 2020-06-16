@@ -23,3 +23,4 @@ def add_header(response):
 from .images import * # NOQA
 from .votes import * # NOQA
 from .results import * # NOQA
+from .campaigns import * # NOQA

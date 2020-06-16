@@ -1,0 +1,19 @@
+safety:
+  id: campaign-1-safety
+  start:
+    question: >
+      Wo fühlst du dich sicherer?
+    task: |
+      Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich sicherer fühlen würdest.
+    hint: |
+      Schau dir im Bild <b>die ganze Umgebung</b> an und bewerte diese als Fussgänger*in oder Velofahrer*in.
+
+atmos:
+  id: campaign-2-atmosphere
+  start:
+    question: >
+      In welcher Umgebung würdest du dich lieber aufhalten?
+    task: |
+      Wir zeigen dir Bildpaare und du schätzt ein, in welcher Umgebung du dich lieber aufhalten würdest.
+    hint: |
+      Schau dir im Bild <b>die ganze Umgebung</b> an und bewerte diese als Fussgänger*in.

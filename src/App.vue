@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss">
-#app, .vs-popup, .vs-dialog {
+#app, .vs-popup, .vs-dialog, .vs-notifications {
   font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,8 +37,16 @@ export default {
   overflow-x: hidden;
   color: #5b5777;
 }
+.vs-notifications p {
+  font-weight: bolder;
+}
 .vs-popup {
   text-align: left;
+  p.tip {
+    font-size: 90%;
+    color: #777;
+  }
+  p, h1, h2, h3, h4, h5 { line-height: 1.4em; }
 }
 .fullscreen .vs-popup header { display: none; }
 .fullscreen .lightbox-container {
@@ -46,6 +54,7 @@ export default {
   .vs-button-text { color: black; text-shadow: 1px 1px 1px white; }
 }
 .vs-navbar--header > button.vs-navbar--btn-responsive { visibility: hidden; }
+.vs-popup-primary .vs-popup--background { background: rgba(60,90,60,0.9); }
 
 // Note: for compatibility with IE11 - configured in main.js
 .vuesax-app-is-ltr {

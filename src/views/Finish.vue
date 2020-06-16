@@ -5,9 +5,9 @@
   SocialIcons(expand=true)
   .footer
     router-link(to="/")
-      vs-button(flat, size='large', color='dark') Schliessen
-    router-link(:to="{ name: 'wise', params: { skipintro: true }}")
-      vs-button(flat, size='large', color='success') Weitere Bilder bewerten
+      vs-button(flat, size='large', color='dark') schliessen
+    router-link(:to="{ name: 'wise', params: { didsurvey: true, didfeedback: true }}")
+      vs-button(flat, size='large', color='success') weitere Bilder bewerten
 </template>
 
 <script>

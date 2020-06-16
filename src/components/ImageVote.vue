@@ -54,7 +54,8 @@ export default {
   name: 'ImageVote',
   props: {
     msg: String,
-    skipintro: Boolean,
+    skipcomplete: Boolean,
+    skipfeedback: Boolean,
     debugmode: {
       type: Boolean,
       default: false
@@ -62,6 +63,10 @@ export default {
     votesrequired: {
       type: Number,
       default: 10
+    },
+    campaign: {
+      type: Number,
+      default: null
     }
   },
   components: {
@@ -86,14 +91,28 @@ export default {
       errorPromptVisible: false
     }
   },
+  watch: {
+    campaign: function (val) {
+      // Wait for campaign id to propagate before initializing
+      if (val !== null && !this.hasLoaded()) this.nextImagePair()
+    }
+  },
+  mounted: function () {
+    // Init immediately if campaign data is available
+    if (this.campaign !== null && !this.hasLoaded()) this.nextImagePair()
+  },
   methods: {
     elapsedTime () {
       return Math.round((Date.now() - this.timeStart) / 1000)
     },
+    hasLoaded () {
+      return this.imageLeft !== 0 && this.imageRight !== 0
+    },
     checkVotesComplete () {
-      if (this.voteCount === this.votesrequired) {
-        if (this.skipintro) {
-          let voter = this
+      if (this.voteCount >= this.votesrequired) {
+        if (this.skipcomplete && this.skipfeedback) {
+          const voter = this
+          this.voteCount = 0
           this.$vs.dialog({
             type: 'alert',
             color: 'success',
@@ -102,13 +121,15 @@ export default {
             acceptText: 'Bestätigen',
             accept: function () {
               // Continue responding to questions
-              voter.voteCount = 0
             },
             cancel: function () {
               // Return to home screen
               voter.$router.push({ name: 'start' })
             }
           })
+        } else if (this.skipcomplete) {
+          // Continue to feedback screen
+          this.$router.push({ name: 'complete', params: { skipsurvey: true, responses: this.voteTotal } })
         } else {
           // Continue to finish survey screen
           this.$router.push({ name: 'complete', params: { responses: this.voteTotal } })
@@ -119,7 +140,7 @@ export default {
     promptNetworkError () {
       if (this.errorPromptVisible) return
       this.errorPromptVisible = true
-      let self = this
+      const self = this
       this.$vs.dialog({
         type: 'confirm',
         color: 'danger',
@@ -164,7 +185,7 @@ export default {
         color: 'warning',
         title: 'Upps!',
         text: 'Das ging etwas zu schnell.',
-        acceptText: 'Nochmals versuchen'
+        acceptText: 'wiederholen'
       })
     },
     vote (isRight, textComment = '') {
@@ -205,21 +226,7 @@ export default {
       this.nextImagePair(true)
       this.$vs.notify({ text: 'Übersprungen!', color: 'warning', position: 'top-center' })
     }
-  },
-  mounted () {
-    this.nextImagePair()
-
-    // Notify mobile users about langscape mode
-    if (window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768) {
-      this.$vs.dialog({
-        type: 'alert',
-        color: 'success',
-        title: `Hinweis`,
-        text: 'Ein kleiner Tipp als Handy-Nutzer*in: halte das Handy quer für eine bessere Ansicht!',
-        acceptText: 'OK'
-      })
-    }
-  }
+  } // -methods
 }
 </script>
 
@@ -266,23 +273,18 @@ export default {
 }
 @media screen and (max-height: 900px) and (min-height: 700px) {
   .imagepane div img { height: 500px; }
-  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 700px) and (min-height: 601px) {
   .imagepane div img { height: 400px; }
-  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 600px) and (min-height: 401px) {
   .imagepane div img { height: 333px; }
-  .progressbar { top: 0px; }
 }
 @media screen and (max-height: 500px) and (min-width: 640px) {
   .imagepane div img { height: 260px;}
-  .progressbar { margin: 0.5em 0 0 !important; }
 }
 @media screen and (max-height: 400px) {
   .imagepane div img { height: 205px; }
-  .progressbar { top: 0px; }
 }
 
 .lightbox {
@@ -386,6 +388,7 @@ export default {
   background: white;
   padding: 0 5px;
   position: absolute;
+  top: 0px;
   right: 0px;
   p {
     display: none;
