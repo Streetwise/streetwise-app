@@ -20,6 +20,12 @@ from streetwise.models import *
 
 app = create_app()
 
+def initialize_image_counter():
+    with app.app_context():
+        from streetwise.api.helper.image_display_count import initialize_image_display_counter
+        initialize_image_display_counter()
+    return app
+
 
 @app.shell_context_processor
 def make_shell_context():
