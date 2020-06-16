@@ -23,8 +23,8 @@ $axios.interceptors.response.use(function (response) {
 
 export default {
   voteCast (isRight, imageLeft, imageRight, timeTaken, textComment) {
-    let sessionHash = localStorage.getItem('streetwiseSession') || null
-    let campaignId = localStorage.getItem('currentCampaignId') || null
+    const sessionHash = localStorage.getItem('streetwiseSession') || null
+    const campaignId = localStorage.getItem('currentCampaignId') || null
     return $axios.post(`vote/`, {
       session_hash: sessionHash,
       campaign_id: campaignId,
@@ -55,7 +55,7 @@ export default {
   },
 
   saveSurvey (surveyData) {
-    let sessionHash = localStorage.getItem('streetwiseSession') || null
+    const sessionHash = localStorage.getItem('streetwiseSession') || null
     if (!sessionHash) {
       return alert('Session not found, please start again')
     }
@@ -73,7 +73,7 @@ export default {
   },
 
   getRandomImages () {
-    let campaignId = localStorage.getItem('currentCampaignId') || null
+    const campaignId = localStorage.getItem('currentCampaignId') || null
     return $axios.get(`image/random/` + campaignId)
       .then(response => response.data)
   },

@@ -38,7 +38,7 @@ class CampaignNext(Resource):
     def get(self):
         global current_campaign
         if current_campaign is not None:
-            campaign = Campaign.query.get(current_campaign + 1)
+            campaign = Campaign.query.filter(Campaign.id > current_campaign).first()
         if current_campaign is None or campaign is None:
             campaign = Campaign.query.first()
         current_campaign = campaign.id

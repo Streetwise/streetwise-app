@@ -17,29 +17,23 @@
         | Jetzt geht es weiter mit der Frage:
       h2 {{ text.question }}
       p {{ text.task }}
-      p.tip {{ text.hint }}
-      p.tip(v-show="portraitMode")
-        | Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht der Bilder!
+      p.tip
+        div(v-html='text.hint')
       center
-        vs-button(flat='', size='large', color='success', @click='infoActive=false') alles klar
+        vs-button(flat='', size='large', color='success', @click='infoActive=false;showTip()') alles klar
 
   vs-popup(title='Hilfe', :active.sync='helpActive')
     .content.centerx
-      p.campaign {{ text.hint }}
+      p.campaign
+        div(v-html='text.hint')
       center.together
         | links &#x1F448;
         vs-button.undecided(disabled='', type='border', color='black') ???
         | &#x1F449; rechts
       p.tip
         | Tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-      //- center
-      //-   vs-icon(icon="star", size="small", color="darkblue")
-      //- <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
-      //- p.tip(v-show="portraitMode")
-      //-   | Halte das Handy quer für eine bessere Ansicht.
-      //-   | Beantworte
-      //-   b &nbsp;mindestens {{ votesRequired }}
-      //-   | &nbsp;Bildpaare, bitte.
+      p.tip.highlight(v-show="portraitMode")
+        | Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht der Bilder!
       center
         vs-button(flat='', size='large', color='success', @click='helpActive=false') Los geht&apos;s !
   center.help-icon
@@ -93,16 +87,28 @@ export default {
   mounted () {
     this.portraitMode = window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768
   },
+  methods: {
+    showTip () {
+      if (this.portraitMode) {
+        this.$vs.notify({
+          text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht.',
+          color: 'primary',
+          position: 'bottom-center',
+          time: 5000
+        })
+      }
+    }
+  },
   beforeCreate: function () {
-    let self = this
+    const self = this
     $backend.getNextCampaign()
       .then((res) => {
         self.campaignId = res.id
-        let selectContent = CampaignTexts[res.name]
+        const selectContent = CampaignTexts[res.name]
         self.text = selectContent.start
-        console.debug(selectContent.id, 'text loaded')
+        // console.info(selectContent.id, 'text loaded')
         // Trigger loading images from the selected campaign
-        self.$refs.imageVote.nextImagePair()
+        // self.$refs.imageVote.nextImagePair()
       })
   }
 }
@@ -126,6 +132,11 @@ export default {
   z-index: 10000;
   b { color: orange !important; font-size: 120%; }
   button { padding: 7px; }
+}
+.highlight {
+  color: black;
+  background-color: yellow;
+  padding: 0 5pt;
 }
 .imagevote {
   margin-bottom: 7px;
