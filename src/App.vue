@@ -29,13 +29,16 @@ export default {
 </script>
 
 <style lang="scss">
-#app, .vs-popup, .vs-dialog {
+#app, .vs-popup, .vs-dialog, .vs-notifications {
   font-family: 'OpenSans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   overflow-x: hidden;
   color: #5b5777;
+}
+.vs-notifications p {
+  font-weight: bolder;
 }
 .vs-popup {
   text-align: left;

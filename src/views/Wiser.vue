@@ -19,10 +19,8 @@
       p {{ text.task }}
       p.tip
         div(v-html='text.hint')
-      p.tip.highlight(v-show="portraitMode")
-        | Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht der Bilder!
       center
-        vs-button(flat='', size='large', color='success', @click='infoActive=false') alles klar
+        vs-button(flat='', size='large', color='success', @click='infoActive=false;showTip()') alles klar
 
   vs-popup(title='Hilfe', :active.sync='helpActive')
     .content.centerx
@@ -34,14 +32,8 @@
         | &#x1F449; rechts
       p.tip
         | Tippe auf ein Bild, um es zu vergrössern. Klicke entsprechend auf links oder rechts für deine Auswahl. Kannst du dich nicht entscheiden? Dann wähle «unentschieden».
-      //- center
-      //-   vs-icon(icon="star", size="small", color="darkblue")
-      //- <div><img style="max-width:100%" src="@/assets/example.jpg"></div>
-      //- p.tip(v-show="portraitMode")
-      //-   | Halte das Handy quer für eine bessere Ansicht.
-      //-   | Beantworte
-      //-   b &nbsp;mindestens {{ votesRequired }}
-      //-   | &nbsp;Bildpaare, bitte.
+      p.tip.highlight(v-show="portraitMode")
+        | Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht der Bilder!
       center
         vs-button(flat='', size='large', color='success', @click='helpActive=false') Los geht&apos;s !
   center.help-icon
@@ -94,20 +86,17 @@ export default {
   },
   mounted () {
     this.portraitMode = window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768
-    if (this.portraitMode) {
-      // this.$vs.notify({
-      //   text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht.',
-      //   color: 'warning',
-      //   position: 'top-center',
-      //   time: 5000
-      // })
-      // this.$vs.dialog({
-      //   type: 'alert',
-      //   color: 'success',
-      //   title: `Hinweis`,
-      //   text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht!',
-      //   acceptText: 'OK'
-      // })
+  },
+  methods: {
+    showTip () {
+      if (this.portraitMode) {
+        this.$vs.notify({
+          text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht.',
+          color: 'primary',
+          position: 'bottom-center',
+          time: 5000
+        })
+      }
     }
   },
   beforeCreate: function () {
@@ -119,7 +108,7 @@ export default {
         self.text = selectContent.start
         // console.info(selectContent.id, 'text loaded')
         // Trigger loading images from the selected campaign
-        self.$refs.imageVote.nextImagePair()
+        // self.$refs.imageVote.nextImagePair()
       })
   }
 }
