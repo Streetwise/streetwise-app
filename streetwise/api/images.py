@@ -9,13 +9,11 @@ from sqlalchemy.sql.expression import func
 
 from ..models import Image
 from . import api_rest
+from .helper.image_display_count import least_displayed_images
 
 ns = api_rest.namespace('image',
     description = 'Image operations'
 )
-
-# In-memory store for image counting at runtime
-IMAGE_COUNTER_MAP = {}
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
@@ -50,8 +48,7 @@ class ImageRandom(Resource):
     @ns.marshal_list_with(ImageModel)
     def get(self, campaign_id):
         images = Image.query.filter_by(campaign_id=campaign_id).order_by(func.random()).limit(10).all()
-        sortedImages = sortImagesByDisplayCount(images)
-        return selectLeastDisplayedImages(sortedImages), 201
+        return least_displayed_images(images, campaign_id), 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):
@@ -61,21 +58,3 @@ class ImageSelect(Resource):
     @ns.marshal_with(ImageModel, code=201)
     def get(self, image_id):
         return Image.query.get(image_id), 201
-
-def selectLeastDisplayedImages(sortedImageList):
-    """ Return two images in the form of a list """
-    IMAGE_RESPONSE_COUNT = 2
-    images = sortedImageList[0:IMAGE_RESPONSE_COUNT]
-    return list(map(lambda i: i[0], images))
-
-def sortImagesByDisplayCount(images):
-    """ Sorting function for images, based on the frequency of their being displayed """
-    imageCount = {}
-    for i in images:
-        if not IMAGE_COUNTER_MAP.get(i.id):
-            imageCount[i] = 1
-            IMAGE_COUNTER_MAP[imageId] = 1
-        else:
-            imageCount[i] = IMAGE_COUNTER_MAP[i.id]
-            IMAGE_COUNTER_MAP[imageId] += 1
-    return sorted(imageCount.items(), key=lambda n: n[1])
