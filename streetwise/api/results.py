@@ -26,13 +26,16 @@ def voteModel(vote):
         float(vote.session.agent_width) /
         float(vote.session.agent_height), 1)
     aspect_resolution = vote.session.agent_height if aspect_ratio < 1 else vote.session.agent_width
+    campaign_id = None if vote.campaign is None else vote.campaign.id
+    campaign_name = None if vote.campaign is None else vote.campaign.name
+
     return {
         'id':              vote.id,
         'created':         vote.created.isoformat(),
         'time_elapsed':    vote.time_elapsed,
         'campaign':        {
-            'id':          vote.campaign.id,
-            'name':        vote.campaign.name,
+            'id':          campaign_id,
+            'name':        campaign_name,
         },
         'session': {
             'id':          vote.session.id,
