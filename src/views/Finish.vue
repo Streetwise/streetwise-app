@@ -2,6 +2,8 @@
 .finish-page
   h2 Herzlichen Dank f&uuml;r deine Teilnahme.
   p Teile die streetwise Umfrage mit deinen Freunden und Bekannten!
+  center
+    ProgressGoals
   SocialIcons(expand=true)
   .footer
     router-link(to="/")
@@ -12,19 +14,25 @@
 
 <script>
 import SocialIcons from '@/components/SocialIcons.vue'
+import ProgressGoals from '@/components/ProgressGoals.vue'
 
 export default {
   name: 'Finish',
   components: {
-    SocialIcons
+    SocialIcons,
+    ProgressGoals
   }
 }
 </script>
 
 <style lang="scss">
 .finish-page {
-  h2, p, div {
+  > h2, > p, > div {
     margin: 1em 10%;
+  }
+  .progress-goals {
+    width: 22em;
+    margin: 0px;
   }
   .social-icons {
     position: absolute;
