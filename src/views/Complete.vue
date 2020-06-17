@@ -39,7 +39,7 @@
   div.survey-contest(v-show='surveyComplete && surveyRaffle')
     center.thanks
       | Herzlichen Dank f&uuml;r deine Teilnahme!
-    iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
+    iframe(:src='hrefSurveyForm', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
       //- a(href='https://forms.gle/SoFeC5tRiJdiEvoU6', target='_blank')
       //-   vs-button(flat='', type='line', color='light') Formular im Vollbildmodus anzeigen
@@ -50,7 +50,7 @@
       | Hast du auf&#32;
       b Senden
       | &#32;geklickt? Wenn nicht, tippe hier.
-    iframe(src='https://docs.google.com/forms/d/e/1FAIpQLSe95u0jGrf04V44J75dbuI5y3RbpiL00eqyw84B8v_rH9HrPw/viewform?embedded=true', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
+    iframe(:src='hrefFeedbackForm', width='100%', height='500', frameborder='0', marginheight='0', marginwidth='0') Loading&mldr;
     center.survey-next
       //- a(href='https://forms.gle/fDcXHYkSire7GRiU9', target='_blank')
       //-   vs-button(flat='', size='large', type='line', color='light') Formular im Vollbildmodus anzeigen
@@ -83,6 +83,9 @@ export default {
       showBlockquote: false,
       surveyComplete: this.skipsurvey,
       surveyRaffle: true,
+      // Configuration (TODO: use environment)
+      hrefSurveyForm: 'https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true',
+      hrefFeedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSfto7SCBYoZ5z9WtZLvlBrMslUsZmszeiYzBqf06kJ8DWBXIQ/viewform?embedded=true',
       // Survey data
       surveyAge: null,
       surveyGender: null,
