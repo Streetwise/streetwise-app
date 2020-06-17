@@ -29,6 +29,18 @@ class CampaignBrowser(Resource):
 
 current_campaign = None
 
+def getCampaign(campaign_id):
+    campaign = None
+    if campaign_id is not None:
+        campaign_id = int(campaign_id)
+        campaign = Campaign.query.filter(Campaign.id > campaign_id).first()
+    if campaign_id is None or campaign is None:
+        campaign = Campaign.query.first()
+    if campaign is None:
+        print("Error: no campaigns available")
+        return None
+    return campaign
+
 @ns.route('/next')
 class CampaignNext(Resource):
     """ Get alternating campaigns """
@@ -37,9 +49,18 @@ class CampaignNext(Resource):
     @ns.marshal_list_with(CampaignModel)
     def get(self):
         global current_campaign
-        if current_campaign is not None:
-            campaign = Campaign.query.filter(Campaign.id > current_campaign).first()
-        if current_campaign is None or campaign is None:
-            campaign = Campaign.query.first()
+        campaign = getCampaign(current_campaign)
+        current_campaign = campaign.id
+        return campaign, 201
+
+    @ns.doc('next_campaign_post')
+    @ns.marshal_list_with(CampaignModel)
+    def post(self):
+        ''' Get next campaign from one provided '''
+        global current_campaign
+        data = api_rest.payload
+        if data and 'campaign_id' in data:
+            current_campaign = data['campaign_id']
+        campaign = getCampaign(current_campaign)
         current_campaign = campaign.id
         return campaign, 201
