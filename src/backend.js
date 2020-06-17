@@ -26,6 +26,7 @@ export default {
     const sessionHash = localStorage.getItem('streetwiseSession') || null
     const campaignId = localStorage.getItem('currentCampaignId') || null
     return $axios.post(`vote/`, {
+
       session_hash: sessionHash,
       campaign_id: campaignId,
       choice_id: isRight ? imageRight : imageLeft,
@@ -36,6 +37,7 @@ export default {
       window_width: window.innerWidth,
       window_height: window.innerHeight,
       comment: textComment
+
     }).then(function (response) {
       if (response.status === 201) {
         if (typeof response.data.session_hash !== 'undefined' &&
@@ -60,8 +62,10 @@ export default {
       return alert('Session not found, please start again')
     }
     return $axios.post(`vote/survey`, {
+
       session_hash: sessionHash,
       survey_data: surveyData
+
     }).then(function (response) {
       if (response.status === 201) {
         return true
@@ -72,8 +76,25 @@ export default {
     })
   },
 
-  getRandomImages () {
+  getNextCampaign () {
     const campaignId = localStorage.getItem('currentCampaignId') || null
+    return $axios.post(`campaign/next`, {
+
+      campaign_id: campaignId
+
+    }).then(function (response) {
+      if (response.status === 201) {
+        localStorage.setItem('currentCampaignId', response.data.id)
+        return response.data
+      }
+      console.debug('Default campaign selected')
+      localStorage.setItem('currentCampaignId', 1)
+      return { id: 1 }
+    })
+  },
+
+  getRandomImages () {
+    const campaignId = localStorage.getItem('currentCampaignId')
     return $axios.get(`image/random/` + campaignId)
       .then(response => response.data)
   },
@@ -81,18 +102,5 @@ export default {
   getVoteCount () {
     return $axios.get(`vote/count`)
       .then(response => response.data)
-  },
-
-  getNextCampaign () {
-    return $axios.get(`campaign/next`)
-      .then(function (response) {
-        if (response.status === 201) {
-          localStorage.setItem('currentCampaignId', response.data.id)
-          return response.data
-        }
-        console.debug('Default campaign selected')
-        localStorage.setItem('currentCampaignId', 1)
-        return { id: 1 }
-      })
   }
 }

@@ -31,3 +31,12 @@ def test_campaign_sequence(client):
         resp = client.get('/api/campaign/next')
         result2 = json.loads(resp.data)
         assert result1['id'] != result2['id']
+
+def test_campaign_post(client):
+    with app_context:
+        resp = client.post('/api/campaign/next', json={'campaign_id':None})
+        result1 = json.loads(resp.data)
+        id1 = result1['id']
+        resp = client.post('/api/campaign/next', json={'campaign_id':id1})
+        result2 = json.loads(resp.data)
+        assert result1['id'] != result2['id']

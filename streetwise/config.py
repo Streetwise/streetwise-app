@@ -10,7 +10,7 @@ APP_DIR = os.path.dirname(__file__)
 # ../data/streetwise.db
 DATA_PATH = os.path.abspath(os.path.join(APP_DIR, os.pardir, 'data', 'streetwise.db'))
 
-DEFAULT_BUCKET_URL = "https://imagery.streetwise-app.ch/enhanced/"
+DEFAULT_BUCKET_URL = "https://imagery.streetwise-app.ch/campaigns"
 
 class Config(object):
     # If not set fall back to production for safety
