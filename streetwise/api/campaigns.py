@@ -31,7 +31,7 @@ current_campaign = None
 
 def getCampaign(campaign_id):
     campaign = None
-    if campaign_id is not None:
+    if campaign_id is not None and campaign_id.isdigit():
         campaign_id = int(campaign_id)
         campaign = Campaign.query.filter(Campaign.id > campaign_id).first()
     if campaign_id is None or campaign is None:
