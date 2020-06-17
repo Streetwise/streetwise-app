@@ -24,8 +24,6 @@ def initialize_image_counter():
     with app.app_context():
         from streetwise.api.helper.image_display_count import initialize_image_display_counter
         initialize_image_display_counter()
-    return app
-
 
 @app.shell_context_processor
 def make_shell_context():
@@ -121,6 +119,7 @@ def deploy():
         upgrade(migration_path)
     # Generate some bytes to create entropy
     os.urandom(256)
+    initialize_image_counter()
 
 @app.cli.command()
 @click.option('--campaign',
