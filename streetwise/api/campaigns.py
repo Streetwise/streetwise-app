@@ -36,7 +36,7 @@ def getCampaign(campaign_id):
     if campaign_id is not None:
         if isinstance(campaign_id, str) and campaign_id.isdigit():
             campaign_id = int(campaign_id)
-        campaign = query.filter(Campaign.id > campaign_id).first()
+            campaign = query.filter(Campaign.id > campaign_id).first()
     # Otherwise take the first campaign in the list
     if campaign_id is None or campaign is None:
         campaign = query.first()
