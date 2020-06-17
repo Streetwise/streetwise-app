@@ -159,6 +159,10 @@ export default {
       })
     },
     nextImagePair (skip = false) {
+      if (this.campaign === null || this.campaign === 'null') {
+        console.info('Waiting for campaign data')
+        return
+      }
       if (!skip) {
         this.voteCount++
         this.voteTotal++

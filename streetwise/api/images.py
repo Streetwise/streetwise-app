@@ -47,8 +47,14 @@ class ImageRandom(Resource):
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
     def get(self, campaign_id):
-        images = Image.query.filter_by(campaign_id=campaign_id).order_by(func.random()).limit(10).all()
-        return least_displayed_images(images, campaign_id), 201
+        if campaign_id is None or campaign_id == 'null':
+            print("Null campaign requested: selecting default (1)")
+            campagn_id = 1
+        q = Image.query.filter_by(campaign_id=campaign_id, shown=True)
+        q = q.order_by(func.random()).limit(2).all()
+        #return q, 201
+		#images = Image.query.filter_by(campaign_id=campaign_id).order_by(func.random()).limit(10).all()
+        #return least_displayed_images(images, campaign_id), 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):
