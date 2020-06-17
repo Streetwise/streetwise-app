@@ -84,7 +84,7 @@ export default {
       this.portraitMode = window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768
       if (this.portraitMode) {
         this.$vs.notify({
-          text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht.',
+          text: 'Tipp: halte dein Handy quer für eine bessere Ansicht',
           color: 'primary',
           position: 'bottom-center',
           time: 3000
