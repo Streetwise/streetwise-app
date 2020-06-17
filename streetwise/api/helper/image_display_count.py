@@ -74,5 +74,4 @@ def least_displayed_images(howmany, images, campaign_id):
     """
     sortedImages = sort_images_by_display_count(images, campaign_id)
     selectedImages = select_least_displayed(howmany, sortedImages)
-    print(selectedImages)
     return selectedImages
