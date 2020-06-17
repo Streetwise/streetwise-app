@@ -8,7 +8,7 @@
   .footer
     router-link(to="/")
       vs-button(flat, size='large', color='dark') schliessen
-    router-link(:to="{ name: 'wise', params: { didsurvey: true, didfeedback: true }}")
+    router-link(:to="{ name: 'wise', params: { didSurvey: true, didFeedback: true }}")
       vs-button(flat, size='large', color='success') weitere Bilder bewerten
 </template>
 

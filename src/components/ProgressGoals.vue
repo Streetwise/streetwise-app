@@ -37,7 +37,9 @@ export default {
   clear: both;
   width: 100%;
   margin: 2em 0 1.5em;
-
+  .vs-progress--background {
+    text-align: left;
+  }
   .progress-text {
     margin-top: 0.3em;
     margin-bottom: 0.3em;

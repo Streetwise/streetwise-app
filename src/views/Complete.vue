@@ -133,7 +133,7 @@ export default {
           this.surveyComplete = true
           window.scrollTo(0, 0)
           // Continue to 2nd round of wiser
-          this.$router.push({ name: 'wise', params: { didsurvey: true } })
+          this.$router.push({ name: 'wise', params: { didSurvey: true } })
         }).catch(error => {
           console.warn(error.message)
           this.$vs.notify({ text: 'Es gab einen Fehler', color: 'danger', position: 'top-center' })

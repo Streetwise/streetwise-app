@@ -3,7 +3,7 @@ Campaigns routing blueprint
 http://flask-restplus.readthedocs.io
 """
 
-from flask import request
+from flask import current_app
 from flask_restplus import Resource, fields
 
 from ..models import Campaign
@@ -31,13 +31,18 @@ current_campaign = None
 
 def getCampaign(campaign_id):
     campaign = None
-    if campaign_id is not None and campaign_id.isdigit():
-        campaign_id = int(campaign_id)
-        campaign = Campaign.query.filter(Campaign.id > campaign_id).first()
+    query = Campaign.query.order_by(Campaign.id.asc())
+    # Select the next campaign in sequence if one is provided
+    if campaign_id is not None:
+        if isinstance(campaign_id, str) and campaign_id.isdigit():
+            campaign_id = int(campaign_id)
+        campaign = query.filter(Campaign.id > campaign_id).first()
+    # Otherwise take the first campaign in the list
     if campaign_id is None or campaign is None:
-        campaign = Campaign.query.first()
+        campaign = query.first()
+    # Error condition
     if campaign is None:
-        print("Error: no campaigns available")
+        current_app.logger.error('No campaigns available')
         return None
     return campaign
 
