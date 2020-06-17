@@ -94,11 +94,7 @@ export default {
   },
 
   getRandomImages () {
-    const campaignId = localStorage.getItem('currentCampaignId') || null
-    if (campaignId === null) {
-      console.info('Waiting for campaign data ...')
-      return null
-    }
+    const campaignId = localStorage.getItem('currentCampaignId')
     return $axios.get(`image/random/` + campaignId)
       .then(response => response.data)
   },
