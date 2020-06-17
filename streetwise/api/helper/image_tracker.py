@@ -20,11 +20,11 @@ def count_images_from_votes():
     selected_images = Vote.query\
       .join(Image, Image.id == Vote.choice_id)\
       .with_entities(Image.id, Vote.campaign_id, func.count(Vote.id))\
-      .all()
+      .group_by(Vote.campaign_id, Image.id).all()
     rejected_images = Vote.query\
       .join(Image, Image.id == Vote.other_id)\
       .with_entities(Image.id, Vote.campaign_id, func.count(Vote.id))\
-      .all()
+      .group_by(Vote.campaign_id, Image.id).all()
     return selected_images + rejected_images
 
 def init_image_counter(cache=None):
