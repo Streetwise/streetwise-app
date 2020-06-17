@@ -3,7 +3,7 @@
 import pytest, json
 
 from streetwise.models import Image, Campaign, Vote
-from streetwise.api.helper import image_display_count
+from streetwise.api.helper import image_tracker
 from . import app, app_context, db
 
 @pytest.fixture(scope="module")
@@ -33,8 +33,8 @@ def test_image_counter(client):
         db.session.add(vote2)
         db.session.commit()
 
-        image_display_count.initialize_image_display_counter()
-        # print(image_display_count.IMAGE_COUNTER_DICT)
+        image_tracker.init_image_counter()
+        # print(image_tracker.IMAGE_COUNTER_DICT)
 
         resp = client.get('/api/image/random/%d' % campaign1.id)
         assert resp.status_code == 201

@@ -3,14 +3,16 @@ Images routing blueprint
 http://flask-restplus.readthedocs.io
 """
 
-from flask import request
+from flask import request, g
 from flask_restplus import Resource, fields
 from sqlalchemy.sql.expression import func
 
 from ..models import Image
 from . import api_rest
 
-from .helper.image_display_count import least_displayed_images
+from .helper.image_tracker import (
+    init_image_counter, least_displayed_images
+)
 
 ns = api_rest.namespace('image',
     description = 'Image operations'
@@ -54,9 +56,16 @@ class ImageRandom(Resource):
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
     def get(self, campaign_id):
+        # Prime the image counter if needed
+        if not 'image_counter' in g:
+            g.image_counter = init_image_counter()
+        # Select showable images
         q = Image.query.filter_by(campaign_id=campaign_id, shown=True)
+        # Retrieve a random selection
         q = q.order_by(func.random()).limit(IMAGES_RANDOM_WALK).all()
-        return least_displayed_images(2, q, campaign_id), 201
+        # Obtain the two least tracked images from the selection
+        img2 = least_displayed_images(2, q, campaign_id, g.image_counter)
+        return img2, 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):

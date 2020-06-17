@@ -114,10 +114,6 @@ def deploy():
         upgrade(migration_path)
     # Generate some bytes to create entropy
     os.urandom(256)
-    # Prime the image counter
-    with app.app_context():
-        from streetwise.api.helper import image_display_count
-        image_display_count.initialize_image_display_counter()
 
 @app.cli.command()
 @click.option('--campaign',
