@@ -56,7 +56,7 @@ def sort_images_by_display_count(images, campaign_id):
             IMAGE_COUNTER_DICT[campaign_id][image.id] = 0
         selected_images[image.id] = IMAGE_COUNTER_DICT[campaign_id][image.id]
     # Return the items sorted by count
-    return sorted(selected_images.items())
+    return sorted(selected_images.items(), key=lambda item: item[1])
 
 def select_least_displayed(how_many, sorted_image_list):
     """
