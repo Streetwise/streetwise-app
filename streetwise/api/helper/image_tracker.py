@@ -9,6 +9,13 @@ from streetwise.models import Vote, Image
 # { 'image key': { campaign_id: count }}
 IMAGE_COUNTER_DICT = {}
 
+class ImageCache:
+    counter: {}
+    queue: None
+    def __init__(self, counter, queue):
+        self.counter = counter
+        self.queue = queue
+
 def count_images_from_votes():
     """
     Returns a list of tuple of the form (image_id, campaign_id, count)
@@ -32,7 +39,7 @@ def init_image_counter(cache=None):
     Initialize the image display counter
     """
     global IMAGE_COUNTER_DICT
-    if cache is not None: IMAGE_COUNTER_DICT = cache
+    if cache is not None: IMAGE_COUNTER_DICT = cache.counter
     image_campaign_counts = count_images_from_votes()
     for (image_id, campaign_id, count) in image_campaign_counts:
         if not campaign_id in IMAGE_COUNTER_DICT:
@@ -41,6 +48,7 @@ def init_image_counter(cache=None):
             IMAGE_COUNTER_DICT[campaign_id][image_id] += count
         else:
             IMAGE_COUNTER_DICT[campaign_id][image_id] = count
+    return ImageCache(IMAGE_COUNTER_DICT, None)
 
 def sort_images_by_display_count(images, campaign_id):
     """
@@ -63,12 +71,16 @@ def select_least_displayed(how_many, sorted_image_list):
     Return two image IDs in the form of a list, and record their being displayed
     """
     imageSorted = sorted_image_list[0 : how_many]
+    if len(sorted_image_list) >= how_many*2:
+        remaining = sorted_image_list[how_many+1]
+    else:
+        remaining = None
     imageIDs = list(map(lambda i: i[0], imageSorted))
     images = list(map(lambda i: Image.query.get(i), imageIDs))
     # Increment the tracker
     for image in images:
         IMAGE_COUNTER_DICT[image.campaign.id][image.id] += 1
-    return images
+    return images, remaining
 
 def least_displayed_images(howmany, images, campaign, cache=None):
     """
@@ -77,7 +89,10 @@ def least_displayed_images(howmany, images, campaign, cache=None):
     persists data between calls.
     """
     global IMAGE_COUNTER_DICT
-    if cache is not None: IMAGE_COUNTER_DICT = cache
-    sortedImages = sort_images_by_display_count(images, campaign)
-    selectedImages = select_least_displayed(howmany, sortedImages)
-    return selectedImages
+    sortedImages = None
+    if cache is not None:
+        IMAGE_COUNTER_DICT = cache.counter
+        sortedImages = cache.queue
+    if sortedImages is None:
+        sortedImages = sort_images_by_display_count(images, campaign)
+    return select_least_displayed(howmany, sortedImages)

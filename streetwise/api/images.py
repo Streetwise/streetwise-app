@@ -64,7 +64,8 @@ class ImageRandom(Resource):
         # Retrieve a random selection
         q = q.order_by(func.random()).limit(IMAGES_RANDOM_WALK).all()
         # Obtain the two least tracked images from the selection
-        img2 = least_displayed_images(2, q, campaign_id, g.image_counter)
+        img2, queue = least_displayed_images(2, q, campaign_id, g.image_counter)
+        g.image_counter.queue = queue
         return img2, 201
 
 @ns.route('/<int:image_id>')
