@@ -49,11 +49,11 @@ export default {
     },
     campaignId: {
       type: Number,
-      required: true
+      default: null
     },
     campaignName: {
       type: String,
-      required: true
+      default: null
     }
   },
   data () {
@@ -72,13 +72,8 @@ export default {
       debugMode: process.env.VUE_APP_DEBUG || false
     }
   },
-  computed: {
-    campaign () {
-      return { id: this.campaignId, name: this.campaignName }
-    }
-  },
   mounted () {
-    if (this.campaign.id === null || this.campaign.name === null) {
+    if (this.campaignId === null || this.campaignName === null) {
       return this.$router.push({ name: 'wise', query: { 'reason': 'no_campaign' } })
     }
     this.text = CampaignTexts[this.campaignName].start
@@ -89,10 +84,10 @@ export default {
       this.portraitMode = window.matchMedia('(orientation: portrait)').matches && window.innerWidth < 768
       if (this.portraitMode) {
         this.$vs.notify({
-          text: 'Ein kleiner Tipp: halte dein Handy quer für eine bessere Ansicht.',
+          text: 'Tipp: halte dein Handy quer für eine bessere Ansicht',
           color: 'primary',
           position: 'bottom-center',
-          time: 50000
+          time: 3000
         })
       }
     }

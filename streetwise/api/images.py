@@ -3,16 +3,26 @@ Images routing blueprint
 http://flask-restplus.readthedocs.io
 """
 
-from flask import request
+from flask import request, g
 from flask_restplus import Resource, fields
 from sqlalchemy.sql.expression import func
 
 from ..models import Image
 from . import api_rest
 
+from .helper.image_tracker import (
+    init_image_counter, least_displayed_images
+)
+
 ns = api_rest.namespace('image',
     description = 'Image operations'
 )
+
+# How many images to randomly select before counting
+IMAGES_RANDOM_WALK = 50
+
+# Max. number of images to return in 'all'
+IMAGES_SHOWN_ALL = 100
 
 ImageModel = api_rest.model('Image', {
     'id': fields.Integer,
@@ -37,7 +47,7 @@ class ImageBrowser(Resource):
     @ns.doc('list_images')
     @ns.marshal_list_with(ImageModel)
     def get(self):
-        return Image.query.limit(100).all()
+        return Image.query.limit(IMAGES_SHOWN_ALL).all()
 
 @ns.route('/random/<int:campaign_id>')
 class ImageRandom(Resource):
@@ -46,12 +56,16 @@ class ImageRandom(Resource):
     @ns.doc('random_images')
     @ns.marshal_list_with(ImageModel)
     def get(self, campaign_id):
-        if campaign_id is None or campaign_id == 'null':
-            print("Null campaign requested: selecting default (1)")
-            campagn_id = 1
+        # Prime the image counter if needed
+        if not 'image_counter' in g:
+            g.image_counter = init_image_counter()
+        # Select showable images
         q = Image.query.filter_by(campaign_id=campaign_id, shown=True)
-        q = q.order_by(func.random()).limit(2).all()
-        return q, 201
+        # Retrieve a random selection
+        q = q.order_by(func.random()).limit(IMAGES_RANDOM_WALK).all()
+        # Obtain the two least tracked images from the selection
+        img2 = least_displayed_images(2, q, campaign_id, g.image_counter)
+        return img2, 201
 
 @ns.route('/<int:image_id>')
 class ImageSelect(Resource):

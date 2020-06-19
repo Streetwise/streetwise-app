@@ -28,7 +28,7 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   // Implement Navigation Guards
-  if (from.name === 'vote' && to.name === 'start' && to.fullPath.indexOf('?reason') > 0) {
+  if (from.name === 'vote' && to.fullPath.indexOf('?reason') > 0) {
     // Do not prompt for confirmation while going to /start on network error
     next()
   } else if (from.name === 'vote' && to.name !== 'complete' && to.name !== 'finish') {
