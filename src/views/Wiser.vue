@@ -11,11 +11,13 @@
     p.tip
       div(v-html='text.hint')
     center
-      vs-button(flat='', size='large', color='success', @click='toVoting()') alles klar
+      vs-button(
+        flat='', size='large', color='success',
+        @click='toVoting()') alles klar
     img.logo(
+      v-show='imageurl'
       v-bind:src='imageurl',
       v-bind:style='cssBorderStyle',
-      v-show='!didSurvey && imageurl'
     )
 </template>
 
@@ -75,6 +77,7 @@ export default {
 <style lang="scss" scoped>
 .wiser {
   .content {
+    text-align: center;
     margin: 0 20%;
     font-size: 140%;
     h2 {
@@ -83,7 +86,6 @@ export default {
     }
     > p, > div {
       margin: 1em 0;
-      text-align: left;
     }
     img {
       border: 2px solid white;
@@ -97,5 +99,8 @@ export default {
       max-width: 700px;
     }
   }
+}
+@media screen and (max-width: 600px) {
+  .wiser .content { text-align: left; margin: 10%; }
 }
 </style>
