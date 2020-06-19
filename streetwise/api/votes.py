@@ -50,8 +50,6 @@ class VoteCounter(Resource):
 class VoteCast(Resource):
     """ Collect user votes """
 
-    decorators = [api_limiter.limit('1/second')]
-
     @ns.doc('create_vote')
     @ns.expect(VotingModel)
     @ns.marshal_with(VotingModel, code=201)
