@@ -77,7 +77,7 @@ def select_least_displayed(how_many, sorted_image_list):
     """
     imageSorted = sorted_image_list[0 : how_many]
     if len(sorted_image_list) >= how_many*3:
-        remaining = sorted_image_list[how_many+1]
+        remaining = sorted_image_list[how_many+1:]
     else:
         remaining = None
     print(imageSorted)
