@@ -10,6 +10,9 @@ from streetwise.models import Vote, Image
 IMAGE_COUNTER_DICT = {}
 
 class ImageCache:
+    """
+    Simple object to keep the counter and randomized image queue in app memory
+    """
     counter: {}
     queue: None
     def __init__(self, counter, queue):
@@ -40,7 +43,9 @@ def init_image_counter(cache=None):
     """
     global IMAGE_COUNTER_DICT
     if cache is not None: IMAGE_COUNTER_DICT = cache.counter
+    # Collect image counts
     image_campaign_counts = count_images_from_votes()
+    # ..and map them for the appropriate campaign
     for (image_id, campaign_id, count) in image_campaign_counts:
         if not campaign_id in IMAGE_COUNTER_DICT:
             IMAGE_COUNTER_DICT[campaign_id] = {}
@@ -71,16 +76,17 @@ def select_least_displayed(how_many, sorted_image_list):
     Return two image IDs in the form of a list, and record their being displayed
     """
     imageSorted = sorted_image_list[0 : how_many]
-    if len(sorted_image_list) >= how_many*2:
+    if len(sorted_image_list) >= how_many*3:
         remaining = sorted_image_list[how_many+1]
     else:
         remaining = None
+    print(imageSorted)
     imageIDs = list(map(lambda i: i[0], imageSorted))
     images = list(map(lambda i: Image.query.get(i), imageIDs))
     # Increment the tracker
     for image in images:
         IMAGE_COUNTER_DICT[image.campaign.id][image.id] += 1
-    return images, remaining
+    return images, ImageCache(IMAGE_COUNTER_DICT, remaining)
 
 def least_displayed_images(howmany, images, campaign, cache=None):
     """
@@ -94,5 +100,6 @@ def least_displayed_images(howmany, images, campaign, cache=None):
         IMAGE_COUNTER_DICT = cache.counter
         sortedImages = cache.queue
     if sortedImages is None:
+        if images is None: raise Exception("No images in queue")
         sortedImages = sort_images_by_display_count(images, campaign)
     return select_least_displayed(howmany, sortedImages)

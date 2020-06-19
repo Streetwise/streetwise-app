@@ -59,13 +59,18 @@ class ImageRandom(Resource):
         # Prime the image counter if needed
         if not 'image_counter' in g:
             g.image_counter = init_image_counter()
-        # Select showable images
-        q = Image.query.filter_by(campaign_id=campaign_id, shown=True)
-        # Retrieve a random selection
-        q = q.order_by(func.random()).limit(IMAGES_RANDOM_WALK).all()
-        # Obtain the two least tracked images from the selection
-        img2, queue = least_displayed_images(2, q, campaign_id, g.image_counter)
-        g.image_counter.queue = queue
+
+        # If the cache is empty, collect fresh data
+        images = None
+        if g.image_counter.queue is None:
+            # Select showable images
+            images = Image.query.filter_by(campaign_id=campaign_id, shown=True)
+            # Retrieve a random selection
+            images = images.order_by(func.random()).limit(IMAGES_RANDOM_WALK).all()
+
+        # Obtain the two least tracked images from queue / the selection
+        img2, cache = least_displayed_images(2, images, campaign_id, g.image_counter)
+        g.image_counter = cache
         return img2, 201
 
 @ns.route('/<int:image_id>')
