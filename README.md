@@ -181,11 +181,15 @@ Other useful variables to set in production include:
 - **VUE_APP_FRONTEND_LOGGER_KEY** - embed code for error logging (coralogix.com)
 - **VUE_APP_DEBUG** - set to `true` for frontend troubleshooting
 - **DATABASE_URL** - set automatically by Heroku, this specifies the DB endpoint
+- **MIGRATION_PATH** - a folder storing the DB migration (i.e. `deploy/streetwise-prod`)
 - **FLASK_SECRET** - auto-generated
 - **FLASK_APP** - `streetwise`
 - **FLASK_ENV** - `production`
 
-Production DB migrations are tracked in the `deploy` folder. Set the `MIGRATION_PATH` variable to the folder you wish deployments to pick up. Be aware that as this is currently also used in testing, any migrations will need to be propagated for CI to pass, i.e.:
+
+#### Database migration
+
+Production DB migrations are tracked in the `deploy` folder, and controlled using the `MIGRATION_PATH` environment variable. Be aware that as this is currently also used in testing, any migrations will need to be propagated for CI to pass, i.e.:
 
 ```
 export MIGRATION_PATH=deploy/streetwise-prod
@@ -193,9 +197,7 @@ export MIGRATION_PATH=deploy/streetwise-prod
 ./manage.py deploy
 ```
 
-Other useful Heroku commands include restoring backups from production to stage:
-
-`heroku pg:backups:restore streetwise-app::b008 DATABASE_URL --app streetwise-stage`
+Visit our wiki for further [notes about deployment](https://github.com/Streetwise/streetwise-data/wiki/AppDeployment).
 
 For a good introduction to production Flask apps, see [freecodecamp article by Greg Obinna](https://www.freecodecamp.org/news/structuring-a-flask-restplus-web-service-for-production-builds-c2ec676de563/).
 
