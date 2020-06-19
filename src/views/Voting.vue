@@ -2,6 +2,7 @@
 .voting
   ImageVote(
     v-bind:msg='text.question',
+    v-bind:msgStyle='campaignStyle',
     v-bind:campaign='campaignId',
     :debugmode='debugMode',
     :votesrequired='votesRequired',
@@ -59,6 +60,7 @@ export default {
   data () {
     return {
       text: {},
+      campaignStyle: '',
 
       // Orientation of app
       portraitMode: false,
@@ -76,7 +78,8 @@ export default {
     if (this.campaignId === null || this.campaignName === null) {
       return this.$router.push({ name: 'wise', query: { 'reason': 'no_campaign' } })
     }
-    this.text = CampaignTexts[this.campaignName].start
+    this.text = CampaignTexts[this.campaignName]
+    this.campaignStyle = 'border-color:' + this.text.color
     this.showPortraitTip()
   },
   methods: {

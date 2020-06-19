@@ -1,17 +1,22 @@
 <template lang="pug">
 .wiser
   .content
-    p(v-show="!didSurvey")
+    p(v-show='!didSurvey')
       | Für dich geht’s los mit der Frage:
-    p(v-show="didSurvey")
+    p(v-show='didSurvey')
       | Jetzt geht es weiter mit der Frage:
-    h2 {{ text.question }}
+    h2(v-bind:style='cssBorderStyle')
+      | {{ text.question }}
     p {{ text.task }}
     p.tip
       div(v-html='text.hint')
     center
       vs-button(flat='', size='large', color='success', @click='toVoting()') alles klar
-    img.logo(src="@/assets/ui-sketch.png", v-show="!didSurvey")
+    img.logo(
+      v-bind:src='imageurl',
+      v-bind:style='cssBorderStyle',
+      v-show='!didSurvey && imageurl'
+    )
 </template>
 
 <script>
@@ -33,6 +38,8 @@ export default {
   data () {
     return {
       text: {},
+      imageurl: null,
+      cssBorderStyle: 'border-color:white',
       campaignId: null,
       campaignName: null
     }
@@ -57,7 +64,9 @@ export default {
       .then((res) => {
         self.campaignId = res.id
         self.campaignName = res.name
-        self.text = CampaignTexts[res.name].start
+        self.text = CampaignTexts[res.name]
+        self.cssBorderStyle = 'border-color:' + self.text.color
+        self.imageurl = require('@/assets/campaigns/' + self.text.image)
       })
   }
 }
@@ -68,13 +77,24 @@ export default {
   .content {
     margin: 0 20%;
     font-size: 140%;
+    h2 {
+      display: inline-block;
+      border-bottom: 8px solid black;
+    }
     > p, > div {
       margin: 1em 0;
       text-align: left;
     }
     img {
+      border: 2px solid white;
+      border-top: none;
+      border-left: none;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px grey;
+      padding: 5px;
       margin-top: 1em;
       width: 100%;
+      max-width: 700px;
     }
   }
 }

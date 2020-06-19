@@ -4,7 +4,7 @@
       <vs-progress :height="12" :percent="votePercent" color="warning"></vs-progress>
     </div>
 
-    <h3 class="lead">{{ msg }}</h3>
+    <h3 class="lead" :style="msgStyle">{{ msg }}</h3>
 
     <div class="imagepane">
       <div class="left" @click="popupImage=true;popupLeft=true" ref="leftImagePane">
@@ -67,6 +67,10 @@ export default {
     campaign: {
       type: Number,
       default: null
+    },
+    msgStyle: {
+      type: String,
+      default: 'border-color:white'
     }
   },
   components: {
@@ -310,6 +314,7 @@ export default {
 
 .lead {
   padding: 0.5em;
+  border-top: 5px solid white;
 }
 
 @media screen and (max-height: 600px) {

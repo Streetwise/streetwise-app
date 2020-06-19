@@ -83,7 +83,7 @@ export default {
       showBlockquote: false,
       surveyComplete: this.skipsurvey,
       surveyRaffle: true,
-      // Configuration (TODO: use environment)
+      // Configuration (TODO: use campaigns.yaml as settings)
       hrefSurveyForm: 'https://docs.google.com/forms/d/e/1FAIpQLSck2tNAqXEOXwCeIdzKW5PrSEEw-yAnN0MVzwQGlAZ5Ysg6YQ/viewform?embedded=true',
       hrefFeedbackForm: 'https://docs.google.com/forms/d/e/1FAIpQLSfto7SCBYoZ5z9WtZLvlBrMslUsZmszeiYzBqf06kJ8DWBXIQ/viewform?embedded=true',
       // Survey data
