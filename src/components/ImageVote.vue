@@ -71,6 +71,10 @@ export default {
     msgStyle: {
       type: String,
       default: 'border-color:white'
+    },
+    buttonStunDuration: {
+      type: Number,
+      default: 1000 // 1 second
     }
   },
   components: {
@@ -92,7 +96,11 @@ export default {
       popupImage: false,
       popupLeft: false,
       openUndecided: false,
-      errorPromptVisible: false
+      errorPromptVisible: false,
+      buttonState: {
+        active: true,
+        timeout: null
+      }
     }
   },
   watch: {
@@ -187,6 +195,21 @@ export default {
           this.imageRightUrl = responseData[1].Url
         }).catch((error) => this.promptNetworkError(error))
     },
+    isButtonActive () {
+      return this.buttonState.active
+    },
+    activateButtons () {
+      this.buttonState.active = true
+      this.buttonState.timer = null
+    },
+    deactivateButtons () {
+      this.buttonState.active = false
+      if (this.buttonState.timer !== null) {
+        clearTimeout(this.buttonState.timer)
+      }
+
+      this.buttonState.timer = setTimeout(this.activateButtons, this.buttonStunDuration)
+    },
     promptVoteTooFast () {
       this.$vs.dialog({
         type: 'alert',
@@ -216,15 +239,18 @@ export default {
             return this.promptVoteTooFast()
           }
           this.$vs.notify({ text: 'Es gab einen Fehler bei der Übermittlung.', color: 'danger', position: 'top-center' })
-        })
+        }).finally(() => this.deactivateButtons())
     },
     voteLeft () {
+      if (this.isButtonActive() === false) return this.deactivateButtons()
       this.vote(false)
     },
     voteRight () {
+      if (this.isButtonActive() === false) return this.deactivateButtons()
       this.vote(true)
     },
     voteUndecided (accept) {
+      if (this.isButtonActive() === false) return this.deactivateButtons()
       this.openUndecided = false
       if (accept === false) return
       this.$vs.notify({ text: 'Danke für deine Rückmeldung.', color: 'warning', position: 'top-center' })
