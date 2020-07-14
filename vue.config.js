@@ -26,5 +26,25 @@ module.exports = {
       .use('js-yaml-loader')
       .loader('js-yaml-loader')
       .end()
+  },
+  configureWebpack: {
+    optimization: {
+      minimize: true,
+      splitChunks: {
+        minSize: 100000,
+        maxSize: 1000000,
+        maxAsyncRequests: 6,
+        maxInitialRequests: 4,
+        chunks: 'all'
+      }
+    },
+    entry: {
+      index: './src/main.js',
+      start: './src/views/Start.vue',
+      wiser: './src/views/Wiser.vue',
+      voting: './src/views/Voting.vue',
+      complete: './src/views/Complete.vue',
+      finish: './src/views/Finish.vue'
+    }
   }
 }
