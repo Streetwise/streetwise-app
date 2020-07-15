@@ -4,6 +4,9 @@ http://flask-restplus.readthedocs.io
 """
 
 from flask_restplus import Resource
+from flask import Response
+import json
+from sqlalchemy.orm import joinedload
 
 from . import db, api_rest
 from .util import require_auth
@@ -49,6 +52,10 @@ def voteModel(vote):
         'comment':         vote.comment
     }
 
+def voteGenerator(votes):
+    for vote in votes:
+        yield json.dumps(voteModel(vote))
+
 class SecureResource(Resource):
     """ Calls require_auth decorator on all requests """
     method_decorators = [require_auth]
@@ -59,11 +66,18 @@ class VoteLatest(SecureResource):
 
     @ns.doc('latest_votes')
     def get(self):
-        return [voteModel(p) for p in Vote.query
-                .filter_by(is_undecided=False)
-                .order_by(Vote.created.desc())
-                .limit(50)
-                .all()]
+        votes = Vote.query\
+                    .enable_eagerloads(True)\
+                    .options(joinedload(Vote.other),
+                             joinedload(Vote.choice),
+                             joinedload(Vote.session),
+                             joinedload(Vote.campaign))\
+                    .filter_by(is_undecided=False)\
+                    .order_by(Vote.created.desc())\
+                    .limit(50)\
+                    .all()
+
+        return Response(voteGenerator(votes))
 
 @ns.route('/undecided')
 class VoteUndecided(SecureResource):
@@ -71,10 +85,17 @@ class VoteUndecided(SecureResource):
 
     @ns.doc('latest_undecided')
     def get(self):
-        return [voteModel(p) for p in Vote.query
-                .filter_by(is_undecided=True)
-                .limit(50)
-                .all()]
+        votes = Vote.query\
+                    .enable_eagerloads(True)\
+                    .options(joinedload(Vote.other),
+                             joinedload(Vote.choice),
+                             joinedload(Vote.session),
+                             joinedload(Vote.campaign))\
+                    .filter_by(is_undecided=True)\
+                    .limit(50)\
+                    .all()
+
+        return Response(voteGenerator(votes))
 
 @ns.route('/all')
 class VoteAll(SecureResource):
@@ -83,4 +104,13 @@ class VoteAll(SecureResource):
     # TODO: consider using CSV for brevity
     @ns.doc('all_votes')
     def get(self):
-        return [voteModel(p) for p in Vote.query.all()]
+        votes = Vote.query\
+                    .enable_eagerloads(True)\
+                    .options(joinedload(Vote.other),
+                             joinedload(Vote.choice),
+                             joinedload(Vote.session),
+                             joinedload(Vote.campaign))\
+                    .all()
+
+        return Response(voteGenerator(votes))
+
