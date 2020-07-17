@@ -53,8 +53,13 @@ def voteModel(vote):
     }
 
 def voteGenerator(votes):
+    yield '['
     for vote in votes:
-        yield json.dumps(voteModel(vote))
+        if vote == votes[-1]:
+            yield json.dumps(voteModel(vote))
+        else:
+            yield json.dumps(voteModel(vote)) + ','
+    yield ']'
 
 class SecureResource(Resource):
     """ Calls require_auth decorator on all requests """
