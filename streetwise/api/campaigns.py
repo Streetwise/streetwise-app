@@ -31,14 +31,14 @@ current_campaign = None
 
 def getCampaign(campaign_id):
     campaign = None
-    query = Campaign.query.order_by(Campaign.id.asc())
+    query = Campaign.query.order_by(Campaign.id.desc())
     # Select the next campaign in sequence if one is provided
     if campaign_id is not None:
         if isinstance(campaign_id, str) and campaign_id.isdigit():
             campaign_id = int(campaign_id)
-            campaign = query.filter(Campaign.id > campaign_id).first()
+            campaign = query.filter(Campaign.id < campaign_id).first()
         if isinstance(campaign_id, int):
-            campaign = query.filter(Campaign.id > campaign_id).first()
+            campaign = query.filter(Campaign.id < campaign_id).first()
     # Otherwise take the first campaign in the list
     if campaign_id is None or campaign is None:
         campaign = query.first()
