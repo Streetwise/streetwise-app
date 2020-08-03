@@ -113,7 +113,7 @@ export default {
       return this.imageLeft !== 0 && this.imageRight !== 0
     },
     checkVotesComplete () {
-      if (this.voteCount >= this.votesrequired) {
+      if (this.voteCount > this.votesrequired) {
         if (this.skipcomplete && this.skipfeedback) {
           const voter = this
           this.voteCount = 0
