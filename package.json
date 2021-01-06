@@ -9,7 +9,7 @@
     "postinstall": "yarn build"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "coralogix-logger": "^1.1.25",
     "js-yaml-loader": "^1.2.2",
     "pug": "^2.0.4",
