@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "coralogix-logger": "^1.1.25",
     "js-yaml-loader": "^1.2.2",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "swiper": "^5.3.7",
     "vue": "^2.5.13",
